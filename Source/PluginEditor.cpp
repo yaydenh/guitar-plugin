@@ -17,6 +17,13 @@ GuitarAmpAudioProcessorEditor::GuitarAmpAudioProcessorEditor(GuitarAmpAudioProce
     // editor's size to whatever you need it to be.
     setSize (400, 300);
 
+    // distortion type selector
+    preampModeSelector.addItem("Clean", 1);
+    preampModeSelector.addItem("Crunch", 2);
+    preampModeSelector.addItem("Lead", 3);
+    addAndMakeVisible(preampModeSelector);
+    preampModeAttachment.reset(new ComboBoxAttachment(valueTreeState, "preampMode", preampModeSelector));
+
     // pre gain knob
     preGainSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
     preGainSlider.setRange(-24.0f, 24.0f, 0.1f);
@@ -106,6 +113,8 @@ void GuitarAmpAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
     auto sliderLeft = 100;
+
+    preampModeSelector.setBounds(sliderLeft, 20, 150, 30);
 
     auto preX = 10;
     auto preY = 50;

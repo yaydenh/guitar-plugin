@@ -25,6 +25,9 @@ GuitarAmpAudioProcessor::GuitarAmpAudioProcessor()
     ),
     parameters(*this, nullptr, "parameters",
         {
+            std::make_unique<juce::AudioParameterChoice>("preampMode", "preampMode",
+                juce::StringArray { "Clean", "Crunch", "Lead" }, 0
+            ),
             std::make_unique<juce::AudioParameterFloat>("preGain", "preGain", -24.0f, 24.0f, 0.0f),
             std::make_unique<juce::AudioParameterFloat>("preBassEQ", "preBassEQ", -12.0f, 12.0f, 0.0f),
             std::make_unique<juce::AudioParameterFloat>("preMidEQ", "preMidEQ", -12.0f, 12.0f, 0.0f),
@@ -189,6 +192,8 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     }
     
     // preamp
+    int preampMode = parameters.getParameterAsValue("distortionType").getValue();
+    preamp.setMode(static_cast<PreampProcessor::Mode>(preampMode));
     float preampGain = *parameters.getRawParameterValue("preGain");
     preamp.setGain(preampGain);
     float preampBass = *parameters.getRawParameterValue("preBassEQ");

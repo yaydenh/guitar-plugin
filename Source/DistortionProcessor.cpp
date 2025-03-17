@@ -59,7 +59,7 @@ float DistortionProcessor::applyDistortion(float sample)
             break;
 
         case Type::WaveShaper:
-            newSample = std::tanh(sample * gain);
+            newSample = std::tanh(sample);
             break;
 
         case Type::Fuzz:

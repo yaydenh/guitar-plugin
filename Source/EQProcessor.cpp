@@ -20,6 +20,9 @@ void EQProcessor::prepare(juce::dsp::ProcessSpec& spec)
     bassFilter.prepare(spec);
     midFilter.prepare(spec);
     trebleFilter.prepare(spec);
+    bassFilter.coefficients = juce::dsp::IIR::Coefficients<float>::makeLowShelf(sampleRate, 100.0f, 0.7f, juce::Decibels::decibelsToGain(0.0f));
+    midFilter.coefficients = juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, 1000.0f, 1.0f, juce::Decibels::decibelsToGain(0.0f));
+    trebleFilter.coefficients = juce::dsp::IIR::Coefficients<float>::makeHighShelf(sampleRate, 8000.0f, 0.7f, juce::Decibels::decibelsToGain(0.0f));
     updateEQ(0.0f, 0.0f, 0.0f);
 }
 
