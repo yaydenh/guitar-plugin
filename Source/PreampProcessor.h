@@ -24,9 +24,11 @@ public:
     void setGain(float newGainDb);
 
 private:
-    juce::dsp::IIR::Filter<float> bassFilter;
-    juce::dsp::IIR::Filter<float> midFilter;
-    juce::dsp::IIR::Filter<float> trebleFilter;
+    int numChannels;
+
+    std::vector<juce::dsp::IIR::Filter<float>> bassFilters;
+    std::vector<juce::dsp::IIR::Filter<float>> midFilters;
+    std::vector<juce::dsp::IIR::Filter<float>> trebleFilters;
 
     float sampleRate = 44100.0f;
 
