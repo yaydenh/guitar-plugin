@@ -38,7 +38,6 @@ void PreampProcessor::prepare(juce::dsp::ProcessSpec& spec)
 void PreampProcessor::process(juce::AudioBuffer<float>& buffer)
 {
     smoothedGain.applyGain(buffer, buffer.getNumSamples());
-
     juce::dsp::AudioBlock<float> block(buffer);
     juce::dsp::ProcessContextReplacing<float> context(block);
 
@@ -55,6 +54,33 @@ void PreampProcessor::process(juce::AudioBuffer<float>& buffer)
         midFilters[channel].process(channelContext);
         trebleFilters[channel].process(channelContext);
     }
+
+    // clipping
+    for (int channel = 0; channel < numChannels; channel++)
+    {
+        auto* samples = buffer.getWritePointer(channel);
+        for (int i = 0; i < buffer.getNumSamples(); i++)
+        {
+            if (mode == Mode::Clean)
+            {
+                // no clipping?
+            }
+            if (mode == Mode::Crunch)
+            {
+                samples[i] = juce::jlimit(-0.8f, 0.8f, samples[i] + 0.2f * std::tanh(samples[i]));
+            }
+            if (mode == Mode::Lead)
+            {
+                samples[i] = juce::jlimit(-0.6f, 0.6f, samples[i]);
+            }
+        }
+    }
+    // post EQ?
+    
+    // normalise volume
+    if (mode == Mode::Clean)        buffer.applyGain(juce::Decibels::decibelsToGain(-1.5f));
+    else if (mode == Mode::Crunch)  buffer.applyGain(juce::Decibels::decibelsToGain(-10.0f));
+    else if (mode == Mode::Lead)    buffer.applyGain(juce::Decibels::decibelsToGain(-20.0f));
 }
 
 void PreampProcessor::updateEQ(float bass, float mid, float treble)
@@ -89,11 +115,10 @@ void PreampProcessor::updateEQ(float bass, float mid, float treble)
 void PreampProcessor::setGain(float newGainDb)
 {
     float baseGain = 1.0f;
-    if (mode == Mode::Clean)   baseGain = 1.5f;
-    if (mode == Mode::Crunch)  baseGain = 10.0f;
-    if (mode == Mode::Lead)    baseGain = 50.0f;
-    DBG("HELLO");
-    currentGainDb = newGainDb;
+    if (mode == Mode::Clean)        baseGain = 1.5f;
+    else if (mode == Mode::Crunch)  baseGain = 10.0f;
+    else if (mode == Mode::Lead)    baseGain = 50.0f;
+    currentGainDb = baseGain + newGainDb;
     smoothedGain.setTargetValue(juce::Decibels::decibelsToGain(baseGain + newGainDb));
 }
 

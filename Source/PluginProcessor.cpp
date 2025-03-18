@@ -192,7 +192,7 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     }
     
     // preamp
-    int preampMode = parameters.getParameterAsValue("distortionType").getValue();
+    int preampMode = parameters.getParameterAsValue("preampMode").getValue();
     preamp.setMode(static_cast<PreampProcessor::Mode>(preampMode));
     float preampGain = *parameters.getRawParameterValue("preGain");
     preamp.setGain(preampGain);

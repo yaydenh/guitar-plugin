@@ -27,7 +27,7 @@ public:
     void setMode(Mode newMode);
 
 private:
-    int numChannels;
+    int numChannels = 2;
 
     std::vector<juce::dsp::IIR::Filter<float>> bassFilters;
     std::vector<juce::dsp::IIR::Filter<float>> midFilters;
