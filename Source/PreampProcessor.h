@@ -28,6 +28,7 @@ public:
 
 private:
     int numChannels = 2;
+    std::vector<juce::dsp::IIR::Filter<float>> lowFreqFilters;
 
     std::vector<juce::dsp::IIR::Filter<float>> bassFilters;
     std::vector<juce::dsp::IIR::Filter<float>> midFilters;

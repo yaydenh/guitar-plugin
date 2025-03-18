@@ -24,6 +24,10 @@ void PreampProcessor::prepare(juce::dsp::ProcessSpec& spec)
     numChannels = spec.numChannels;
     for (int i = 0; i < numChannels; i++)
     {
+        lowFreqFilters.push_back(
+            juce::dsp::IIR::Filter<float>(juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, 70.0f, 0.7f))
+        );
+        lowFreqFilters[i].prepare(spec);
         bassFilters.push_back(juce::dsp::IIR::Filter<float>());
         bassFilters[i].prepare(spec);
         midFilters.push_back(juce::dsp::IIR::Filter<float>());
@@ -40,6 +44,14 @@ void PreampProcessor::process(juce::AudioBuffer<float>& buffer)
     smoothedGain.applyGain(buffer, buffer.getNumSamples());
     juce::dsp::AudioBlock<float> block(buffer);
     juce::dsp::ProcessContextReplacing<float> context(block);
+
+    // filter out low freq - prevent muddiness and noise
+    for (int channel = 0; channel < numChannels; channel++)
+    {
+        juce::dsp::AudioBlock<float> channelBlock = block.getSingleChannelBlock(channel);
+        juce::dsp::ProcessContextReplacing<float> channelContext(channelBlock);
+        lowFreqFilters[channel].process(channelContext);
+    }
 
     // pre gain
     gainProcessor.process(context);
