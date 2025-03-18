@@ -15,7 +15,10 @@ GuitarAmpAudioProcessorEditor::GuitarAmpAudioProcessorEditor(GuitarAmpAudioProce
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setSize (400, 600);
+
+    addAndMakeVisible(freq);
+    audioProcessor.setFrequencyVisualiser(&freq);
 
     // distortion type selector
     preampModeSelector.addItem("Clean", 1);
@@ -133,4 +136,5 @@ void GuitarAmpAudioProcessorEditor::resized()
     postTrebleSlider.setBounds(postX + 100, postY, 80, 80);
     postGainSlider.setBounds(postX + 150, postY, 100, 100);
 
+    freq.setBounds(0, 300, 400, 300);
 }

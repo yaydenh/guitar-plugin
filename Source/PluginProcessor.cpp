@@ -216,6 +216,12 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     eq.updateEQ(postBass, postMid, postTreble);
     eq.process(buffer);
 
+    auto* outputSamples = buffer.getWritePointer(0);
+    for (int i = 0; i < buffer.getNumSamples(); i++)
+    {
+        freq->pushSample(outputSamples[i]);
+    }
+
     // post gain
     float postGain = *parameters.getRawParameterValue("postGain");
     gain.setGain(postGain);

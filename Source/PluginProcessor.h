@@ -14,6 +14,7 @@
 #include "GainProcessor.h"
 #include "DistortionProcessor.h"
 #include "EQProcessor.h"
+#include "FrequencyVisualiser.h"
 
 //==============================================================================
 /**
@@ -58,8 +59,12 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    void setFrequencyVisualiser(FrequencyVisualiser* f) { freq = f; };
+
     juce::AudioProcessorValueTreeState parameters;
 private:
+    FrequencyVisualiser* freq = nullptr;
+
     PreampProcessor preamp;
     DistortionProcessor distortion;
     EQProcessor eq;
