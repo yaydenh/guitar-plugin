@@ -75,12 +75,15 @@ void PreampProcessor::process(juce::AudioBuffer<float>& buffer)
             }
         }
     }
+
     // post EQ?
     
     // normalise volume
-    if (mode == Mode::Clean)        buffer.applyGain(juce::Decibels::decibelsToGain(-1.5f));
-    else if (mode == Mode::Crunch)  buffer.applyGain(juce::Decibels::decibelsToGain(-10.0f));
-    else if (mode == Mode::Lead)    buffer.applyGain(juce::Decibels::decibelsToGain(-20.0f));
+    // not really normalising at the moment, but makes the volume not unbearable
+    buffer.applyGain(juce::Decibels::decibelsToGain(-1 * currentGainDb));
+    //if (mode == Mode::Clean)        buffer.applyGain(juce::Decibels::decibelsToGain(-0.0f));
+    //else if (mode == Mode::Crunch)  buffer.applyGain(juce::Decibels::decibelsToGain(-5.0f));
+    //else if (mode == Mode::Lead)    buffer.applyGain(juce::Decibels::decibelsToGain(-10.0f));
 }
 
 void PreampProcessor::updateEQ(float bass, float mid, float treble)
@@ -117,7 +120,7 @@ void PreampProcessor::setGain(float newGainDb)
     float baseGain = 1.0f;
     if (mode == Mode::Clean)        baseGain = 1.5f;
     else if (mode == Mode::Crunch)  baseGain = 10.0f;
-    else if (mode == Mode::Lead)    baseGain = 50.0f;
+    else if (mode == Mode::Lead)    baseGain = 20.0f;
     currentGainDb = baseGain + newGainDb;
     smoothedGain.setTargetValue(juce::Decibels::decibelsToGain(baseGain + newGainDb));
 }
