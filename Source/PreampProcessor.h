@@ -15,6 +15,8 @@
 class PreampProcessor
 {
 public:
+    enum class Mode { Clean, Crunch, Lead };
+
     PreampProcessor();
     ~PreampProcessor() = default;
 
@@ -22,9 +24,10 @@ public:
     void process(juce::AudioBuffer<float>& buffer);
     void updateEQ(float bass, float mid, float treble);
     void setGain(float newGainDb);
+    void setMode(Mode newMode);
 
 private:
-    int numChannels;
+    int numChannels = 2;
 
     std::vector<juce::dsp::IIR::Filter<float>> bassFilters;
     std::vector<juce::dsp::IIR::Filter<float>> midFilters;
@@ -35,4 +38,6 @@ private:
     juce::dsp::Gain<float> gainProcessor;
     juce::SmoothedValue<float, juce::ValueSmoothingTypes::Linear> smoothedGain;
     float currentGainDb = 0.0f;
+
+    Mode mode = Mode::Clean;
 };

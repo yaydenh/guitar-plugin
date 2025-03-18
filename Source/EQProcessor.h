@@ -23,7 +23,7 @@ public:
     void updateEQ(float bass, float mid, float treble);
 
 private:
-    int numChannels;
+    int numChannels = 2;
     
     std::vector<juce::dsp::IIR::Filter<float>> bassFilters;
     std::vector<juce::dsp::IIR::Filter<float>> midFilters;

@@ -34,6 +34,9 @@ private:
 
     juce::AudioProcessorValueTreeState& valueTreeState;
 
+    juce::ComboBox preampModeSelector;
+    std::unique_ptr<ComboBoxAttachment> preampModeAttachment;
+
     juce::Slider preGainSlider;
     std::unique_ptr<SliderAttachment> preGainAttachment;
 
