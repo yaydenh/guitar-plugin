@@ -193,6 +193,8 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
         leftChannel[sample] = rightChannel[sample];
     }
     
+    preVisualiser->pushBuffer(buffer);
+
     // preamp
     int preampMode = parameters.getParameterAsValue("preampMode").getValue();
     preamp.setMode(static_cast<PreampProcessor::Mode>(preampMode));
@@ -221,7 +223,7 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     // noise gate
     float noiseGateThreshold = *parameters.getRawParameterValue("noiseGateThreshold");
     noiseGate.setThreshhold(noiseGateThreshold);
-    noiseGate.process(buffer);
+    //noiseGate.process(buffer);
 
     // freq visualiser
     auto* outputSamples = buffer.getWritePointer(0);
@@ -229,6 +231,8 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     {
         freq->pushSample(outputSamples[i]);
     }
+
+    postVisualiser->pushBuffer(buffer);
 
     // post gain
     float postGain = *parameters.getRawParameterValue("postGain");

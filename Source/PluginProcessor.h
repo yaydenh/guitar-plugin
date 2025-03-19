@@ -61,10 +61,14 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
     void setFrequencyVisualiser(FrequencyVisualiser* f) { freq = f; };
+    void setPreWaveformVisualiser(juce::AudioVisualiserComponent* v) { preVisualiser = v; };
+    void setPostWaveformVisualiser(juce::AudioVisualiserComponent* v) { postVisualiser = v; };
 
     juce::AudioProcessorValueTreeState parameters;
 private:
     FrequencyVisualiser* freq = nullptr;
+    juce::AudioVisualiserComponent* preVisualiser = nullptr;
+    juce::AudioVisualiserComponent* postVisualiser = nullptr;
 
     PreampProcessor preamp;
     DistortionProcessor distortion;

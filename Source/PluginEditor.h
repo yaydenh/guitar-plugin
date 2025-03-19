@@ -34,6 +34,8 @@ private:
     GuitarAmpAudioProcessor& audioProcessor;
 
     FrequencyVisualiser freq;
+    juce::AudioVisualiserComponent preVisualiser = juce::AudioVisualiserComponent(1);
+    juce::AudioVisualiserComponent postVisualiser = juce::AudioVisualiserComponent(1);
 
     juce::AudioProcessorValueTreeState& valueTreeState;
 
