@@ -60,13 +60,15 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
-    void setFrequencyVisualiser(FrequencyVisualiser* f) { freq = f; };
+    void setPreFrequencyVisualiser(FrequencyVisualiser* f) { preFreq = f; };
+    void setPostFrequencyVisualiser(FrequencyVisualiser* f) { postFreq = f; };
     void setPreWaveformVisualiser(juce::AudioVisualiserComponent* v) { preVisualiser = v; };
     void setPostWaveformVisualiser(juce::AudioVisualiserComponent* v) { postVisualiser = v; };
 
     juce::AudioProcessorValueTreeState parameters;
 private:
-    FrequencyVisualiser* freq = nullptr;
+    FrequencyVisualiser* preFreq = nullptr;
+    FrequencyVisualiser* postFreq = nullptr;
     juce::AudioVisualiserComponent* preVisualiser = nullptr;
     juce::AudioVisualiserComponent* postVisualiser = nullptr;
 

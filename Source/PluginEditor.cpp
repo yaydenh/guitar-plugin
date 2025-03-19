@@ -15,10 +15,12 @@ GuitarAmpAudioProcessorEditor::GuitarAmpAudioProcessorEditor(GuitarAmpAudioProce
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 1000);
+    setSize (800, 1000);
 
-    addAndMakeVisible(freq);
-    audioProcessor.setFrequencyVisualiser(&freq);
+    addAndMakeVisible(preFreq);
+    audioProcessor.setPreFrequencyVisualiser(&preFreq);
+    addAndMakeVisible(postFreq);
+    audioProcessor.setPostFrequencyVisualiser(&postFreq);
 
     addAndMakeVisible(preVisualiser);
     audioProcessor.setPreWaveformVisualiser(&preVisualiser);
@@ -148,10 +150,11 @@ void GuitarAmpAudioProcessorEditor::resized()
     postTrebleSlider.setBounds(postX + 100, postY, 80, 80);
     postGainSlider.setBounds(postX + 150, postY, 100, 100);
 
-    freq.setBounds(0, 300, 400, 300);
+    preFreq.setBounds(0, 300, 400, 300);
+    postFreq.setBounds(0, 600, 400, 300);
 
-    preVisualiser.setBounds(0, 600, 400, 200);
-    postVisualiser.setBounds(0, 800, 400, 200);
+    preVisualiser.setBounds(400, 300, 400, 300);
+    postVisualiser.setBounds(400, 600, 400, 300);
 
     noiseGateThresholdSlider.setBounds(300, 0, 80, 80);
 }

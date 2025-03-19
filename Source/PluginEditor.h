@@ -33,7 +33,8 @@ private:
     // access the processor object that created it.
     GuitarAmpAudioProcessor& audioProcessor;
 
-    FrequencyVisualiser freq;
+    FrequencyVisualiser preFreq;
+    FrequencyVisualiser postFreq;
     juce::AudioVisualiserComponent preVisualiser = juce::AudioVisualiserComponent(1);
     juce::AudioVisualiserComponent postVisualiser = juce::AudioVisualiserComponent(1);
 

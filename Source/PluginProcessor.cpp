@@ -191,8 +191,12 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     for (int sample = 0; sample < buffer.getNumSamples(); sample++)
     {
         leftChannel[sample] = rightChannel[sample];
+
+        // pre freq visualiser
+        preFreq->pushSample(rightChannel[sample]);
     }
-    
+
+    // pre waveform visualiser
     preVisualiser->pushBuffer(buffer);
 
     // preamp
@@ -225,13 +229,14 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     noiseGate.setThreshhold(noiseGateThreshold);
     //noiseGate.process(buffer);
 
-    // freq visualiser
+    // post freq visualiser
     auto* outputSamples = buffer.getWritePointer(0);
     for (int i = 0; i < buffer.getNumSamples(); i++)
     {
-        freq->pushSample(outputSamples[i]);
+        postFreq->pushSample(outputSamples[i]);
     }
 
+    // post waveform visualiser
     postVisualiser->pushBuffer(buffer);
 
     // post gain
