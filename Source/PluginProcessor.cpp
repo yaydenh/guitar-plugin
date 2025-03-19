@@ -40,6 +40,7 @@ GuitarAmpAudioProcessor::GuitarAmpAudioProcessor()
             std::make_unique<juce::AudioParameterFloat>("postMidEQ", "postMidEQ", -12.0f, 12.0f, 0.0f),
             std::make_unique<juce::AudioParameterFloat>("postTrebleEQ", "postTrebleEQ", -12.0f, 12.0f, 0.0f),
             std::make_unique<juce::AudioParameterFloat>("postGain", "postGain", -24.0f, 24.0f, 0.0f),
+            std::make_unique<juce::AudioParameterFloat>("noiseGateThreshold", "noiseGateThreshold", -96.0f, 0.0f, -96.0f),
         })
 #endif
 {
@@ -120,6 +121,7 @@ void GuitarAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     preamp.prepare(spec);
     eq.prepare(spec);
     gain.prepare(spec);
+    noiseGate.prepare(spec);
 }
 
 void GuitarAmpAudioProcessor::releaseResources()
@@ -216,6 +218,12 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     eq.updateEQ(postBass, postMid, postTreble);
     eq.process(buffer);
 
+    // noise gate
+    float noiseGateThreshold = *parameters.getRawParameterValue("noiseGateThreshold");
+    noiseGate.setThreshhold(noiseGateThreshold);
+    noiseGate.process(buffer);
+
+    // freq visualiser
     auto* outputSamples = buffer.getWritePointer(0);
     for (int i = 0; i < buffer.getNumSamples(); i++)
     {
@@ -226,12 +234,6 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     float postGain = *parameters.getRawParameterValue("postGain");
     gain.setGain(postGain);
     gain.process(buffer);
-
-    //std::ofstream log("log.txt");
-    //log << distortionChoice << std::endl;
-    //log << (int)(static_cast<DistortionProcessor::Type>(distortionChoice)) << std::endl;
-    //log.close();
-
 }
 
 //==============================================================================

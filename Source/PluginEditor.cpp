@@ -94,6 +94,13 @@ GuitarAmpAudioProcessorEditor::GuitarAmpAudioProcessorEditor(GuitarAmpAudioProce
     postGainSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
     addAndMakeVisible(postGainSlider);
     postGainAttachment.reset(new SliderAttachment(valueTreeState, "postGain", postGainSlider));
+
+    // noise gate threshold knob
+    noiseGateThresholdSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    noiseGateThresholdSlider.setRange(-96.0f, 0.0f, 0.1f);
+    noiseGateThresholdSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
+    addAndMakeVisible(noiseGateThresholdSlider);
+    noiseGateThresholdAttachment.reset(new SliderAttachment(valueTreeState, "noiseGateThreshold", noiseGateThresholdSlider));
 }
 
 GuitarAmpAudioProcessorEditor::~GuitarAmpAudioProcessorEditor()
@@ -137,4 +144,6 @@ void GuitarAmpAudioProcessorEditor::resized()
     postGainSlider.setBounds(postX + 150, postY, 100, 100);
 
     freq.setBounds(0, 300, 400, 300);
+
+    noiseGateThresholdSlider.setBounds(300, 0, 80, 80);
 }

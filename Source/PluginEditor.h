@@ -65,5 +65,8 @@ private:
     juce::Slider postGainSlider;
     std::unique_ptr<SliderAttachment> postGainAttachment;
 
+    juce::Slider noiseGateThresholdSlider;
+    std::unique_ptr<SliderAttachment> noiseGateThresholdAttachment;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GuitarAmpAudioProcessorEditor)
 };

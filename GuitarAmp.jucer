@@ -26,11 +26,13 @@
       <FILE id="iCCPUg" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="BB0DUJ" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="tibNzz" name="FrequencyVisualiser.cpp" compile="1" resource="0"
+            file="Source/FrequencyVisualiser.cpp"/>
+      <FILE id="GKLOQ8" name="NoiseGate.cpp" compile="1" resource="0" file="Source/NoiseGate.cpp"/>
+      <FILE id="rkFLgK" name="NoiseGate.h" compile="0" resource="0" file="Source/NoiseGate.h"/>
+      <FILE id="rJvv1E" name="FrequencyVisualiser.h" compile="0" resource="0"
+            file="Source/FrequencyVisualiser.h"/>
     </GROUP>
-    <FILE id="tibNzz" name="FrequencyVisualiser.cpp" compile="1" resource="0"
-          file="Source/FrequencyVisualiser.cpp"/>
-    <FILE id="rJvv1E" name="FrequencyVisualiser.h" compile="0" resource="0"
-          file="Source/FrequencyVisualiser.h"/>
   </MAINGROUP>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>

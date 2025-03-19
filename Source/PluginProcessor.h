@@ -15,6 +15,7 @@
 #include "DistortionProcessor.h"
 #include "EQProcessor.h"
 #include "FrequencyVisualiser.h"
+#include "NoiseGate.h"
 
 //==============================================================================
 /**
@@ -69,7 +70,7 @@ private:
     DistortionProcessor distortion;
     EQProcessor eq;
     GainProcessor gain;
-
+    NoiseGate noiseGate;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GuitarAmpAudioProcessor)
