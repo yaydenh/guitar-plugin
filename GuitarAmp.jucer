@@ -16,6 +16,11 @@
         <FILE id="RHSzjX" name="PreampProcessor.h" compile="0" resource="0"
               file="Source/PreampProcessor.h"/>
         <FILE id="DwLfX0" name="EQProcessor.cpp" compile="1" resource="0" file="Source/EQProcessor.cpp"/>
+        <FILE id="GKLOQ8" name="NoiseGate.cpp" compile="1" resource="0" file="Source/NoiseGate.cpp"/>
+        <FILE id="rkFLgK" name="NoiseGate.h" compile="0" resource="0" file="Source/NoiseGate.h"/>
+        <FILE id="wsSCbY" name="CabSimulator.cpp" compile="1" resource="0"
+              file="Source/CabSimulator.cpp"/>
+        <FILE id="uEoVtG" name="CabSimulator.h" compile="0" resource="0" file="Source/CabSimulator.h"/>
         <FILE id="HirxE8" name="EQProcessor.h" compile="0" resource="0" file="Source/EQProcessor.h"/>
         <FILE id="GYrgvT" name="GainProcessor.h" compile="0" resource="0" file="Source/GainProcessor.h"/>
       </GROUP>
@@ -28,8 +33,6 @@
       <FILE id="BB0DUJ" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
       <FILE id="tibNzz" name="FrequencyVisualiser.cpp" compile="1" resource="0"
             file="Source/FrequencyVisualiser.cpp"/>
-      <FILE id="GKLOQ8" name="NoiseGate.cpp" compile="1" resource="0" file="Source/NoiseGate.cpp"/>
-      <FILE id="rkFLgK" name="NoiseGate.h" compile="0" resource="0" file="Source/NoiseGate.h"/>
       <FILE id="rJvv1E" name="FrequencyVisualiser.h" compile="0" resource="0"
             file="Source/FrequencyVisualiser.h"/>
     </GROUP>

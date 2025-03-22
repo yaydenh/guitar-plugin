@@ -122,6 +122,7 @@ void GuitarAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     eq.prepare(spec);
     gain.prepare(spec);
     noiseGate.prepare(spec);
+    cabSim.prepare(spec);
 }
 
 void GuitarAmpAudioProcessor::releaseResources()
@@ -216,6 +217,11 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     int distortionChoice = parameters.getParameterAsValue("distortionType").getValue();
     distortion.setType(static_cast<DistortionProcessor::Type>(distortionChoice));
     distortion.process(buffer);
+
+    // cab sim
+    juce::dsp::AudioBlock<float> block(buffer);
+    juce::dsp::ProcessContextReplacing<float> context(block);
+    cabSim.process(context);
 
     // post EQ
     float postBass = *parameters.getRawParameterValue("postBassEQ");

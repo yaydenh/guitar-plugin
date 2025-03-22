@@ -16,6 +16,7 @@
 #include "EQProcessor.h"
 #include "FrequencyVisualiser.h"
 #include "NoiseGate.h"
+#include "CabSimulator.h"
 
 //==============================================================================
 /**
@@ -77,6 +78,7 @@ private:
     EQProcessor eq;
     GainProcessor gain;
     NoiseGate noiseGate;
+    CabSimulator cabSim;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GuitarAmpAudioProcessor)
