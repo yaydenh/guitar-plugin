@@ -79,11 +79,11 @@ void PreampProcessor::process(juce::AudioBuffer<float>& buffer)
             }
             if (mode == Mode::Crunch)
             {
-                samples[i] = juce::jlimit(-0.8f, 0.8f, samples[i] + 0.2f * std::tanh(samples[i]));
+                samples[i] = juce::jlimit(-1.0f, 1.0f, samples[i] - 0.3f * std::powf(samples[i], 3));
             }
             if (mode == Mode::Lead)
             {
-                samples[i] = juce::jlimit(-0.6f, 0.6f, samples[i]);
+                samples[i] = juce::jlimit(-0.8f, 0.8f, samples[i]);
             }
         }
     }
@@ -92,10 +92,7 @@ void PreampProcessor::process(juce::AudioBuffer<float>& buffer)
     
     // normalise volume
     // not really normalising at the moment, but makes the volume not unbearable
-    buffer.applyGain(juce::Decibels::decibelsToGain(-1 * currentGainDb));
-    //if (mode == Mode::Clean)        buffer.applyGain(juce::Decibels::decibelsToGain(-0.0f));
-    //else if (mode == Mode::Crunch)  buffer.applyGain(juce::Decibels::decibelsToGain(-5.0f));
-    //else if (mode == Mode::Lead)    buffer.applyGain(juce::Decibels::decibelsToGain(-10.0f));
+    buffer.applyGain(1 / sqrt(currentGainDb));
 }
 
 void PreampProcessor::updateEQ(float bass, float mid, float treble)
