@@ -24,10 +24,12 @@ public:
 private:
     double sampleRate = 0;
 
-    float thresholdDb = 0.0f;
-    float hysteresisDb = 10.0f;
+    float envelope = 0.0f;
 
-    float attackMs = 50.0f;
+    float thresholdDb = 0.0f;
+    float hysteresisDb = 5.0f;
+
+    float attackMs = 5.0f;
     float attackCoeff = 0.0f;
     float releaseMs = 150.0f;
     float releaseCoeff = 0.0f;

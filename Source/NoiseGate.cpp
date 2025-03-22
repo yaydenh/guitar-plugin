@@ -30,7 +30,6 @@ void NoiseGate::process(juce::AudioBuffer<float>& buffer)
     for (int channel = 0; channel < buffer.getNumChannels(); channel++)
     {
         auto* samples = buffer.getWritePointer(channel);
-        float envelope = 0.0f;
 
         for (int i = 0; i < buffer.getNumSamples(); i++)
         {
@@ -48,6 +47,7 @@ void NoiseGate::process(juce::AudioBuffer<float>& buffer)
                 // envelope moves to 0 in exponential decay
                 envelope = envelope * releaseCoeff;
 
+            //DBG(envelope);
             samples[i] *= envelope;
         }
     }
