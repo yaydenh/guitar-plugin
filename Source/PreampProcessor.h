@@ -26,11 +26,12 @@ public:
     void setGain(float newGainDb);
     void setMode(Mode newMode);
 
+    bool test = false;
 private:
     int numChannels = 2;
     std::vector<juce::dsp::IIR::Filter<float>> lowFreqFilters;
-    std::vector<juce::dsp::IIR::Filter<float>> midRangeBoost;
-
+    std::vector<juce::dsp::IIR::Filter<float>> boost800Hz;
+    std::vector<juce::dsp::IIR::Filter<float>> boost5000Hz;
 
     std::vector<juce::dsp::IIR::Filter<float>> bassFilters;
     std::vector<juce::dsp::IIR::Filter<float>> midFilters;

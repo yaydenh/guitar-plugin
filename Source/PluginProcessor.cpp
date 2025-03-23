@@ -198,10 +198,13 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
         preFreq->pushSample(rightChannel[sample]);
     }
 
+    bool test = parameters.getParameterAsValue("test").getValue();
+
     // pre waveform visualiser
     preVisualiser->pushBuffer(buffer);
 
     // preamp
+    preamp.test = test;
     int preampMode = parameters.getParameterAsValue("preampMode").getValue();
     preamp.setMode(static_cast<PreampProcessor::Mode>(preampMode));
     float preampGain = *parameters.getRawParameterValue("preGain");

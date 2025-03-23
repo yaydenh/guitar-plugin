@@ -29,10 +29,15 @@ void PreampProcessor::prepare(juce::dsp::ProcessSpec& spec)
         );
         lowFreqFilters[i].prepare(spec);
 
-        midRangeBoost.push_back(
+        boost800Hz.push_back(
             juce::dsp::IIR::Filter<float>(juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, 800.0f, 1.5f, juce::Decibels::decibelsToGain(6.0f)))
         );
-        midRangeBoost[i].prepare(spec);
+        boost800Hz[i].prepare(spec);
+
+        boost5000Hz.push_back(
+            juce::dsp::IIR::Filter<float>(juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, 5000.0f, 5.0f, juce::Decibels::decibelsToGain(6.0f)))
+        );
+        boost5000Hz[i].prepare(spec);
 
         bassFilters.push_back(juce::dsp::IIR::Filter<float>());
         bassFilters[i].prepare(spec);
@@ -101,7 +106,8 @@ void PreampProcessor::process(juce::AudioBuffer<float>& buffer)
     {
         juce::dsp::AudioBlock<float> channelBlock = block.getSingleChannelBlock(channel);
         juce::dsp::ProcessContextReplacing<float> channelContext(channelBlock);
-        midRangeBoost[channel].process(channelContext);
+        boost800Hz[channel].process(channelContext);
+        if (test) boost5000Hz[channel].process(channelContext);
     }
 
     // normalise volume
