@@ -28,6 +28,12 @@ void PreampProcessor::prepare(juce::dsp::ProcessSpec& spec)
             juce::dsp::IIR::Filter<float>(juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, 70.0f, 0.7f))
         );
         lowFreqFilters[i].prepare(spec);
+
+        midRangeBoost.push_back(
+            juce::dsp::IIR::Filter<float>(juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, 800.0f, 1.5f, juce::Decibels::decibelsToGain(-12.0f)))
+        );
+        midRangeBoost[i].prepare(spec);
+
         bassFilters.push_back(juce::dsp::IIR::Filter<float>());
         bassFilters[i].prepare(spec);
         midFilters.push_back(juce::dsp::IIR::Filter<float>());
@@ -90,6 +96,14 @@ void PreampProcessor::process(juce::AudioBuffer<float>& buffer)
 
     // post EQ?
     
+    // boost 800hz
+    for (int channel = 0; channel < numChannels; channel++)
+    {
+        juce::dsp::AudioBlock<float> channelBlock = block.getSingleChannelBlock(channel);
+        juce::dsp::ProcessContextReplacing<float> channelContext(channelBlock);
+        midRangeBoost[channel].process(channelContext);
+    }
+
     // normalise volume
     // not really normalising at the moment, but makes the volume not unbearable
     buffer.applyGain(1 / sqrt(currentGainDb));
