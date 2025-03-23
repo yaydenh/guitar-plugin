@@ -14,6 +14,7 @@
 
 typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 typedef juce::AudioProcessorValueTreeState::ComboBoxAttachment ComboBoxAttachment;
+typedef juce::AudioProcessorValueTreeState::ButtonAttachment ButtonAttachment;
 
 //==============================================================================
 /**
@@ -32,6 +33,10 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     GuitarAmpAudioProcessor& audioProcessor;
+
+    juce::ToggleButton testToggle;
+    std::unique_ptr<ButtonAttachment> testToggleAttachment;
+    juce::Label testLabel;
 
     FrequencyVisualiser preFreq;
     FrequencyVisualiser postFreq;

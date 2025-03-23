@@ -25,6 +25,7 @@ GuitarAmpAudioProcessor::GuitarAmpAudioProcessor()
     ),
     parameters(*this, nullptr, "parameters",
         {
+            std::make_unique<juce::AudioParameterBool>("test", "test", false),
             std::make_unique<juce::AudioParameterChoice>("preampMode", "preampMode",
                 juce::StringArray { "Clean", "Crunch", "Lead" }, 0
             ),

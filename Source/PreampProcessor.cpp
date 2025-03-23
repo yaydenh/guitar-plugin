@@ -30,7 +30,7 @@ void PreampProcessor::prepare(juce::dsp::ProcessSpec& spec)
         lowFreqFilters[i].prepare(spec);
 
         midRangeBoost.push_back(
-            juce::dsp::IIR::Filter<float>(juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, 800.0f, 1.5f, juce::Decibels::decibelsToGain(-12.0f)))
+            juce::dsp::IIR::Filter<float>(juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, 800.0f, 1.5f, juce::Decibels::decibelsToGain(6.0f)))
         );
         midRangeBoost[i].prepare(spec);
 

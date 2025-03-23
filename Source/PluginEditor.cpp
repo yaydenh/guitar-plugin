@@ -17,6 +17,13 @@ GuitarAmpAudioProcessorEditor::GuitarAmpAudioProcessorEditor(GuitarAmpAudioProce
     // editor's size to whatever you need it to be.
     setSize (800, 1000);
 
+    // toggle button for testing
+    addAndMakeVisible(testToggle);
+    testToggleAttachment.reset(new ButtonAttachment(valueTreeState, "test", testToggle));
+    testLabel.setText("Test", juce::NotificationType::dontSendNotification);
+    testLabel.attachToComponent(&testToggle, false);
+
+    // visualisers
     addAndMakeVisible(preFreq);
     audioProcessor.setPreFrequencyVisualiser(&preFreq);
     addAndMakeVisible(postFreq);
@@ -129,6 +136,10 @@ void GuitarAmpAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+
+    // test button
+    testToggle.setBounds(400, 100, 30, 30);
+
     auto sliderLeft = 100;
 
     preampModeSelector.setBounds(sliderLeft, 20, 150, 30);
