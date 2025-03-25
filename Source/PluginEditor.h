@@ -30,6 +30,8 @@ public:
     void resized() override;
 
 private:
+    void createKnob(juce::Slider& knob, double min, double max, double interval);
+
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     GuitarAmpAudioProcessor& audioProcessor;

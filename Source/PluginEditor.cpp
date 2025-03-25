@@ -42,36 +42,19 @@ GuitarAmpAudioProcessorEditor::GuitarAmpAudioProcessorEditor(GuitarAmpAudioProce
     preampModeAttachment.reset(new ComboBoxAttachment(valueTreeState, "preampMode", preampModeSelector));
 
     // pre gain knob
-    preGainSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    preGainSlider.setRange(-24.0f, 24.0f, 0.1f);
-    preGainSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
-    addAndMakeVisible(preGainSlider);
+    createKnob(preGainSlider, -24.0f, 24.0f, 0.1f);
     preGainAttachment.reset(new SliderAttachment(valueTreeState, "preGain", preGainSlider));
 
     // pre eq knobs
-    preBassSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    preBassSlider.setRange(-12.0f, 12.0f, 0.1f);
-    preBassSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
-    addAndMakeVisible(preBassSlider);
+    createKnob(preBassSlider, -12.0f, 12.0f, 0.1f);
     preBassAttachment.reset(new SliderAttachment(valueTreeState, "preBassEQ", preBassSlider));
-
-    preMidSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    preMidSlider.setRange(-12.0f, 12.0f, 0.1f);
-    preMidSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
-    addAndMakeVisible(preMidSlider);
+    createKnob(preMidSlider, -12.0f, 12.0f, 0.1f);
     preMidAttachment.reset(new SliderAttachment(valueTreeState, "preMidEQ", preMidSlider));
-
-    preTrebleSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    preTrebleSlider.setRange(-12.0f, 12.0f, 0.1f);
-    preTrebleSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
-    addAndMakeVisible(preTrebleSlider);
+    createKnob(preTrebleSlider, -12.0f, 12.0f, 0.1f);
     preTrebleAttachment.reset(new SliderAttachment(valueTreeState, "preTrebleEQ", preTrebleSlider));
 
     // distortion drive knob
-    driveSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    driveSlider.setRange(1.0f, 10.0f, 0.1f);
-    driveSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
-    addAndMakeVisible(driveSlider);
+    createKnob(driveSlider, 1.0f, 10.0f, 0.1f);
     driveAttachment.reset(new SliderAttachment(valueTreeState, "drive", driveSlider));
 
     // distortion type selector
@@ -84,36 +67,19 @@ GuitarAmpAudioProcessorEditor::GuitarAmpAudioProcessorEditor(GuitarAmpAudioProce
     distortionTypeAttachment.reset(new ComboBoxAttachment(valueTreeState, "distortionType", distortionTypeSelector));
 
     // post eq knobs
-    postBassSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    postBassSlider.setRange(-12.0f, 12.0f, 0.1f);
-    postBassSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
-    addAndMakeVisible(postBassSlider);
+    createKnob(postBassSlider, -12.0f, 12.0f, 0.1f);
     postBassAttachment.reset(new SliderAttachment(valueTreeState, "postBassEQ", postBassSlider));
-
-    postMidSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    postMidSlider.setRange(-12.0f, 12.0f, 0.1f);
-    postMidSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
-    addAndMakeVisible(postMidSlider);
+    createKnob(postMidSlider, -12.0f, 12.0f, 0.1f);
     postMidAttachment.reset(new SliderAttachment(valueTreeState, "postMidEQ", postMidSlider));
-
-    postTrebleSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    postTrebleSlider.setRange(-12.0f, 12.0f, 0.1f);
-    postTrebleSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
-    addAndMakeVisible(postTrebleSlider);
+    createKnob(postTrebleSlider, -12.0f, 12.0f, 0.1f);
     postTrebleAttachment.reset(new SliderAttachment(valueTreeState, "postTrebleEQ", postTrebleSlider));
 
     // post gain knob
-    postGainSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    postGainSlider.setRange(-24.0f, 24.0f, 0.1f);
-    postGainSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
-    addAndMakeVisible(postGainSlider);
+    createKnob(postGainSlider, -24.0f, 24.0f, 0.1f);
     postGainAttachment.reset(new SliderAttachment(valueTreeState, "postGain", postGainSlider));
 
     // noise gate threshold knob
-    noiseGateThresholdSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    noiseGateThresholdSlider.setRange(-96.0f, 0.0f, 0.1f);
-    noiseGateThresholdSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
-    addAndMakeVisible(noiseGateThresholdSlider);
+    createKnob(noiseGateThresholdSlider, -96.0f, 0.0f, 0.1f);
     noiseGateThresholdAttachment.reset(new SliderAttachment(valueTreeState, "noiseGateThreshold", noiseGateThresholdSlider));
 }
 
@@ -168,4 +134,12 @@ void GuitarAmpAudioProcessorEditor::resized()
     postVisualiser.setBounds(400, 600, 400, 300);
 
     noiseGateThresholdSlider.setBounds(300, 0, 80, 80);
+}
+
+void GuitarAmpAudioProcessorEditor::createKnob(juce::Slider& knob, double min, double max, double interval)
+{
+    knob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    knob.setRange(-min, max, interval);
+    knob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
+    addAndMakeVisible(knob);
 }
