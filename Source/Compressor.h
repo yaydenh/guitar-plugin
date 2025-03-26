@@ -15,19 +15,22 @@
 class Compressor
 {
 public:
-    Compressor();
+    Compressor(float thresholdDb, float attackMs, float releaseMs, float kneeWidth, float ratio, float makeUpGain);
 
     void prepare(juce::dsp::ProcessSpec& spec);
     void process(juce::AudioBuffer<float>& buffer);
 
 private:
     float thresholdDb;      // level above which compression starts
-    float attack;           // how fast compression starts
-    float release;          // how fast compression stops
+    float attackMs;           // how fast compression starts
+    float attack = 0.0f;
+    float releaseMs;          // how fast compression stops
+    float release = 0.0f;
     float kneeWidth;        // idk
     float ratio;            // i/o ratios for input above threshold i.e. amount of compression
     float makeUpGain;       // increase gain to match input after compressing
-
+    
+    // to add:
     // hold
     // side chain filtering
     // look ahead

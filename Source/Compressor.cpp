@@ -12,21 +12,21 @@
 
 // https://eecs.qmul.ac.uk/~josh/documents/2012/GiannoulisMassbergReiss-dynamicrangecompression-JAES2012.pdf
 
+Compressor::Compressor(float thresholdDb, float attackMs, float releaseMs, float kneeWidth, float ratio, float makeUpGain)
+    :   thresholdDb(thresholdDb),
+        attackMs(attackMs),
+        releaseMs(releaseMs),
+        kneeWidth(kneeWidth),
+        ratio(ratio),
+        makeUpGain(makeUpGain)
+{
+}
 
-// Gain Stage
-// y =  x + c + M
-// where y is output, x is input, c is control, M is makeup (all in decibels)
-
-// Gain Computer - generates control c
-// Compression Ratio:
-// R = (xG - T) / (yG - T) for xG > T
-// where T is threshold
-// In words, this is the recipricol of the slope of input above the threshold
-// yG = xG                  if xG <= T   (output is same as input)
-//      T + (xG - T)/R      if xG > T    
-// Knee Stuff Too
-
-// Level Detection
+void Compressor::prepare(juce::dsp::ProcessSpec& spec)
+{
+    attack = std::exp(-1 / (attackMs * 1000 * spec.sampleRate));
+    release = std::exp(-1 / (releaseMs * 1000 * spec.sampleRate));
+}
 
 void Compressor::process(juce::AudioBuffer<float>& buffer)
 {
@@ -36,14 +36,31 @@ void Compressor::process(juce::AudioBuffer<float>& buffer)
         float yL = 0, y1 = 0;
         for (int i = 0; i < buffer.getNumSamples(); i++)
         {
-            float xG = 20 * std::log10f(std::abs(samples[i]));
+            // convert sample to decibel
+            float xG = 20 * std::log10f(std::abs(samples[i]) + 1e-6f);
+
+            // Compression Ratio:
+            // R = (xG - T) / (yG - T) for xG > T
+            // where T is threshold
+            // In words, this is the recipricol of the slope of input above the threshold
+            // yG = xG                  if xG <= T   (output is same as input)
+            //      T + (xG - T)/R      if xG > T 
             float yG = xG <= thresholdDb ? xG : thresholdDb + (xG - thresholdDb) / ratio;
 
+            // xL = how much was compressed
             float xL = xG - yG;
+
+            // Peak detection for smoothing:
+
+            // tracks peaks of signal
+            // if new peak xL, set y1 to xL (fast attack)
+            // else if xL is smaller, decay based on release factor (slow release)
             y1 = std::max(xL, release * y1 + (1 - release) * xL);
+
+            // smoothing with attack coefficient - how aggressive compressor is applied
             yL = attack * yL + (1 - attack) * y1;
 
-            samples[i] += makeUpGain - yL;
+            samples[i] *= juce::Decibels::decibelsToGain(makeUpGain - yL);
 
         }
     }
