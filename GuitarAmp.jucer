@@ -4,19 +4,19 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
   <MAINGROUP id="n1ZJnT" name="GuitarAmp">
     <GROUP id="{57F8A268-1A21-55E5-C00E-FCB1E05162E8}" name="Source">
-      <FILE id="RRkbxl" name="Chorus.cpp" compile="1" resource="0" file="Source/Chorus.cpp"/>
-      <FILE id="X7IyP3" name="Chorus.h" compile="0" resource="0" file="Source/Chorus.h"/>
-      <FILE id="hLVqvN" name="Delay.cpp" compile="1" resource="0" file="Source/Delay.cpp"/>
-      <FILE id="EGIKyO" name="Delay.h" compile="0" resource="0" file="Source/Delay.h"/>
-      <FILE id="gjQCa8" name="Overdrive.cpp" compile="1" resource="0" file="Source/Overdrive.cpp"/>
-      <FILE id="ZBXLPZ" name="Overdrive.h" compile="0" resource="0" file="Source/Overdrive.h"/>
-      <FILE id="nIguoA" name="Reverb.cpp" compile="1" resource="0" file="Source/Reverb.cpp"/>
-      <FILE id="e9P30x" name="Reverb.h" compile="0" resource="0" file="Source/Reverb.h"/>
       <GROUP id="{E3F64B15-85B4-912D-A842-9002542D4589}" name="Processors">
         <FILE id="KSkGr4" name="DistortionProcessor.cpp" compile="1" resource="0"
               file="Source/DistortionProcessor.cpp"/>
         <FILE id="hmiYon" name="DistortionProcessor.h" compile="0" resource="0"
               file="Source/DistortionProcessor.h"/>
+        <FILE id="RRkbxl" name="Chorus.cpp" compile="1" resource="0" file="Source/Chorus.cpp"/>
+        <FILE id="X7IyP3" name="Chorus.h" compile="0" resource="0" file="Source/Chorus.h"/>
+        <FILE id="hLVqvN" name="Delay.cpp" compile="1" resource="0" file="Source/Delay.cpp"/>
+        <FILE id="EGIKyO" name="Delay.h" compile="0" resource="0" file="Source/Delay.h"/>
+        <FILE id="gjQCa8" name="Overdrive.cpp" compile="1" resource="0" file="Source/Overdrive.cpp"/>
+        <FILE id="ZBXLPZ" name="Overdrive.h" compile="0" resource="0" file="Source/Overdrive.h"/>
+        <FILE id="nIguoA" name="Reverb.cpp" compile="1" resource="0" file="Source/Reverb.cpp"/>
+        <FILE id="e9P30x" name="Reverb.h" compile="0" resource="0" file="Source/Reverb.h"/>
         <FILE id="cymMwB" name="GainProcessor.cpp" compile="1" resource="0"
               file="Source/GainProcessor.cpp"/>
         <FILE id="owW4Ef" name="PreampProcessor.cpp" compile="1" resource="0"
@@ -29,6 +29,8 @@
         <FILE id="wsSCbY" name="CabSimulator.cpp" compile="1" resource="0"
               file="Source/CabSimulator.cpp"/>
         <FILE id="uEoVtG" name="CabSimulator.h" compile="0" resource="0" file="Source/CabSimulator.h"/>
+        <FILE id="na3lEM" name="Compressor.cpp" compile="1" resource="0" file="Source/Compressor.cpp"/>
+        <FILE id="kP6yaC" name="Compressor.h" compile="0" resource="0" file="Source/Compressor.h"/>
         <FILE id="HirxE8" name="EQProcessor.h" compile="0" resource="0" file="Source/EQProcessor.h"/>
         <FILE id="GYrgvT" name="GainProcessor.h" compile="0" resource="0" file="Source/GainProcessor.h"/>
       </GROUP>
@@ -44,8 +46,6 @@
       <FILE id="rJvv1E" name="FrequencyVisualiser.h" compile="0" resource="0"
             file="Source/FrequencyVisualiser.h"/>
     </GROUP>
-    <FILE id="na3lEM" name="Compressor.cpp" compile="1" resource="0" file="Source/Compressor.cpp"/>
-    <FILE id="kP6yaC" name="Compressor.h" compile="0" resource="0" file="Source/Compressor.h"/>
   </MAINGROUP>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>

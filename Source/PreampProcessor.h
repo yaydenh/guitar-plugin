@@ -11,6 +11,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include <../Source/Compressor.h>
 
 class PreampProcessor
 {
@@ -42,6 +43,8 @@ private:
     juce::dsp::Gain<float> gainProcessor;
     juce::SmoothedValue<float, juce::ValueSmoothingTypes::Linear> smoothedGain;
     float currentGainDb = 0.0f;
+
+    Compressor compressor;
 
     Mode mode = Mode::Clean;
 };

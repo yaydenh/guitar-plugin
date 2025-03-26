@@ -14,11 +14,13 @@ PreampProcessor::PreampProcessor()
 {
     gainProcessor.setGainDecibels(currentGainDb);
     smoothedGain.reset(44100, 0.05f);
+    compressor = Compressor(-20, 5.0f, 100.0f, 0.0f, 4.0f, 10.0f);
 }
 
 void PreampProcessor::prepare(juce::dsp::ProcessSpec& spec)
 {
     gainProcessor.prepare(spec);
+    compressor.prepare(spec);
     smoothedGain.reset(spec.sampleRate, 0.05f);
     sampleRate = spec.sampleRate;
     numChannels = spec.numChannels;
@@ -64,6 +66,9 @@ void PreampProcessor::process(juce::AudioBuffer<float>& buffer)
         lowFreqFilters[channel].process(channelContext);
     }
 
+    // pre compressor - good for quiet sounds (tapping, note sustain)
+    if (test) compressor.process(buffer);
+
     // pre gain
     gainProcessor.process(context);
 
@@ -107,12 +112,12 @@ void PreampProcessor::process(juce::AudioBuffer<float>& buffer)
         juce::dsp::AudioBlock<float> channelBlock = block.getSingleChannelBlock(channel);
         juce::dsp::ProcessContextReplacing<float> channelContext(channelBlock);
         boost800Hz[channel].process(channelContext);
-        if (test) boost5000Hz[channel].process(channelContext);
+        boost5000Hz[channel].process(channelContext);
     }
 
     // normalise volume
     // not really normalising at the moment, but makes the volume not unbearable
-    buffer.applyGain(1 / sqrt(currentGainDb));
+    if (currentGainDb >= 0) buffer.applyGain(1 / sqrt(currentGainDb));
 }
 
 void PreampProcessor::updateEQ(float bass, float mid, float treble)
@@ -149,7 +154,7 @@ void PreampProcessor::setGain(float newGainDb)
     float baseGain = 1.0f;
     if (mode == Mode::Clean)        baseGain = 1.5f;
     else if (mode == Mode::Crunch)  baseGain = 10.0f;
-    else if (mode == Mode::Lead)    baseGain = 20.0f;
+    else if (mode == Mode::Lead)    baseGain = 30.0f;
     currentGainDb = baseGain + newGainDb;
     smoothedGain.setTargetValue(juce::Decibels::decibelsToGain(baseGain + newGainDb));
 }
