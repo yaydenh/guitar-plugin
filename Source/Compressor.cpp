@@ -43,9 +43,18 @@ void Compressor::process(juce::AudioBuffer<float>& buffer)
             // R = (xG - T) / (yG - T) for xG > T
             // where T is threshold
             // In words, this is the recipricol of the slope of input above the threshold
-            // yG = xG                  if xG <= T   (output is same as input)
-            //      T + (xG - T)/R      if xG > T 
-            float yG = xG <= thresholdDb ? xG : thresholdDb + (xG - thresholdDb) / ratio;
+            // yG = xG                              if xG - T < W/2     (output is same as input)
+            //      xG + (1/R-1)(xG-T+W/2)^2 / 2W   if |xG - T| <= W/2  (smoothing within knee width of threshold)
+            //      T + (xG - T)/R                  if xG - T > W/2     (compressed)
+            float yG = xG;
+            if (2 * std::abs(xG - thresholdDb) <= kneeWidth)
+            {
+                yG = xG + (1 / ratio - 1) * std::powf(xG - thresholdDb + kneeWidth / 2, 2) / (2 * kneeWidth);
+            }
+            else if (2 * (xG - thresholdDb) > kneeWidth)
+            {
+                yG = thresholdDb + (xG - thresholdDb) / ratio;
+            }
 
             // xL = how much was compressed
             float xL = xG - yG;

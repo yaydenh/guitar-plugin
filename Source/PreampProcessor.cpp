@@ -14,7 +14,7 @@ PreampProcessor::PreampProcessor()
 {
     gainProcessor.setGainDecibels(currentGainDb);
     smoothedGain.reset(44100, 0.05f);
-    compressor = Compressor(-20, 5.0f, 100.0f, 0.0f, 4.0f, 10.0f);
+    compressor = Compressor(-20, 5.0f, 100.0f, 6.0f, 4.0f, 10.0f);
 }
 
 void PreampProcessor::prepare(juce::dsp::ProcessSpec& spec)

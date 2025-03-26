@@ -27,7 +27,7 @@ private:
     float attack      =   0.0f;
     float releaseMs   = 100.0f; // how fast compression stops
     float release     =   0.0f;
-    float kneeWidth   =   6.0f; // idk
+    float kneeWidth   =   6.0f; // how smooth the compression is around the threshold
     float ratio       =   4.0f; // i/o ratios for input above threshold i.e. amount of compression
     float makeUpGain  =   0.0f; // increase gain to match input after compressing
     
