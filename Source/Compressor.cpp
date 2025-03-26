@@ -24,8 +24,8 @@ Compressor::Compressor(float thresholdDb, float attackMs, float releaseMs, float
 
 void Compressor::prepare(juce::dsp::ProcessSpec& spec)
 {
-    attack = std::exp(-1 / (attackMs * 1000 * spec.sampleRate));
-    release = std::exp(-1 / (releaseMs * 1000 * spec.sampleRate));
+    attack = std::exp(-1 / (attackMs * 0.001f * spec.sampleRate));
+    release = std::exp(-1 / (releaseMs * 0.001f * spec.sampleRate));
 }
 
 void Compressor::process(juce::AudioBuffer<float>& buffer)
