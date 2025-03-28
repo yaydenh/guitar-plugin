@@ -30,7 +30,7 @@ public:
     void resized() override;
 
 private:
-    void createKnob(juce::Slider& knob, double min, double max, double interval);
+    void createKnob(juce::Slider& knob, juce::Label& label, double min, double max, double interval, std::string text);
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
@@ -49,34 +49,45 @@ private:
 
     juce::ComboBox preampModeSelector;
     std::unique_ptr<ComboBoxAttachment> preampModeAttachment;
+    juce::Label preampModeLabel;
 
     juce::Slider preGainSlider;
     std::unique_ptr<SliderAttachment> preGainAttachment;
+    juce::Label preGainLabel;
 
     juce::Slider preBassSlider;
     std::unique_ptr<SliderAttachment> preBassAttachment;
+    juce::Label preBassLabel;
     juce::Slider preMidSlider;
     std::unique_ptr<SliderAttachment> preMidAttachment;
+    juce::Label preMidLabel;
     juce::Slider preTrebleSlider;
     std::unique_ptr<SliderAttachment> preTrebleAttachment;
+    juce::Label preTrebleLabel;
 
     juce::ComboBox distortionTypeSelector;
     std::unique_ptr<ComboBoxAttachment> distortionTypeAttachment;
     juce::Slider driveSlider;
     std::unique_ptr<SliderAttachment> driveAttachment;
+    juce::Label driveLabel;
 
     juce::Slider postBassSlider;
     std::unique_ptr<SliderAttachment> postBassAttachment;
+    juce::Label postBassLabel;
     juce::Slider postMidSlider;
     std::unique_ptr<SliderAttachment> postMidAttachment;
+    juce::Label postMidLabel;
     juce::Slider postTrebleSlider;
     std::unique_ptr<SliderAttachment> postTrebleAttachment;
+    juce::Label postTrebleLabel;
 
     juce::Slider postGainSlider;
     std::unique_ptr<SliderAttachment> postGainAttachment;
+    juce::Label postGainLabel;
 
     juce::Slider noiseGateThresholdSlider;
     std::unique_ptr<SliderAttachment> noiseGateThresholdAttachment;
+    juce::Label noiseGateLabel;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GuitarAmpAudioProcessorEditor)
 };
