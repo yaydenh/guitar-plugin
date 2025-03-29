@@ -95,7 +95,7 @@ void PreampProcessor::process(juce::AudioBuffer<float>& buffer)
             }
             if (mode == Mode::Crunch)
             {
-                samples[i] = juce::jlimit(-1.0f, 1.0f, samples[i] - 0.3f * std::powf(samples[i], 3));
+                samples[i] = samples[i] / std::sqrt(1 + samples[i] * samples[i]);
             }
             if (mode == Mode::Lead)
             {
@@ -153,8 +153,8 @@ void PreampProcessor::setGain(float newGainDb)
 {
     float baseGain = 1.0f;
     if (mode == Mode::Clean)        baseGain = 1.5f;
-    else if (mode == Mode::Crunch)  baseGain = 10.0f;
-    else if (mode == Mode::Lead)    baseGain = 30.0f;
+    else if (mode == Mode::Crunch)  baseGain = 20.0f;
+    else if (mode == Mode::Lead)    baseGain = 40.0f;
     currentGainDb = baseGain + newGainDb;
     smoothedGain.setTargetValue(juce::Decibels::decibelsToGain(baseGain + newGainDb));
 }
