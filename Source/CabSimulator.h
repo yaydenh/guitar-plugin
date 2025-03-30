@@ -21,6 +21,11 @@ public:
     template <typename ProcessContext>
     void process(const ProcessContext& context) { convolver.process(context); };
 
+    void loadImpulseResponse(juce::String filename);
+    juce::StringArray getFilenames();
+
 private:
     juce::dsp::Convolution convolver;
+    juce::File IRDir;
+    juce::StringArray IRFilenames;
 };

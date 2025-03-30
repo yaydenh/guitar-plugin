@@ -65,6 +65,8 @@ public:
     void setPostFrequencyVisualiser(FrequencyVisualiser* f) { postFreq = f; };
     void setPreWaveformVisualiser(juce::AudioVisualiserComponent* v) { preVisualiser = v; };
     void setPostWaveformVisualiser(juce::AudioVisualiserComponent* v) { postVisualiser = v; };
+    void setImpulseResponse(juce::String filename) { cabSim.loadImpulseResponse(filename); };
+    juce::StringArray getImpulseResponseFilenames() { return cabSim.getFilenames(); };
 
     juce::AudioProcessorValueTreeState parameters;
 private:

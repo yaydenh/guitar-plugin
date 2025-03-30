@@ -42,6 +42,7 @@ GuitarAmpAudioProcessor::GuitarAmpAudioProcessor()
             std::make_unique<juce::AudioParameterFloat>("postTrebleEQ", "postTrebleEQ", -12.0f, 12.0f, 0.0f),
             std::make_unique<juce::AudioParameterFloat>("postGain", "postGain", -24.0f, 24.0f, 0.0f),
             std::make_unique<juce::AudioParameterFloat>("noiseGateThreshold", "noiseGateThreshold", -96.0f, 0.0f, -96.0f),
+            //std::make_unique<juce::AudioParameterChoice>("irChoice", "IRChoice", cabSim.getFilenames(), 0),
         })
 #endif
 {

@@ -89,5 +89,9 @@ private:
     std::unique_ptr<SliderAttachment> noiseGateThresholdAttachment;
     juce::Label noiseGateLabel;
 
+    juce::ComboBox irSelector;
+    juce::Label irLabel;
+    std::unique_ptr<ComboBoxAttachment> irAttachment;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GuitarAmpAudioProcessorEditor)
 };

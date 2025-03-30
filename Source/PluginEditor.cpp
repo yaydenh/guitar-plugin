@@ -83,6 +83,14 @@ GuitarAmpAudioProcessorEditor::GuitarAmpAudioProcessorEditor(GuitarAmpAudioProce
     // noise gate threshold knob
     createKnob(noiseGateThresholdSlider, noiseGateLabel, -96.0f, 0.0f, 0.1f, "Noise Gate");
     noiseGateThresholdAttachment.reset(new SliderAttachment(valueTreeState, "noiseGateThreshold", noiseGateThresholdSlider));
+
+    // cab sim ir selector
+    irSelector.addItemList(audioProcessor.getImpulseResponseFilenames(), 1);
+    addAndMakeVisible(irSelector);
+    irAttachment.reset(new ComboBoxAttachment(valueTreeState, "irChoice", irSelector));
+    irLabel.setText("IR", juce::NotificationType::dontSendNotification);
+    irLabel.attachToComponent(&irSelector, false);
+    irSelector.onChange = [this] { audioProcessor.setImpulseResponse(audioProcessor.getImpulseResponseFilenames()[irSelector.getSelectedId() - 1]); };
 }
 
 GuitarAmpAudioProcessorEditor::~GuitarAmpAudioProcessorEditor()
@@ -112,6 +120,8 @@ void GuitarAmpAudioProcessorEditor::resized()
 
     //left controls
     preampModeSelector.setBounds(marginLeft, marginTop, 100, 30);
+
+    irSelector.setBounds(marginLeft + 300, marginTop, 100, 30);
 
     auto preX = marginLeft + 60;
     auto preY = marginTop + 60;
