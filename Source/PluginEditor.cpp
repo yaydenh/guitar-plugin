@@ -87,7 +87,7 @@ GuitarAmpAudioProcessorEditor::GuitarAmpAudioProcessorEditor(GuitarAmpAudioProce
     // cab sim ir selector
     irSelector.addItemList(audioProcessor.getImpulseResponseFilenames(), 1);
     addAndMakeVisible(irSelector);
-    irAttachment.reset(new ComboBoxAttachment(valueTreeState, "irChoice", irSelector));
+    //irAttachment.reset(new ComboBoxAttachment(valueTreeState, "irChoice", irSelector));
     irLabel.setText("IR", juce::NotificationType::dontSendNotification);
     irLabel.attachToComponent(&irSelector, false);
     irSelector.onChange = [this] { audioProcessor.setImpulseResponse(audioProcessor.getImpulseResponseFilenames()[irSelector.getSelectedId() - 1]); };
