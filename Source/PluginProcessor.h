@@ -61,19 +61,19 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
-    void setPreFrequencyVisualiser(FrequencyVisualiser* f) { preFreq = f; };
-    void setPostFrequencyVisualiser(FrequencyVisualiser* f) { postFreq = f; };
-    void setPreWaveformVisualiser(juce::AudioVisualiserComponent* v) { preVisualiser = v; };
-    void setPostWaveformVisualiser(juce::AudioVisualiserComponent* v) { postVisualiser = v; };
+    void setPreFrequencyVisualiser(FrequencyVisualiser* f) { preFreq.reset(f); };
+    void setPostFrequencyVisualiser(FrequencyVisualiser* f) { postFreq.reset(f); };
+    void setPreWaveformVisualiser(juce::AudioVisualiserComponent* v) { preVisualiser.reset(v); };
+    void setPostWaveformVisualiser(juce::AudioVisualiserComponent* v) { postVisualiser.reset(v); };
     void setImpulseResponse(juce::String filename) { cabSim.loadImpulseResponse(filename); };
     juce::StringArray getImpulseResponseFilenames() { return cabSim.getFilenames(); };
 
     juce::AudioProcessorValueTreeState parameters;
 private:
-    FrequencyVisualiser* preFreq = nullptr;
-    FrequencyVisualiser* postFreq = nullptr;
-    juce::AudioVisualiserComponent* preVisualiser = nullptr;
-    juce::AudioVisualiserComponent* postVisualiser = nullptr;
+    std::unique_ptr<FrequencyVisualiser> preFreq = std::make_unique<FrequencyVisualiser>();
+    std::unique_ptr<FrequencyVisualiser> postFreq = std::make_unique<FrequencyVisualiser>();
+    std::unique_ptr<juce::AudioVisualiserComponent> preVisualiser = std::make_unique<juce::AudioVisualiserComponent>(1);
+    std::unique_ptr<juce::AudioVisualiserComponent> postVisualiser = std::make_unique<juce::AudioVisualiserComponent>(1);
 
     PreampProcessor preamp;
     DistortionProcessor distortion;
