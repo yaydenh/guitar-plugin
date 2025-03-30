@@ -153,7 +153,7 @@ void GuitarAmpAudioProcessorEditor::resized()
 void GuitarAmpAudioProcessorEditor::createKnob(juce::Slider& knob, juce::Label& label, double min, double max, double interval, std::string text)
 {
     knob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    knob.setRange(-min, max, interval);
+    knob.setRange(min, max, interval);
     knob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
     label.setText(text, juce::NotificationType::dontSendNotification);
     label.setJustificationType(juce::Justification::centred);
