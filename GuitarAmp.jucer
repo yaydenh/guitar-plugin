@@ -35,6 +35,10 @@
         <FILE id="GYrgvT" name="GainProcessor.h" compile="0" resource="0" file="Source/GainProcessor.h"/>
       </GROUP>
       <GROUP id="{96D2748F-02E3-C928-0BE6-1243B309E500}" name="Components">
+        <GROUP id="{73100DBD-629B-AF8E-17B2-8B171EA91A82}" name="Tabs">
+          <FILE id="eyqZOk" name="TabMain.cpp" compile="1" resource="0" file="Source/TabMain.cpp"/>
+          <FILE id="uHd2NP" name="TabMain.h" compile="0" resource="0" file="Source/TabMain.h"/>
+        </GROUP>
         <FILE id="tibNzz" name="FrequencyVisualiser.cpp" compile="1" resource="0"
               file="Source/FrequencyVisualiser.cpp"/>
         <FILE id="exQr5p" name="AmpKnob.cpp" compile="1" resource="0" file="Source/AmpKnob.cpp"/>

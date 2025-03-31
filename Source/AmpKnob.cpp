@@ -48,11 +48,4 @@ void AmpKnob::resized()
     label.setBounds(bounds.removeFromBottom(20));
 }
 
-//bool AmpKnob::hitTest(int x, int y)
-//{
-//    auto width = slider.getBounds().getWidth();
-//    auto quarter = width / 4;
-//    auto sliderClickArea = slider.getBounds().removeFromLeft(quarter).removeFromRight(quarter);
-//    return sliderClickArea.contains(x, y);
-//}
 
