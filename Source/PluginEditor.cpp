@@ -11,11 +11,23 @@
 
 //==============================================================================
 GuitarAmpAudioProcessorEditor::GuitarAmpAudioProcessorEditor(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeState& vts)
-    : AudioProcessorEditor(&p), audioProcessor(p), valueTreeState(vts)
+    : AudioProcessorEditor(&p), audioProcessor(p), valueTreeState(vts), tabs(juce::TabbedButtonBar::TabsAtTop),
+      preGain(-24.0f, 24.0f, 0.1f, "Input", "preGain", vts),
+      preBass(-12.0f, 12.0f, 0.1f, "bass", "preBassEQ", vts),
+      preMid(-12.0f, 12.0f, 0.1f, "mid", "preMidEQ", vts),
+      preTreble(-12.0f, 12.0f, 0.1f, "treble", "preTrebleEQ", vts),
+      drive(1.0f, 10.0f, 0.1f, "Drive", "drive", vts),
+      postBass(-12.0f, 12.0f, 0.1f, "bass", "postBassEQ", vts),
+      postMid(-12.0f, 12.0f, 0.1f, "mid", "postMidEQ", vts),
+      postTreble(-12.0f, 12.0f, 0.1f, "treble", "postTrebleEQ", vts),
+      postGain(-24.0f, 24.0f, 0.1f, "Output", "postGain", vts),
+      noiseGate(-96.0f, 0.0f, 0.1f, "Noise Gate", "noiseGateThreshold", vts)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (800, 1000);
+
+    addAndMakeVisible(tabs);
 
     // toggle button for testing
     addAndMakeVisible(testToggle);
@@ -44,20 +56,15 @@ GuitarAmpAudioProcessorEditor::GuitarAmpAudioProcessorEditor(GuitarAmpAudioProce
     preampModeLabel.attachToComponent(&preampModeSelector, false);
 
     // pre gain knob
-    createKnob(preGainSlider, preGainLabel, -24.0f, 24.0f, 0.1f, "Input");
-    preGainAttachment.reset(new SliderAttachment(valueTreeState, "preGain", preGainSlider));
+    addAndMakeVisible(preGain);
 
     // pre eq knobs
-    createKnob(preBassSlider, preBassLabel, -12.0f, 12.0f, 0.1f, "bass");
-    preBassAttachment.reset(new SliderAttachment(valueTreeState, "preBassEQ", preBassSlider));
-    createKnob(preMidSlider, preMidLabel, -12.0f, 12.0f, 0.1f, "mid");
-    preMidAttachment.reset(new SliderAttachment(valueTreeState, "preMidEQ", preMidSlider));
-    createKnob(preTrebleSlider, preTrebleLabel, -12.0f, 12.0f, 0.1f, "treble");
-    preTrebleAttachment.reset(new SliderAttachment(valueTreeState, "preTrebleEQ", preTrebleSlider));
+    addAndMakeVisible(preBass);
+    addAndMakeVisible(preMid);
+    addAndMakeVisible(preTreble);
 
     // distortion drive knob
-    createKnob(driveSlider, driveLabel, 1.0f, 10.0f, 0.1f, "Drive");
-    driveAttachment.reset(new SliderAttachment(valueTreeState, "drive", driveSlider));
+    addAndMakeVisible(drive);
 
     // distortion type selector
     distortionTypeSelector.addItem("Soft Clip", 1);
@@ -69,20 +76,15 @@ GuitarAmpAudioProcessorEditor::GuitarAmpAudioProcessorEditor(GuitarAmpAudioProce
     distortionTypeAttachment.reset(new ComboBoxAttachment(valueTreeState, "distortionType", distortionTypeSelector));
 
     // post eq knobs
-    createKnob(postBassSlider, postBassLabel, -12.0f, 12.0f, 0.1f, "bass");
-    postBassAttachment.reset(new SliderAttachment(valueTreeState, "postBassEQ", postBassSlider));
-    createKnob(postMidSlider, postMidLabel, -12.0f, 12.0f, 0.1f, "mid");
-    postMidAttachment.reset(new SliderAttachment(valueTreeState, "postMidEQ", postMidSlider));
-    createKnob(postTrebleSlider, postTrebleLabel, -12.0f, 12.0f, 0.1f, "treble");
-    postTrebleAttachment.reset(new SliderAttachment(valueTreeState, "postTrebleEQ", postTrebleSlider));
+    addAndMakeVisible(postBass);
+    addAndMakeVisible(postMid);
+    addAndMakeVisible(postTreble);
 
     // post gain knob
-    createKnob(postGainSlider, postGainLabel, -24.0f, 24.0f, 0.1f, "Output");
-    postGainAttachment.reset(new SliderAttachment(valueTreeState, "postGain", postGainSlider));
+    addAndMakeVisible(postGain);
 
     // noise gate threshold knob
-    createKnob(noiseGateThresholdSlider, noiseGateLabel, -96.0f, 0.0f, 0.1f, "Noise Gate");
-    noiseGateThresholdAttachment.reset(new SliderAttachment(valueTreeState, "noiseGateThreshold", noiseGateThresholdSlider));
+    addAndMakeVisible(noiseGate);
 
     // cab sim ir selector
     irSelector.addItemList(audioProcessor.getImpulseResponseFilenames(), 1);
@@ -125,22 +127,22 @@ void GuitarAmpAudioProcessorEditor::resized()
 
     auto preX = marginLeft + 60;
     auto preY = marginTop + 60;
-    preBassSlider.setBounds(preX, preY, 80, 80);
-    preMidSlider.setBounds(preX + 50, preY, 80, 80);
-    preTrebleSlider.setBounds(preX + 100, preY, 80, 80);
-    preGainSlider.setBounds(preX - 80, preY + 40, 100, 100);
+    preBass.setBounds(preX, preY, 80, 80);
+    preMid.setBounds(preX + 50, preY, 80, 80);
+    preTreble.setBounds(preX + 100, preY, 80, 80);
+    preGain.setBounds(preX - 80, preY + 40, 100, 100);
     
     auto postX = preX;
     auto postY = preY + 100;
-    postBassSlider.setBounds(postX, postY, 80, 80);
-    postMidSlider.setBounds(postX + 50, postY, 80, 80);
-    postTrebleSlider.setBounds(postX + 100, postY, 80, 80);
-    postGainSlider.setBounds(postX + 160, preY + 40, 100, 100);
+    postBass.setBounds(postX, postY, 80, 80);
+    postMid.setBounds(postX + 50, postY, 80, 80);
+    postTreble.setBounds(postX + 100, postY, 80, 80);
+    postGain.setBounds(postX + 160, preY + 40, 100, 100);
 
     // right controls
-    driveSlider.setBounds(marginLeft + 330, preY + 40, 100, 100);
+    drive.setBounds(marginLeft + 330, preY + 40, 100, 100);
     distortionTypeSelector.setBounds(marginLeft + 330, preY + 140, 100, 30);
-    noiseGateThresholdSlider.setBounds(marginLeft + 330 + 100, preY + 40, 100, 100);
+    noiseGate.setBounds(marginLeft + 330 + 100, preY + 40, 100, 100);
 
     // visualisers
     preFreq.setBounds(0, 300, 400, 300);
@@ -148,6 +150,7 @@ void GuitarAmpAudioProcessorEditor::resized()
     preVisualiser.setBounds(400, 300, 400, 300);
     postVisualiser.setBounds(400, 600, 400, 300);
 
+    tabs.setBounds(getLocalBounds());
 }
 
 void GuitarAmpAudioProcessorEditor::createKnob(juce::Slider& knob, juce::Label& label, double min, double max, double interval, std::string text)
@@ -160,4 +163,5 @@ void GuitarAmpAudioProcessorEditor::createKnob(juce::Slider& knob, juce::Label& 
     label.attachToComponent(&knob, false);
     addAndMakeVisible(knob);
 }
+
 

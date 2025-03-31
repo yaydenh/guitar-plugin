@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "FrequencyVisualiser.h"
+#include "AmpKnob.h"
 
 typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 typedef juce::AudioProcessorValueTreeState::ComboBoxAttachment ComboBoxAttachment;
@@ -36,6 +37,8 @@ private:
     // access the processor object that created it.
     GuitarAmpAudioProcessor& audioProcessor;
 
+    juce::TabbedComponent tabs;
+
     juce::ToggleButton testToggle;
     std::unique_ptr<ButtonAttachment> testToggleAttachment;
     juce::Label testLabel;
@@ -51,43 +54,23 @@ private:
     std::unique_ptr<ComboBoxAttachment> preampModeAttachment;
     juce::Label preampModeLabel;
 
-    juce::Slider preGainSlider;
-    std::unique_ptr<SliderAttachment> preGainAttachment;
-    juce::Label preGainLabel;
+    AmpKnob preGain;
 
-    juce::Slider preBassSlider;
-    std::unique_ptr<SliderAttachment> preBassAttachment;
-    juce::Label preBassLabel;
-    juce::Slider preMidSlider;
-    std::unique_ptr<SliderAttachment> preMidAttachment;
-    juce::Label preMidLabel;
-    juce::Slider preTrebleSlider;
-    std::unique_ptr<SliderAttachment> preTrebleAttachment;
-    juce::Label preTrebleLabel;
+    AmpKnob preBass;
+    AmpKnob preMid;
+    AmpKnob preTreble;
 
     juce::ComboBox distortionTypeSelector;
     std::unique_ptr<ComboBoxAttachment> distortionTypeAttachment;
-    juce::Slider driveSlider;
-    std::unique_ptr<SliderAttachment> driveAttachment;
-    juce::Label driveLabel;
+    AmpKnob drive;
 
-    juce::Slider postBassSlider;
-    std::unique_ptr<SliderAttachment> postBassAttachment;
-    juce::Label postBassLabel;
-    juce::Slider postMidSlider;
-    std::unique_ptr<SliderAttachment> postMidAttachment;
-    juce::Label postMidLabel;
-    juce::Slider postTrebleSlider;
-    std::unique_ptr<SliderAttachment> postTrebleAttachment;
-    juce::Label postTrebleLabel;
+    AmpKnob postBass;
+    AmpKnob postMid;
+    AmpKnob postTreble;
+    
+    AmpKnob postGain;
 
-    juce::Slider postGainSlider;
-    std::unique_ptr<SliderAttachment> postGainAttachment;
-    juce::Label postGainLabel;
-
-    juce::Slider noiseGateThresholdSlider;
-    std::unique_ptr<SliderAttachment> noiseGateThresholdAttachment;
-    juce::Label noiseGateLabel;
+    AmpKnob noiseGate;
 
     juce::ComboBox irSelector;
     juce::Label irLabel;

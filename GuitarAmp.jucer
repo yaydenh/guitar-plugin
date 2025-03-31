@@ -34,6 +34,14 @@
         <FILE id="HirxE8" name="EQProcessor.h" compile="0" resource="0" file="Source/EQProcessor.h"/>
         <FILE id="GYrgvT" name="GainProcessor.h" compile="0" resource="0" file="Source/GainProcessor.h"/>
       </GROUP>
+      <GROUP id="{96D2748F-02E3-C928-0BE6-1243B309E500}" name="Components">
+        <FILE id="tibNzz" name="FrequencyVisualiser.cpp" compile="1" resource="0"
+              file="Source/FrequencyVisualiser.cpp"/>
+        <FILE id="exQr5p" name="AmpKnob.cpp" compile="1" resource="0" file="Source/AmpKnob.cpp"/>
+        <FILE id="TGR6fz" name="AmpKnob.h" compile="0" resource="0" file="Source/AmpKnob.h"/>
+        <FILE id="rJvv1E" name="FrequencyVisualiser.h" compile="0" resource="0"
+              file="Source/FrequencyVisualiser.h"/>
+      </GROUP>
       <FILE id="eZYUcG" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="MccxRG" name="PluginProcessor.h" compile="0" resource="0"
@@ -41,10 +49,6 @@
       <FILE id="iCCPUg" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="BB0DUJ" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
-      <FILE id="tibNzz" name="FrequencyVisualiser.cpp" compile="1" resource="0"
-            file="Source/FrequencyVisualiser.cpp"/>
-      <FILE id="rJvv1E" name="FrequencyVisualiser.h" compile="0" resource="0"
-            file="Source/FrequencyVisualiser.h"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>
