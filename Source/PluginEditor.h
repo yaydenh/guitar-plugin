@@ -13,6 +13,7 @@
 #include "FrequencyVisualiser.h"
 #include "AmpKnob.h"
 #include "TabMain.h"
+#include "TabPedals.h"
 
 typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 typedef juce::AudioProcessorValueTreeState::ComboBoxAttachment ComboBoxAttachment;
@@ -40,6 +41,7 @@ private:
     juce::TabbedComponent tabs;
 
     TabMain mainTab;
+    TabPedals pedalsTab;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GuitarAmpAudioProcessorEditor)
 };

@@ -14,7 +14,7 @@ AmpKnob::AmpKnob(float min,
                  float max,
                  float interval,
                  juce::String labelText,
-                 juce::String paramId,
+                 juce::String parameterId,
                  juce::AudioProcessorValueTreeState& vts)
     : valueTreeState(vts)
 {
@@ -28,7 +28,7 @@ AmpKnob::AmpKnob(float min,
     label.attachToComponent(&slider, false);
     label.setInterceptsMouseClicks(false, false);
 
-    attachment = std::make_unique<SliderAttachment>(valueTreeState, paramId, slider);
+    attachment = std::make_unique<SliderAttachment>(valueTreeState, parameterId, slider);
 
     addAndMakeVisible(slider);
 }

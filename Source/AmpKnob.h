@@ -19,7 +19,7 @@ public:
             float max,
             float interval,
             juce::String labelText,
-            juce::String paramId,
+            juce::String parameterId,
             juce::AudioProcessorValueTreeState&);
 
     void paint(juce::Graphics& g) override;

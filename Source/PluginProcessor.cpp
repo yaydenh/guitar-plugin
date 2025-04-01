@@ -42,7 +42,10 @@ GuitarAmpAudioProcessor::GuitarAmpAudioProcessor()
             std::make_unique<juce::AudioParameterFloat>("postTrebleEQ", "postTrebleEQ", -12.0f, 12.0f, 0.0f),
             std::make_unique<juce::AudioParameterFloat>("postGain", "postGain", -24.0f, 24.0f, 0.0f),
             std::make_unique<juce::AudioParameterFloat>("noiseGateThreshold", "noiseGateThreshold", -96.0f, 0.0f, -96.0f),
-            //std::make_unique<juce::AudioParameterChoice>("irChoice", "IRChoice", cabSim.getFilenames(), 0),
+            std::make_unique<juce::AudioParameterFloat>("compressorLevel", "compressorLevel", 0.0f, 5.0f, 0.0f),
+            std::make_unique<juce::AudioParameterFloat>("compressorSustain", "compressorSustain", 0.0f, 5.0f, 0.0f),
+            std::make_unique<juce::AudioParameterFloat>("compressorBlend", "compressorBlend", 0.0f, 5.0f, 0.0f),
+            std::make_unique<juce::AudioParameterBool>("compressorOn", "compressorOn", false),
         })
 #endif
 {
@@ -125,6 +128,7 @@ void GuitarAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     gain.prepare(spec);
     noiseGate.prepare(spec);
     cabSim.prepare(spec);
+    compressor.prepare(spec);
 }
 
 void GuitarAmpAudioProcessor::releaseResources()
@@ -234,6 +238,10 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     float postTreble = *parameters.getRawParameterValue("postTrebleEQ");
     eq.updateEQ(postBass, postMid, postTreble);
     eq.process(buffer);
+
+    // compressor pedal
+    bool compressorOn = parameters.getParameterAsValue("compressorOn").getValue();
+    if (compressorOn) compressor.process(buffer);
 
     // noise gate
     float noiseGateThreshold = *parameters.getRawParameterValue("noiseGateThreshold");

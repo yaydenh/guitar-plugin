@@ -38,6 +38,8 @@
         <GROUP id="{73100DBD-629B-AF8E-17B2-8B171EA91A82}" name="Tabs">
           <FILE id="eyqZOk" name="TabMain.cpp" compile="1" resource="0" file="Source/TabMain.cpp"/>
           <FILE id="uHd2NP" name="TabMain.h" compile="0" resource="0" file="Source/TabMain.h"/>
+          <FILE id="wHGomL" name="TabPedals.cpp" compile="1" resource="0" file="Source/TabPedals.cpp"/>
+          <FILE id="R5OiC4" name="TabPedals.h" compile="0" resource="0" file="Source/TabPedals.h"/>
         </GROUP>
         <FILE id="tibNzz" name="FrequencyVisualiser.cpp" compile="1" resource="0"
               file="Source/FrequencyVisualiser.cpp"/>

@@ -17,6 +17,7 @@
 #include "FrequencyVisualiser.h"
 #include "NoiseGate.h"
 #include "CabSimulator.h"
+#include "Compressor.h"
 
 //==============================================================================
 /**
@@ -68,6 +69,8 @@ public:
     void setImpulseResponse(juce::String filename) { cabSim.loadImpulseResponse(filename); };
     juce::StringArray getImpulseResponseFilenames() { return cabSim.getFilenames(); };
 
+    Compressor& getCompressor() { return compressor; };
+
     juce::AudioProcessorValueTreeState parameters;
 private:
     std::unique_ptr<FrequencyVisualiser> preFreq = std::make_unique<FrequencyVisualiser>();
@@ -81,6 +84,9 @@ private:
     GainProcessor gain;
     NoiseGate noiseGate;
     CabSimulator cabSim;
+
+    // pedals
+    Compressor compressor;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GuitarAmpAudioProcessor)
