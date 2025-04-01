@@ -28,7 +28,6 @@ public:
 
 private:
     GuitarAmpAudioProcessor& audioProcessor;
-    juce::AudioProcessorValueTreeState& valueTreeState;
 
     juce::ToggleButton testToggle;
     std::unique_ptr<ButtonAttachment> testToggleAttachment;

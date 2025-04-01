@@ -26,7 +26,6 @@ public:
 
 private:
     GuitarAmpAudioProcessor& audioProcessor;
-    juce::AudioProcessorValueTreeState& valueTreeState;
 
     AmpKnob compressorLevel;
     AmpKnob compressorSustain;

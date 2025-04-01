@@ -11,7 +11,7 @@
 #include "TabMain.h"
 
 TabMain::TabMain(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeState& vts)
-    : audioProcessor(p), valueTreeState(vts),
+    : audioProcessor(p),
       preGain(-24.0f, 24.0f, 0.1f, "Input", "preGain", vts),
       preBass(-12.0f, 12.0f, 0.1f, "bass", "preBassEQ", vts),
       preMid(-12.0f, 12.0f, 0.1f, "mid", "preMidEQ", vts),
@@ -25,7 +25,7 @@ TabMain::TabMain(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeState&
 {
     // toggle button for testing
     addAndMakeVisible(testToggle);
-    testToggleAttachment.reset(new ButtonAttachment(valueTreeState, "test", testToggle));
+    testToggleAttachment.reset(new ButtonAttachment(vts, "test", testToggle));
     testLabel.setText("Test", juce::NotificationType::dontSendNotification);
     testLabel.attachToComponent(&testToggle, false);
 
@@ -45,7 +45,7 @@ TabMain::TabMain(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeState&
     preampModeSelector.addItem("Crunch", 2);
     preampModeSelector.addItem("Lead", 3);
     addAndMakeVisible(preampModeSelector);
-    preampModeAttachment.reset(new ComboBoxAttachment(valueTreeState, "preampMode", preampModeSelector));
+    preampModeAttachment.reset(new ComboBoxAttachment(vts, "preampMode", preampModeSelector));
     preampModeLabel.setText("Mode", juce::NotificationType::dontSendNotification);
     preampModeLabel.attachToComponent(&preampModeSelector, false);
 
@@ -67,7 +67,7 @@ TabMain::TabMain(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeState&
     distortionTypeSelector.addItem("Fuzz", 4);
     distortionTypeSelector.addItem("None", 5);
     addAndMakeVisible(distortionTypeSelector);
-    distortionTypeAttachment.reset(new ComboBoxAttachment(valueTreeState, "distortionType", distortionTypeSelector));
+    distortionTypeAttachment.reset(new ComboBoxAttachment(vts, "distortionType", distortionTypeSelector));
 
     // post eq knobs
     addAndMakeVisible(postBass);

@@ -28,8 +28,6 @@ public:
 private:
     typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 
-    juce::AudioProcessorValueTreeState& valueTreeState;
-
     juce::Slider slider;
     juce::Label label;
     std::unique_ptr<SliderAttachment> attachment;

@@ -11,7 +11,7 @@
 #include "TabPedals.h"
 
 TabPedals::TabPedals(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeState& vts)
-    : audioProcessor(p), valueTreeState(vts),
+    : audioProcessor(p),
       compressorLevel(1.0f, 5.0f, 0.1f, "Level", "compressorLevel", vts),
       compressorSustain(1.0f, 5.0f, 0.1f, "Sustain", "compressorSustain", vts),
       compressorBlend(1.0f, 5.0f, 0.1f, "Blend", "compressorBlend", vts)
@@ -21,7 +21,7 @@ TabPedals::TabPedals(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeSt
     addAndMakeVisible(compressorBlend);
     
     addAndMakeVisible(compressorOnButton);
-    compressorOnAttachment = std::make_unique<ButtonAttachment>(valueTreeState, "compressorOn", compressorOnButton);
+    compressorOnAttachment = std::make_unique<ButtonAttachment>(vts, "compressorOn", compressorOnButton);
 }
 
 void TabPedals::resized()

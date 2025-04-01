@@ -16,7 +16,6 @@ AmpKnob::AmpKnob(float min,
                  juce::String labelText,
                  juce::String parameterId,
                  juce::AudioProcessorValueTreeState& vts)
-    : valueTreeState(vts)
 {
     slider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
     slider.setRange(min, max, interval);
@@ -28,7 +27,7 @@ AmpKnob::AmpKnob(float min,
     label.attachToComponent(&slider, false);
     label.setInterceptsMouseClicks(false, false);
 
-    attachment = std::make_unique<SliderAttachment>(valueTreeState, parameterId, slider);
+    attachment = std::make_unique<SliderAttachment>(vts, parameterId, slider);
 
     addAndMakeVisible(slider);
 }
