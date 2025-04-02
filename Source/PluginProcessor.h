@@ -73,6 +73,8 @@ public:
 
     juce::AudioProcessorValueTreeState parameters;
 private:
+    void initialiseParameters();
+
     std::unique_ptr<FrequencyVisualiser> preFreq = std::make_unique<FrequencyVisualiser>();
     std::unique_ptr<FrequencyVisualiser> postFreq = std::make_unique<FrequencyVisualiser>();
     std::unique_ptr<juce::AudioVisualiserComponent> preVisualiser = std::make_unique<juce::AudioVisualiserComponent>(1);

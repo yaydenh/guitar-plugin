@@ -23,32 +23,10 @@ GuitarAmpAudioProcessor::GuitarAmpAudioProcessor()
         .withOutput("Output", juce::AudioChannelSet::stereo(), true)
 #endif
     ),
-    parameters(*this, nullptr, "parameters",
-        {
-            std::make_unique<juce::AudioParameterBool>("test", "test", false),
-            std::make_unique<juce::AudioParameterChoice>("preampMode", "preampMode",
-                juce::StringArray { "Clean", "Crunch", "Lead" }, 0
-            ),
-            std::make_unique<juce::AudioParameterFloat>("preGain", "preGain", -24.0f, 24.0f, 0.0f),
-            std::make_unique<juce::AudioParameterFloat>("preBassEQ", "preBassEQ", -12.0f, 12.0f, 0.0f),
-            std::make_unique<juce::AudioParameterFloat>("preMidEQ", "preMidEQ", -12.0f, 12.0f, 0.0f),
-            std::make_unique<juce::AudioParameterFloat>("preTrebleEQ", "preTrebleEQ", -12.0f, 12.0f, 0.0f),
-            std::make_unique<juce::AudioParameterFloat>("drive", "Drive", 1.0f, 10.0f, 1.0f),
-            std::make_unique<juce::AudioParameterChoice>("distortionType", "Distortion Type",
-                juce::StringArray { "Soft Clip", "Hard Clip", "WaveShaper", "Fuzz", "None"}, 0
-            ),
-            std::make_unique<juce::AudioParameterFloat>("postBassEQ", "postBassEQ", -12.0f, 12.0f, 0.0f),
-            std::make_unique<juce::AudioParameterFloat>("postMidEQ", "postMidEQ", -12.0f, 12.0f, 0.0f),
-            std::make_unique<juce::AudioParameterFloat>("postTrebleEQ", "postTrebleEQ", -12.0f, 12.0f, 0.0f),
-            std::make_unique<juce::AudioParameterFloat>("postGain", "postGain", -24.0f, 24.0f, 0.0f),
-            std::make_unique<juce::AudioParameterFloat>("noiseGateThreshold", "noiseGateThreshold", -96.0f, 0.0f, -96.0f),
-            std::make_unique<juce::AudioParameterFloat>("compressorLevel", "compressorLevel", 0.0f, 5.0f, 0.0f),
-            std::make_unique<juce::AudioParameterFloat>("compressorSustain", "compressorSustain", 0.0f, 5.0f, 0.0f),
-            std::make_unique<juce::AudioParameterFloat>("compressorBlend", "compressorBlend", 0.0f, 5.0f, 0.0f),
-            std::make_unique<juce::AudioParameterBool>("compressorOn", "compressorOn", false),
-        })
+    parameters(*this, nullptr, "parameters", {})
 #endif
 {
+    initialiseParameters();
 }
 
 GuitarAmpAudioProcessor::~GuitarAmpAudioProcessor()
@@ -294,4 +272,42 @@ void GuitarAmpAudioProcessor::setStateInformation (const void* data, int sizeInB
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new GuitarAmpAudioProcessor();
+}
+
+void GuitarAmpAudioProcessor::initialiseParameters()
+{
+    // parameter for testing
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterBool>("test", "test", false));
+
+    // preamp parameters
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterChoice>("preampMode", "preampMode",
+        juce::StringArray{ "Clean", "Crunch", "Lead" }, 0
+    ));
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterFloat>("preGain", "preGain", -24.0f, 24.0f, 0.0f));
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterFloat>("preBassEQ", "preBassEQ", -12.0f, 12.0f, 0.0f));
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterFloat>("preMidEQ", "preMidEQ", -12.0f, 12.0f, 0.0f));
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterFloat>("preTrebleEQ", "preTrebleEQ", -12.0f, 12.0f, 0.0f));
+
+    // distortion parameters
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterFloat>("drive", "Drive", 1.0f, 10.0f, 1.0f));
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterChoice>("distortionType", "Distortion Type",
+        juce::StringArray{ "Soft Clip", "Hard Clip", "WaveShaper", "Fuzz", "None" }, 0
+    ));
+
+    // eq parameters
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterFloat>("postBassEQ", "postBassEQ", -12.0f, 12.0f, 0.0f));
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterFloat>("postMidEQ", "postMidEQ", -12.0f, 12.0f, 0.0f));
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterFloat>("postTrebleEQ", "postTrebleEQ", -12.0f, 12.0f, 0.0f));
+
+    // output gain
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterFloat>("postGain", "postGain", -24.0f, 24.0f, 0.0f));
+
+    // noise gate
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterFloat>("noiseGateThreshold", "noiseGateThreshold", -96.0f, 0.0f, -96.0f));
+
+    // compressor pedal
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterFloat>("compressorLevel", "compressorLevel", 0.0f, 5.0f, 0.0f));
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterFloat>("compressorSustain", "compressorSustain", 0.0f, 5.0f, 0.0f));
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterFloat>("compressorBlend", "compressorBlend", 0.0f, 5.0f, 0.0f));
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterBool>("compressorOn", "compressorOn", false));
 }
