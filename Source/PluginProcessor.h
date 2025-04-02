@@ -71,9 +71,10 @@ public:
 
     Compressor& getCompressor() { return compressor; };
 
-    juce::AudioProcessorValueTreeState parameters;
 private:
     void initialiseParameters();
+
+    juce::AudioProcessorValueTreeState parameters;
 
     std::unique_ptr<FrequencyVisualiser> preFreq = std::make_unique<FrequencyVisualiser>();
     std::unique_ptr<FrequencyVisualiser> postFreq = std::make_unique<FrequencyVisualiser>();
