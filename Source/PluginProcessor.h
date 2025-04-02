@@ -72,7 +72,7 @@ public:
     Compressor& getCompressor() { return compressor; };
 
 private:
-    void initialiseParameters();
+    juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
 
     juce::AudioProcessorValueTreeState parameters;
 
