@@ -21,15 +21,29 @@ public:
     void prepare(juce::dsp::ProcessSpec& spec);
     void process(juce::AudioBuffer<float>& buffer);
 
+    void setThresholdDb(float newThresholdDb);
+    void setAttackMs(float newAttackMs);
+    void setReleaseMs(float newReleaseMs);
+    void setKneeWidth(float newKneeWidth);
+    void setRatio(float newRatio);
+    void setMakeUpGain(float newMakeUpGain);
+    void configure(float newThresholdDb,
+                   float newAttackMs,
+                   float newReleaseMs,
+                   float newKneeWidth,
+                   float newRatio,
+                   float newMakeUpGain);
 private:
-    float thresholdDb = -24.0f; // level above which compression starts
+    float sampleRate = 0.0f;
+
+    float thresholdDb = -20.0f; // level above which compression starts
     float attackMs    =  10.0f; // how fast compression starts
     float attack      =   0.0f;
-    float releaseMs   = 100.0f; // how fast compression stops
+    float releaseMs   = 150.0f; // how fast compression stops
     float release     =   0.0f;
     float kneeWidth   =   6.0f; // how smooth the compression is around the threshold
     float ratio       =   4.0f; // i/o ratios for input above threshold i.e. amount of compression
-    float makeUpGain  =   0.0f; // increase gain to match input after compressing
+    float makeUpGain  =   6.0f; // increase gain to match input after compressing
     
     // to add:
     // hold

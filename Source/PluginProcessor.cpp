@@ -218,6 +218,18 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
 
     // compressor pedal
     bool compressorOn = parameters.getParameterAsValue("compressorOn").getValue();
+    float compressorThreshold = *parameters.getRawParameterValue("compressorThreshold");
+    float compressorAttack = *parameters.getRawParameterValue("compressorAttack");
+    float compressorRelease = *parameters.getRawParameterValue("compressorRelease");
+    float compressorKneeWidth = *parameters.getRawParameterValue("compressorKneeWidth");
+    float compressorRatio = *parameters.getRawParameterValue("compressorRatio");
+    float compressorMakeUpGain = *parameters.getRawParameterValue("compressorMakeUpGain");
+    compressor.configure(compressorThreshold,
+                         compressorAttack,
+                         compressorRelease,
+                         compressorKneeWidth,
+                         compressorRatio,
+                         compressorMakeUpGain);
     if (compressorOn) compressor.process(buffer);
 
     // noise gate

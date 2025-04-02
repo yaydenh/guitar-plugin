@@ -14,20 +14,41 @@ TabPedals::TabPedals(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeSt
     : audioProcessor(p),
       compressorLevel(1.0f, 5.0f, 0.1f, "Level", "compressorLevel", vts),
       compressorSustain(1.0f, 5.0f, 0.1f, "Sustain", "compressorSustain", vts),
-      compressorBlend(1.0f, 5.0f, 0.1f, "Blend", "compressorBlend", vts)
+      compressorBlend(1.0f, 5.0f, 0.1f, "Blend", "compressorBlend", vts),
+      compressorThreshold(-40.0f, 0.0f, 0.1f, "Threshold", "compressorThreshold", vts),
+      compressorAttack(0.5f, 50.0f, 0.1f, "Attack", "compressorAttack", vts),
+      compressorRelease(50.0f, 150.0f, 0.1f, "Release", "compressorRelease", vts),
+      compressorKneeWidth(0.0f, 10.0f, 0.1f, "KneeWidth", "compressorKneeWidth", vts),
+      compressorRatio(2.0f, 10.0f, 0.1f, "Ratio", "compressorRatio", vts),
+      compressorMakeUpGain(0.0f, 20.0f, 0.1f, "MakeUpGain", "compressorMakeUpGain", vts)
 {
     addAndMakeVisible(compressorLevel);
     addAndMakeVisible(compressorSustain);
     addAndMakeVisible(compressorBlend);
-    
+    addAndMakeVisible(compressorThreshold);
+    addAndMakeVisible(compressorAttack);
+    addAndMakeVisible(compressorRelease);
+    addAndMakeVisible(compressorKneeWidth);
+    addAndMakeVisible(compressorRatio);
+    addAndMakeVisible(compressorMakeUpGain);
+
     addAndMakeVisible(compressorOnButton);
     compressorOnAttachment = std::make_unique<ButtonAttachment>(vts, "compressorOn", compressorOnButton);
 }
 
 void TabPedals::resized()
 {
-    compressorLevel.setBounds(10, 10, 100, 100);
-    compressorSustain.setBounds(10 + 100, 10, 100, 100);
-    compressorBlend.setBounds(10 + 200, 10, 100, 100);
+    auto knobSize = 70;
+    auto padding = 10;
+
+    std::vector<juce::Component*> compressorKnobs = {
+        &compressorLevel, &compressorSustain, &compressorBlend,
+        &compressorThreshold, &compressorAttack, &compressorRelease,
+        &compressorKneeWidth, &compressorRatio, &compressorMakeUpGain
+    };
+
+    for (int i = 0; i < compressorKnobs.size(); i++)
+        compressorKnobs[i]->setBounds(padding + i * knobSize, padding, knobSize, knobSize);
+
     compressorOnButton.setBounds(0, 0, 30, 30);
 }

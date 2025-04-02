@@ -24,6 +24,7 @@ Compressor::Compressor(float thresholdDb, float attackMs, float releaseMs, float
 
 void Compressor::prepare(juce::dsp::ProcessSpec& spec)
 {
+    sampleRate = spec.sampleRate;
     attack = std::exp(-1 / (attackMs * 0.001f * spec.sampleRate));
     release = std::exp(-1 / (releaseMs * 0.001f * spec.sampleRate));
 }
@@ -73,4 +74,46 @@ void Compressor::process(juce::AudioBuffer<float>& buffer)
 
         }
     }
+}
+
+void Compressor::setThresholdDb(float newThresholdDb)
+{
+    thresholdDb = newThresholdDb;
+}
+
+void Compressor::setAttackMs(float newAttackMs)
+{
+    attackMs = newAttackMs;
+    attack = std::exp(-1 / (attackMs * 0.001f * sampleRate));
+}
+
+void Compressor::setReleaseMs(float newReleaseMs)
+{
+    releaseMs = newReleaseMs;
+    release = std::exp(-1 / (releaseMs * 0.001f * sampleRate));
+}
+
+void Compressor::setKneeWidth(float newKneeWidth)
+{
+    kneeWidth = newKneeWidth;
+}
+
+void Compressor::setRatio(float newRatio)
+{
+    ratio = newRatio;
+}
+
+void Compressor::setMakeUpGain(float newMakeUpGain)
+{
+    makeUpGain = newMakeUpGain;
+}
+
+void Compressor::configure(float newThresholdDb, float newAttackMs, float newReleaseMs, float newKneeWidth, float newRatio, float newMakeUpGain)
+{
+    thresholdDb = newThresholdDb;
+    attackMs = newAttackMs;
+    releaseMs = newReleaseMs;
+    kneeWidth = newKneeWidth;
+    ratio = newRatio;
+    makeUpGain = newMakeUpGain;
 }

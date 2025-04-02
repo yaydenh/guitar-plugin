@@ -30,6 +30,12 @@ private:
     AmpKnob compressorLevel;
     AmpKnob compressorSustain;
     AmpKnob compressorBlend;
+    AmpKnob compressorThreshold;
+    AmpKnob compressorAttack;
+    AmpKnob compressorRelease;
+    AmpKnob compressorKneeWidth;
+    AmpKnob compressorRatio;
+    AmpKnob compressorMakeUpGain;
     juce::ToggleButton compressorOnButton;
     std::unique_ptr<ButtonAttachment> compressorOnAttachment;
 };

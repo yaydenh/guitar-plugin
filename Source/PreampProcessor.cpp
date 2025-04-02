@@ -143,9 +143,9 @@ void PreampProcessor::updateEQ(float bass, float mid, float treble)
     }
     for (int channel = 0; channel < numChannels; channel++)
     {
-        bassFilters[channel].coefficients = juce::dsp::IIR::Coefficients<float>::makeLowShelf(sampleRate, 100.0f, 0.7f, juce::Decibels::decibelsToGain(updatedBass));
+        bassFilters[channel].coefficients = juce::dsp::IIR::Coefficients<float>::makeLowShelf(sampleRate, 100.0f, 1.0f, juce::Decibels::decibelsToGain(updatedBass));
         midFilters[channel].coefficients = juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, 1000.0f, 1.0f, juce::Decibels::decibelsToGain(updatedMid));
-        trebleFilters[channel].coefficients = juce::dsp::IIR::Coefficients<float>::makeHighShelf(sampleRate, 8000.0f, 0.7f, juce::Decibels::decibelsToGain(updatedTreble));
+        trebleFilters[channel].coefficients = juce::dsp::IIR::Coefficients<float>::makeHighShelf(sampleRate, 5000.0f, 0.7f, juce::Decibels::decibelsToGain(updatedTreble));
     }
 }
 
