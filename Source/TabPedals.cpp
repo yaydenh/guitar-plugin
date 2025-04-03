@@ -15,11 +15,11 @@ TabPedals::TabPedals(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeSt
       compressorLevel(1.0f, 5.0f, 0.1f, "Level", "compressorLevel", vts),
       compressorSustain(1.0f, 5.0f, 0.1f, "Sustain", "compressorSustain", vts),
       compressorBlend(1.0f, 5.0f, 0.1f, "Blend", "compressorBlend", vts),
-      compressorThreshold(-40.0f, 0.0f, 0.1f, "Threshold", "compressorThreshold", vts),
+      compressorThreshold(-50.0f, 0.0f, 0.1f, "Threshold", "compressorThreshold", vts),
       compressorAttack(0.5f, 50.0f, 0.1f, "Attack", "compressorAttack", vts),
       compressorRelease(50.0f, 150.0f, 0.1f, "Release", "compressorRelease", vts),
-      compressorKneeWidth(0.0f, 10.0f, 0.1f, "KneeWidth", "compressorKneeWidth", vts),
-      compressorRatio(2.0f, 10.0f, 0.1f, "Ratio", "compressorRatio", vts),
+      compressorKneeWidth(0.0f, 20.0f, 0.1f, "KneeWidth", "compressorKneeWidth", vts),
+      compressorRatio(1.0f, 50.0f, 0.1f, "Ratio", "compressorRatio", vts),
       compressorMakeUpGain(0.0f, 20.0f, 0.1f, "MakeUpGain", "compressorMakeUpGain", vts)
 {
     addAndMakeVisible(compressorLevel);

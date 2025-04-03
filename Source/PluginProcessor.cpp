@@ -322,11 +322,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout GuitarAmpAudioProcessor::cre
     params.add(std::make_unique<juce::AudioParameterFloat>("compressorSustain", "compressorSustain", 0.0f, 5.0f, 0.0f));
     params.add(std::make_unique<juce::AudioParameterFloat>("compressorBlend", "compressorBlend", 0.0f, 5.0f, 0.0f));
     params.add(std::make_unique<juce::AudioParameterBool>("compressorOn", "compressorOn", false));
-    params.add(std::make_unique<juce::AudioParameterFloat>("compressorThreshold", "compressorThreshold", -40.0f, 0.0f, -20.0f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("compressorThreshold", "compressorThreshold", -50.0f, 0.0f, -20.0f));
     params.add(std::make_unique<juce::AudioParameterFloat>("compressorAttack", "compressorAttack", 0.5f, 50.0f, 10.0f));
     params.add(std::make_unique<juce::AudioParameterFloat>("compressorRelease", "compressorRelease", 50.0f, 500.0f, 150.0f));
-    params.add(std::make_unique<juce::AudioParameterFloat>("compressorKneeWidth", "compressorKneeWidth", 0.0f, 10.0f, 6.0f));
-    params.add(std::make_unique<juce::AudioParameterFloat>("compressorRatio", "compressorRatio", 2.0f, 10.0f, 4.0f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("compressorKneeWidth", "compressorKneeWidth", 0.0f, 20.0f, 6.0f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("compressorRatio", "compressorRatio", 1.0f, 50.0f, 4.0f));
     params.add(std::make_unique<juce::AudioParameterFloat>("compressorMakeUpGain", "compressorMakeUpGain", 0.0f, 20.0f, 6.0f));
 
     return params;
