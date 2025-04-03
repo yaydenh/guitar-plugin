@@ -53,6 +53,7 @@ void Compressor::process(juce::AudioBuffer<float>& buffer)
     {
         M = thresholdDb + (0.0f - thresholdDb) / ratio;
     }
+    M = -M;
 
     for (auto channel = 0; channel < buffer.getNumChannels(); channel++)
     {
@@ -93,8 +94,9 @@ void Compressor::process(juce::AudioBuffer<float>& buffer)
             // smoothing with attack coefficient - how aggressive compressor is applied
             yL = attack * yL + (1.0f - attack) * y1;
 
-            //samples[i] *= std::powf(10.0f, (M - yL) / 20.0f);
-            samples[i] *= juce::Decibels::decibelsToGain(M - yL);
+            float dry = samples[i];
+            float compressed = samples[i] * juce::Decibels::decibelsToGain(M - yL);
+            samples[i] = (1.0f - blend) * dry + blend * compressed;
 
         }
     }
@@ -132,7 +134,13 @@ void Compressor::setMakeUpGain(float newMakeUpGain)
     makeUpGain = newMakeUpGain;
 }
 
-void Compressor::configure(float newThresholdDb, float newAttackMs, float newReleaseMs, float newKneeWidth, float newRatio, float newMakeUpGain)
+void Compressor::configure(float newThresholdDb,
+                           float newAttackMs,
+                           float newReleaseMs,
+                           float newKneeWidth,
+                           float newRatio,
+                           float newMakeUpGain,
+                           float newBlend)
 {
     thresholdDb = newThresholdDb;
     attackMs = newAttackMs;
@@ -140,4 +148,5 @@ void Compressor::configure(float newThresholdDb, float newAttackMs, float newRel
     kneeWidth = newKneeWidth;
     ratio = newRatio;
     makeUpGain = newMakeUpGain;
+    blend = newBlend;
 }

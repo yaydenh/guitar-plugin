@@ -32,7 +32,8 @@ public:
                    float newReleaseMs,
                    float newKneeWidth,
                    float newRatio,
-                   float newMakeUpGain);
+                   float newMakeUpGain,
+                   float newBlend);
 private:
     float sampleRate = 0.0f;
 
@@ -44,9 +45,10 @@ private:
     float releaseMs   = 150.0f; // how fast compression stops
     float release     =   0.0f;
     float kneeWidth   =   6.0f; // how smooth the compression is around the threshold
-    float ratio       =   4.0f; // i/o ratios for input above threshold i.e. amount of compression
+    float ratio       =   2.0f; // i/o ratios for input above threshold i.e. amount of compression
     float makeUpGain  =   6.0f; // increase gain to match input after compressing
-    
+    float blend       =   1.0f;
+
     // to add:
     // hold
     // side chain filtering

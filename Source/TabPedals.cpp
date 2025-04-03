@@ -14,7 +14,7 @@ TabPedals::TabPedals(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeSt
     : audioProcessor(p),
       compressorLevel(1.0f, 5.0f, 0.1f, "Level", "compressorLevel", vts),
       compressorSustain(1.0f, 5.0f, 0.1f, "Sustain", "compressorSustain", vts),
-      compressorBlend(1.0f, 5.0f, 0.1f, "Blend", "compressorBlend", vts),
+      compressorBlend(0.0f, 1.0f, 0.05f, "Blend", "compressorBlend", vts),
       compressorThreshold(-50.0f, 0.0f, 0.1f, "Threshold", "compressorThreshold", vts),
       compressorAttack(0.5f, 50.0f, 0.1f, "Attack", "compressorAttack", vts),
       compressorRelease(50.0f, 150.0f, 0.1f, "Release", "compressorRelease", vts),
