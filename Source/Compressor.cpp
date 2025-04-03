@@ -27,11 +27,34 @@ void Compressor::prepare(juce::dsp::ProcessSpec& spec)
     sampleRate = spec.sampleRate;
     attack = std::exp(-1.0f / (attackMs * 0.001f * spec.sampleRate));
     release = std::exp(-1.0f / (releaseMs * 0.001f * spec.sampleRate));
+    for (auto i = 0; i < spec.numChannels; i++) {
+        filterHighFreq.push_back(juce::dsp::IIR::Filter<float>(juce::dsp::IIR::Coefficients<float>::makeLowPass(spec.sampleRate, 10.0f, 1.0f)));
+        filterHighFreq[i].prepare(spec);
+    }
 }
 
 void Compressor::process(juce::AudioBuffer<float>& buffer)
 {
-    for (int channel = 0; channel < buffer.getNumChannels(); channel++)
+
+    //juce::dsp::AudioBlock<float> block0(buffer);
+    //for (auto channel = 0; channel < buffer.getNumChannels(); channel++)
+    //{
+    //    juce::dsp::AudioBlock<float> channelBlock = block0.getSingleChannelBlock(channel);
+    //    juce::dsp::ProcessContextReplacing<float> channelContext(channelBlock);
+    //    filterHighFreq[channel].process(channelContext);
+    //}
+
+    float M = 0.0f;
+    if (2.0f * std::abs(0.0f - thresholdDb) <= kneeWidth)
+    {
+        M = 0.0f + (1.0f / ratio - 1.0f) * std::powf(0.0f - thresholdDb + kneeWidth / 2.0f, 2) / (2.0f * kneeWidth);
+    }
+    else if (2.0f * (0.0f - thresholdDb) > kneeWidth)
+    {
+        M = thresholdDb + (0.0f - thresholdDb) / ratio;
+    }
+
+    for (auto channel = 0; channel < buffer.getNumChannels(); channel++)
     {
         auto* samples = buffer.getWritePointer(channel);
         float yL = 0, y1 = 0;
@@ -70,7 +93,8 @@ void Compressor::process(juce::AudioBuffer<float>& buffer)
             // smoothing with attack coefficient - how aggressive compressor is applied
             yL = attack * yL + (1.0f - attack) * y1;
 
-            samples[i] *= juce::Decibels::decibelsToGain(makeUpGain - yL);
+            //samples[i] *= std::powf(10.0f, (M - yL) / 20.0f);
+            samples[i] *= juce::Decibels::decibelsToGain(M - yL);
 
         }
     }

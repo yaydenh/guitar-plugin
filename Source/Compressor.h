@@ -36,6 +36,8 @@ public:
 private:
     float sampleRate = 0.0f;
 
+    std::vector<juce::dsp::IIR::Filter<float>> filterHighFreq;
+
     float thresholdDb = -20.0f; // level above which compression starts
     float attackMs    =  10.0f; // how fast compression starts
     float attack      =   0.0f;
