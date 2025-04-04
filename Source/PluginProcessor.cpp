@@ -231,7 +231,7 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
                          compressorKneeWidth,
                          compressorRatio,
                          compressorMakeUpGain,
-                         copmressorBlend);
+                         compressorBlend);
     if (compressorOn) compressor.process(buffer);
 
     // noise gate

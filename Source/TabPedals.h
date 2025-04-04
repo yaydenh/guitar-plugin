@@ -27,8 +27,6 @@ public:
 private:
     GuitarAmpAudioProcessor& audioProcessor;
 
-    AmpKnob compressorLevel;
-    AmpKnob compressorSustain;
     AmpKnob compressorBlend;
     AmpKnob compressorThreshold;
     AmpKnob compressorAttack;

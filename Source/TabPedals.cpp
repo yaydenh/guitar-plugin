@@ -12,8 +12,6 @@
 
 TabPedals::TabPedals(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeState& vts)
     : audioProcessor(p),
-      compressorLevel(1.0f, 5.0f, 0.1f, "Level", "compressorLevel", vts),
-      compressorSustain(1.0f, 5.0f, 0.1f, "Sustain", "compressorSustain", vts),
       compressorBlend(0.0f, 1.0f, 0.05f, "Blend", "compressorBlend", vts),
       compressorThreshold(-50.0f, 0.0f, 0.1f, "Threshold", "compressorThreshold", vts),
       compressorAttack(0.5f, 50.0f, 0.1f, "Attack", "compressorAttack", vts),
@@ -22,8 +20,6 @@ TabPedals::TabPedals(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeSt
       compressorRatio(1.0f, 50.0f, 0.1f, "Ratio", "compressorRatio", vts),
       compressorMakeUpGain(0.0f, 20.0f, 0.1f, "MakeUpGain", "compressorMakeUpGain", vts)
 {
-    addAndMakeVisible(compressorLevel);
-    addAndMakeVisible(compressorSustain);
     addAndMakeVisible(compressorBlend);
     addAndMakeVisible(compressorThreshold);
     addAndMakeVisible(compressorAttack);
@@ -42,8 +38,7 @@ void TabPedals::resized()
     auto padding = 10;
 
     std::vector<juce::Component*> compressorKnobs = {
-        &compressorLevel, &compressorSustain, &compressorBlend,
-        &compressorThreshold, &compressorAttack, &compressorRelease,
+        &compressorBlend, &compressorThreshold, &compressorAttack, &compressorRelease,
         &compressorKneeWidth, &compressorRatio, &compressorMakeUpGain
     };
 
