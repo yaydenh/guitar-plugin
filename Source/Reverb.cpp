@@ -45,7 +45,7 @@ void Reverb::process(juce::AudioBuffer<float>& buffer)
         // maintain a queue of size k, so we can easily get kth previous sample
         const int k = preDelay * sampleRate;
         
-        if (prev.size() == k)
+        if (prev.size() == k && k != 0)
         {
             x = prev.front();
             prev.pop();
