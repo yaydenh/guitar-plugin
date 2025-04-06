@@ -36,4 +36,13 @@ private:
     AmpKnob compressorMakeUpGain;
     juce::ToggleButton compressorOnButton;
     std::unique_ptr<ButtonAttachment> compressorOnAttachment;
+
+    AmpKnob reverbPreDelay;
+    AmpKnob reverbHighCutFreq;
+    AmpKnob reverbDiffusion;
+    AmpKnob reverbHighFreqDamping;
+    AmpKnob reverbDecayFactor;
+    AmpKnob reverbWetDryMix;
+    juce::ToggleButton reverbOnButton;
+    std::unique_ptr<ButtonAttachment> reverbOnAttachment;
 };

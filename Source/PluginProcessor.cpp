@@ -106,6 +106,7 @@ void GuitarAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     noiseGate.prepare(spec);
     cabSim.prepare(spec);
     compressor.prepare(spec);
+    reverb.prepare(spec);
 }
 
 void GuitarAmpAudioProcessor::releaseResources()
@@ -234,6 +235,22 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
                          compressorBlend);
     if (compressorOn) compressor.process(buffer);
 
+    // reverb pedal
+    bool reverbOn = parameters.getParameterAsValue("reverbOn").getValue();
+    float reverbPreDelay = *parameters.getRawParameterValue("reverbPreDelay");
+    float reverbHighCutFreq = *parameters.getRawParameterValue("reverbHighCutFreq");
+    float reverbDiffusion = *parameters.getRawParameterValue("reverbDiffusion");
+    float reverbHighFreqDamping = *parameters.getRawParameterValue("reverbHighFreqDamping");
+    float reverbDecayFactor = *parameters.getRawParameterValue("reverbDecayFactor");
+    float reverbWetDryMix = *parameters.getRawParameterValue("reverbWetDryMix");
+    reverb.configure(reverbPreDelay,
+        reverbHighCutFreq,
+        reverbDiffusion,
+        reverbHighFreqDamping,
+        reverbDecayFactor,
+        reverbWetDryMix);
+    if (reverbOn) reverb.process(buffer);
+
     // noise gate
     float noiseGateThreshold = *parameters.getRawParameterValue("noiseGateThreshold");
     noiseGate.setThreshhold(noiseGateThreshold);
@@ -320,16 +337,26 @@ juce::AudioProcessorValueTreeState::ParameterLayout GuitarAmpAudioProcessor::cre
     params.add(std::make_unique<juce::AudioParameterFloat>("noiseGateThreshold", "noiseGateThreshold", -96.0f, 0.0f, -96.0f));
 
     // compressor pedal
+    params.add(std::make_unique<juce::AudioParameterBool>("compressorOn", "compressorOn", false));
     params.add(std::make_unique<juce::AudioParameterFloat>("compressorLevel", "compressorLevel", 0.0f, 5.0f, 0.0f));
     params.add(std::make_unique<juce::AudioParameterFloat>("compressorSustain", "compressorSustain", 0.0f, 5.0f, 0.0f));
     params.add(std::make_unique<juce::AudioParameterFloat>("compressorBlend", "compressorBlend", 0.0f, 1.0f, 1.0f));
-    params.add(std::make_unique<juce::AudioParameterBool>("compressorOn", "compressorOn", false));
     params.add(std::make_unique<juce::AudioParameterFloat>("compressorThreshold", "compressorThreshold", -50.0f, 0.0f, -20.0f));
     params.add(std::make_unique<juce::AudioParameterFloat>("compressorAttack", "compressorAttack", 0.5f, 50.0f, 10.0f));
     params.add(std::make_unique<juce::AudioParameterFloat>("compressorRelease", "compressorRelease", 50.0f, 500.0f, 150.0f));
     params.add(std::make_unique<juce::AudioParameterFloat>("compressorKneeWidth", "compressorKneeWidth", 0.0f, 20.0f, 6.0f));
     params.add(std::make_unique<juce::AudioParameterFloat>("compressorRatio", "compressorRatio", 1.0f, 50.0f, 2.0f));
     params.add(std::make_unique<juce::AudioParameterFloat>("compressorMakeUpGain", "compressorMakeUpGain", -10.0f, 20.0f, 0.0f));
+
+
+    // reverb pedal
+    params.add(std::make_unique<juce::AudioParameterBool>("reverbOn", "reverbOn", false));
+    params.add(std::make_unique<juce::AudioParameterFloat>("reverbPreDelay", "reverbPreDelay", 0.0f, 1.0f, 0.0f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("reverbHighCutFreq", "reverbHighCutFreq", 20.0f, 20000.0f, 20000.0f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("reverbDiffusion", "reverbDiffusion", 0.0f, 1.0f, 0.5f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("reverbHighFreqDamping", "reverbHighFreqDamping", 0.0f, 1.0f, 0.5f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("reverbDecayFactor", "reverbHighFreqDamping", 0.0f, 1.0f, 0.5f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("reverbWetDryMix", "reverbWetDryMix", 0.0f, 1.0f, 0.3f));
 
     return params;
 }

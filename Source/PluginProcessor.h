@@ -18,6 +18,7 @@
 #include "NoiseGate.h"
 #include "CabSimulator.h"
 #include "Compressor.h"
+#include "Reverb.h"
 
 //==============================================================================
 /**
@@ -90,7 +91,7 @@ private:
 
     // pedals
     Compressor compressor;
-
+    Reverb reverb;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GuitarAmpAudioProcessor)
 };

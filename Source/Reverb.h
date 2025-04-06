@@ -42,7 +42,7 @@ private:
     float preDelay         = 0.0f;      // time between hearing input and hearing first reverb
     float highCutFreq      = 20000.0f;  // cutoff for filtering out high freq
     float diffusion        = 0.5f;      // how dense the reverberations are
-    float highFreqDamping  = 5e-4;      // how fast high freq reverb decays
+    float highFreqDamping  = 0.5f;      // how fast high freq reverb decays
     float decayFactor      = 0.5f;      // to make reverb decay faster/slower
     float wetDryMix        = 0.3f;      // ratio of reverb and original sample in output
 
