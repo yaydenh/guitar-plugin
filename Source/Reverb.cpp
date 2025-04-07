@@ -103,14 +103,16 @@ void Reverb::process(juce::AudioBuffer<float>& buffer)
         branch2 += indexBuffer(AP5Output, 3720);
 
         // Modulated all pass
-        pushToBuffer(modAP1Input, branch1);
-        pushToBuffer(modAP2Input, branch2);
         // y[n] = - beta * x[n] + x[n-k] + beta * y[n-k]
         // where beta = diffusion and k[n] = (8/29761) * sampleRate * sin(2pi * n/sampleRate)
         // so k[n] roughly oscillates between -8 to 8
+        // cant have negative k so we add max value
+        pushToBuffer(modAP1Input, branch1);
+        pushToBuffer(modAP2Input, branch2);
+
         float k = (8.0f / 29761.0f) * sampleRate * std::sin(2.0f * juce::MathConstants<float>::pi * n * sampleRate);
-        DBG(k);
-        // something fractional k something
+        k += (8.0f / 29761.0f) * sampleRate;
+
         branch1 = -diffusion * branch1 + indexBuffer(modAP1Input, k) + diffusion * indexBuffer(modAP1Output, k);
         branch2 = -diffusion * branch2 + indexBuffer(modAP2Input, k) + diffusion * indexBuffer(modAP2Output, k);
         pushToBuffer(modAP1Output, branch1);
@@ -126,7 +128,7 @@ void Reverb::process(juce::AudioBuffer<float>& buffer)
         branch1 = LP1 * decayFactor;
         branch2 = LP2 * decayFactor;
 
-        // all pass
+        // more all pass
         pushToBuffer(AP5Input, branch1);
         pushToBuffer(AP6Input, branch2);
         branch1 = diffusion * branch1 + indexBuffer(AP5Input, 1800) - diffusion * indexBuffer(AP5Output, 1800);
