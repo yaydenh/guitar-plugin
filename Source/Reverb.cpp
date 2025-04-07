@@ -109,6 +109,7 @@ void Reverb::process(juce::AudioBuffer<float>& buffer)
         // where beta = diffusion and k[n] = (8/29761) * sampleRate * sin(2pi * n/sampleRate)
         // so k[n] roughly oscillates between -8 to 8
         float k = (8.0f / 29761.0f) * sampleRate * std::sin(2.0f * juce::MathConstants<float>::pi * n * sampleRate);
+        DBG(k);
         // something fractional k something
         branch1 = -diffusion * branch1 + indexBuffer(modAP1Input, k) + diffusion * indexBuffer(modAP1Output, k);
         branch2 = -diffusion * branch2 + indexBuffer(modAP2Input, k) + diffusion * indexBuffer(modAP2Output, k);
@@ -209,6 +210,7 @@ void Reverb::configure(float newPreDelay,
 // if index out of bounds, return oldest at back
 float Reverb::indexBuffer(std::deque<float>& buffer, size_t index)
 {
+    if (buffer == modAP1Input) DBG(index);
     if (buffer.size() == 0) return 0.0f;
     if (index >= buffer.size()) return buffer.back();
     return buffer[index];
