@@ -38,6 +38,7 @@ private:
     void pushToBuffer(std::deque<float>& buffer, float value);
 
     float sampleRate;
+    float sampleCount = 0.0f;
 
     float preDelay         = 0.0f;      // time between hearing input and hearing first reverb
     float highCutFreq      = 20000.0f;  // cutoff for filtering out high freq

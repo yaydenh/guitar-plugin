@@ -91,8 +91,16 @@ void Reverb::process(juce::AudioBuffer<float>& buffer)
     }
 
     // tank
+
+    // move these variables to private members?
+    // otherwise they reset every buffer (aka 256 samples with my current settings)
     float LP1 = 0.0f;
     float LP2 = 0.0f;
+    float interpIn1 = 0.0f;
+    float interpOut1 = 0.0f;
+    float interpIn2 = 0.0f;
+    float interpOut2 = 0.0f;
+
     for (int n = 0; n < buffer.getNumSamples(); n++)
     {
         float branch1 = processingBufferSamples[n];
@@ -102,19 +110,35 @@ void Reverb::process(juce::AudioBuffer<float>& buffer)
         branch1 += indexBuffer(AP6Output, 3163);
         branch2 += indexBuffer(AP5Output, 3720);
 
-        // Modulated all pass
+        // Modulated All Pass Section
         // y[n] = - beta * x[n] + x[n-k] + beta * y[n-k]
         // where beta = diffusion and k[n] = (8/29761) * sampleRate * sin(2pi * n/sampleRate)
         // so k[n] roughly oscillates between -8 to 8
         // cant have negative k so we add max value
+
         pushToBuffer(modAP1Input, branch1);
         pushToBuffer(modAP2Input, branch2);
 
-        float k = (8.0f / 29761.0f) * sampleRate * std::sin(2.0f * juce::MathConstants<float>::pi * n * sampleRate);
+
+        float k = (8.0f / 29761.0f) * sampleRate * std::sin(2.0f * juce::MathConstants<float>::pi * sampleCount * sampleRate);
         k += (8.0f / 29761.0f) * sampleRate;
 
-        branch1 = -diffusion * branch1 + indexBuffer(modAP1Input, k) + diffusion * indexBuffer(modAP1Output, k);
-        branch2 = -diffusion * branch2 + indexBuffer(modAP2Input, k) + diffusion * indexBuffer(modAP2Output, k);
+        // private member sampleCount so we can track a full sampleRate cycle for k oscillator
+        sampleCount++;
+        if (sampleCount > sampleRate) sampleCount = 0.0f;
+
+        // all pass interpolation for fractional k
+        // k is delay in samples so we can't get fractional index from delay line
+        float whole;
+        float frac = std::modf(k, &whole);
+        float coeff = (1.0f - frac) / (1.0f + frac);
+        interpIn1 = coeff * (indexBuffer(modAP1Input, whole) - interpIn1) + indexBuffer(modAP1Input, whole + 1);
+        interpOut1 = coeff * (indexBuffer(modAP1Output, whole) - interpOut1) + indexBuffer(modAP1Output, whole + 1);
+        interpIn2 = coeff * (indexBuffer(modAP2Input, whole) - interpIn2) + indexBuffer(modAP2Input, whole + 1);
+        interpOut2 = coeff * (indexBuffer(modAP2Output, whole) - interpOut2) + indexBuffer(modAP2Output, whole + 1);
+
+        branch1 = diffusion * (interpOut1 - branch1) + interpIn1;
+        branch2 = diffusion * (interpOut2 - branch2) + interpIn2;
         pushToBuffer(modAP1Output, branch1);
         pushToBuffer(modAP2Output, branch2);
 
@@ -212,7 +236,6 @@ void Reverb::configure(float newPreDelay,
 // if index out of bounds, return oldest at back
 float Reverb::indexBuffer(std::deque<float>& buffer, size_t index)
 {
-    if (buffer == modAP1Input) DBG(index);
     if (buffer.size() == 0) return 0.0f;
     if (index >= buffer.size()) return buffer.back();
     return buffer[index];
