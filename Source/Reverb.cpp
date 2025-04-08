@@ -34,7 +34,6 @@ void Reverb::process(juce::AudioBuffer<float>& buffer)
 
     // constant for lowpass
     const float alpha = std::exp(-2.0f * juce::MathConstants<float>::pi * highCutFreq / sampleRate);
-    float xLowPass = 0.0f;
 
     for (int n = 0; n < buffer.getNumSamples(); n++)
     {
@@ -91,16 +90,6 @@ void Reverb::process(juce::AudioBuffer<float>& buffer)
     }
 
     // tank
-
-    // move these variables to private members?
-    // otherwise they reset every buffer (aka 256 samples with my current settings)
-    float LP1 = 0.0f;
-    float LP2 = 0.0f;
-    float interpIn1 = 0.0f;
-    float interpOut1 = 0.0f;
-    float interpIn2 = 0.0f;
-    float interpOut2 = 0.0f;
-
     for (int n = 0; n < buffer.getNumSamples(); n++)
     {
         float branch1 = processingBufferSamples[n];
@@ -119,8 +108,7 @@ void Reverb::process(juce::AudioBuffer<float>& buffer)
         pushToBuffer(modAP1Input, branch1);
         pushToBuffer(modAP2Input, branch2);
 
-
-        float k = (8.0f / 29761.0f) * sampleRate * std::sin(2.0f * juce::MathConstants<float>::pi * sampleCount * sampleRate);
+        float k = (8.0f / 29761.0f) * sampleRate * std::sin(2.0f * juce::MathConstants<float>::pi * sampleCount / sampleRate);
         k += (8.0f / 29761.0f) * sampleRate;
 
         // private member sampleCount so we can track a full sampleRate cycle for k oscillator
@@ -139,6 +127,9 @@ void Reverb::process(juce::AudioBuffer<float>& buffer)
 
         branch1 = diffusion * (interpOut1 - branch1) + interpIn1;
         branch2 = diffusion * (interpOut2 - branch2) + interpIn2;
+
+        //branch1 = diffusion * (indexBuffer(modAP1Output, 10) - branch1) + indexBuffer(modAP1Input, 10);
+        //branch2 = diffusion * (indexBuffer(modAP2Output, 10) - branch2) + indexBuffer(modAP2Input, 10);
         pushToBuffer(modAP1Output, branch1);
         pushToBuffer(modAP2Output, branch2);
 

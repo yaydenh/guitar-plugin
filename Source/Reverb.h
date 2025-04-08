@@ -37,7 +37,7 @@ private:
     float indexBuffer(std::deque<float>& buffer, size_t index);
     void pushToBuffer(std::deque<float>& buffer, float value);
 
-    float sampleRate;
+    float sampleRate = 44100.0f;
     float sampleCount = 0.0f;
 
     float preDelay         = 0.0f;      // time between hearing input and hearing first reverb
@@ -64,4 +64,13 @@ private:
     std::deque<float> AP5Output;
     std::deque<float> AP6Input;
     std::deque<float> AP6Output;
+
+    float xLowPass = 0.0f;
+
+    float LP1 = 0.0f;
+    float LP2 = 0.0f;
+    float interpIn1 = 0.0f;
+    float interpOut1 = 0.0f;
+    float interpIn2 = 0.0f;
+    float interpOut2 = 0.0f;
 };
