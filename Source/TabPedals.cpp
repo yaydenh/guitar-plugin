@@ -43,7 +43,7 @@ TabPedals::TabPedals(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeSt
     addAndMakeVisible(reverbDecayFactor);
     addAndMakeVisible(reverbWetDryMix);
     addAndMakeVisible(reverbOnButton);
-    compressorOnAttachment = std::make_unique<ButtonAttachment>(vts, "reverbOn", reverbOnButton);
+    reverbOnAttachment = std::make_unique<ButtonAttachment>(vts, "reverbOn", reverbOnButton);
 }
 
 void TabPedals::resized()
