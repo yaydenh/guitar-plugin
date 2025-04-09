@@ -24,10 +24,12 @@ public:
 
     void paint(juce::Graphics& g) override;
     void resized() override;
+    void displayValue(bool showValue);
 
 private:
     typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 
+    bool valueVisible = true;
     juce::Slider slider;
     juce::Label label;
     std::unique_ptr<SliderAttachment> attachment;

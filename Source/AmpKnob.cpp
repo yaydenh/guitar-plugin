@@ -34,10 +34,13 @@ AmpKnob::AmpKnob(float min,
 
 void AmpKnob::paint(juce::Graphics& g)
 {
-    float value = slider.getValue();
-    g.setColour(juce::Colours::white);
-    g.setFont(15.0f);
-    g.drawFittedText(juce::String(value, 1), getLocalBounds(), juce::Justification::centred, 1);
+    if (valueVisible)
+    {
+        float value = slider.getValue();
+        g.setColour(juce::Colours::white);
+        g.setFont(15.0f);
+        g.drawFittedText(juce::String(value, 1), getLocalBounds(), juce::Justification::centred, 1);
+    }
 }
 
 void AmpKnob::resized()
@@ -45,6 +48,11 @@ void AmpKnob::resized()
     auto bounds = getLocalBounds();
     slider.setBounds(bounds);
     label.setBounds(bounds.removeFromBottom(20));
+}
+
+void AmpKnob::displayValue(bool showValue)
+{
+    valueVisible = showValue;
 }
 
 
