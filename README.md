@@ -1,9 +1,14 @@
 # guitar-plugin
 
 TODO:
+
 Features
-* noise gate
-* impulse responses
+* cab sim
+    * add more impulse responses
+    * mic placement and room acoustics
+* eq
+    * add more bands for post eq
+    * presence and master knob
 * pre-effects
     * overdrive
     * distortion
@@ -11,13 +16,12 @@ Features
     * chorus
 * post-effects
     * delay
-    * reverb
 * transpose
+* acoustic and bass simulation
+* in built metronome and tuner
+* reverb
+    * limit parameter controls
+* save state and presets
 
-Improvements/Issues
-* normalise volume in preamp
-* dynamic response - more distortion when picking harder
-* filter out crackling noises
-* improve sustain of lead amp
-* clean up gui after all features
-* refactor gui code e.g. copy pasted knob code
+
+
