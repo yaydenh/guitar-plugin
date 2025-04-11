@@ -23,7 +23,6 @@ public:
 
     void prepare(juce::dsp::ProcessSpec& spec);
     void process(juce::AudioBuffer<float>& buffer);
-    void updateEQ(float bass, float mid, float treble);
     void setGain(float newGainDb);
     void setMode(Mode newMode);
 

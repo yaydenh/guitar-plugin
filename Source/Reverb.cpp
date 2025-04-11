@@ -10,6 +10,8 @@
 
 // algorithm based on:
 // https://au.mathworks.com/help/audio/ref/reverberator-system-object.html
+// https://ccrma.stanford.edu/~dattorro/EffectDesignPart1.pdf
+// https://ccrma.stanford.edu/~dattorro/EffectDesignPart2.pdf
 
 #include "Reverb.h"
 
@@ -125,11 +127,10 @@ void Reverb::process(juce::AudioBuffer<float>& buffer)
         interpIn2 = coeff * (indexBuffer(modAP2Input, whole) - interpIn2) + indexBuffer(modAP2Input, whole + 1);
         interpOut2 = coeff * (indexBuffer(modAP2Output, whole) - interpOut2) + indexBuffer(modAP2Output, whole + 1);
 
+        // modulated all pass
         branch1 = diffusion * (interpOut1 - branch1) + interpIn1;
         branch2 = diffusion * (interpOut2 - branch2) + interpIn2;
 
-        //branch1 = diffusion * (indexBuffer(modAP1Output, 10) - branch1) + indexBuffer(modAP1Input, 10);
-        //branch2 = diffusion * (indexBuffer(modAP2Output, 10) - branch2) + indexBuffer(modAP2Input, 10);
         pushToBuffer(modAP1Output, branch1);
         pushToBuffer(modAP2Output, branch2);
 

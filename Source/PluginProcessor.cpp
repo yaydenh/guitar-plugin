@@ -101,6 +101,7 @@ void GuitarAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     // initialisation that you need..
     juce::dsp::ProcessSpec spec{ sampleRate, (juce::uint32)samplesPerBlock, getTotalNumOutputChannels() };
     preamp.prepare(spec);
+    toneStack.prepare(spec);
     eq.prepare(spec);
     gain.prepare(spec);
     noiseGate.prepare(spec);
@@ -192,11 +193,14 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     preamp.setMode(static_cast<PreampProcessor::Mode>(preampMode));
     float preampGain = *parameters.getRawParameterValue("preGain");
     preamp.setGain(preampGain);
-    float preampBass = *parameters.getRawParameterValue("preBassEQ");
-    float preampMid = *parameters.getRawParameterValue("preMidEQ");
-    float preampTreble = *parameters.getRawParameterValue("preTrebleEQ");
-    preamp.updateEQ(preampBass, preampMid, preampTreble);
     preamp.process(buffer);
+
+    // tone stack
+    float toneStackBass = *parameters.getRawParameterValue("toneStackBass");
+    float toneStackMid = *parameters.getRawParameterValue("toneStackMid");
+    float toneStackTreble = *parameters.getRawParameterValue("toneStackTreble");
+    toneStack.updateEQ(toneStackBass, toneStackMid, toneStackTreble);
+    toneStack.process(buffer);
 
     // distortion
     float driveValue = *parameters.getRawParameterValue("drive");
@@ -315,9 +319,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout GuitarAmpAudioProcessor::cre
         juce::StringArray{ "Clean", "Crunch", "Lead" }, 0
     ));
     params.add(std::make_unique<juce::AudioParameterFloat>("preGain", "preGain", -24.0f, 24.0f, 0.0f));
-    params.add(std::make_unique<juce::AudioParameterFloat>("preBassEQ", "preBassEQ", -12.0f, 12.0f, 0.0f));
-    params.add(std::make_unique<juce::AudioParameterFloat>("preMidEQ", "preMidEQ", -12.0f, 12.0f, 0.0f));
-    params.add(std::make_unique<juce::AudioParameterFloat>("preTrebleEQ", "preTrebleEQ", -12.0f, 12.0f, 0.0f));
+
+    // tone stack parameteres
+    params.add(std::make_unique<juce::AudioParameterFloat>("toneStackBass", "toneStackBass", -12.0f, 12.0f, 0.0f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("toneStackMid", "toneStackMid", -12.0f, 12.0f, 0.0f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("toneStackTreble", "toneStackTreble", -12.0f, 12.0f, 0.0f));
 
     // distortion parameters
     params.add(std::make_unique<juce::AudioParameterFloat>("drive", "Drive", 1.0f, 10.0f, 1.0f));

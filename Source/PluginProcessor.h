@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 
 #include "PreampProcessor.h"
+#include "ToneStack.h"
 #include "GainProcessor.h"
 #include "DistortionProcessor.h"
 #include "EQProcessor.h"
@@ -83,6 +84,7 @@ private:
     std::unique_ptr<juce::AudioVisualiserComponent> postVisualiser = std::make_unique<juce::AudioVisualiserComponent>(1);
 
     PreampProcessor preamp;
+    ToneStack toneStack;
     DistortionProcessor distortion;
     EQProcessor eq;
     GainProcessor gain;

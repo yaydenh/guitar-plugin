@@ -45,9 +45,9 @@ private:
 
     AmpKnob preGain;
 
-    AmpKnob preBass;
-    AmpKnob preMid;
-    AmpKnob preTreble;
+    AmpKnob toneStackBass;
+    AmpKnob toneStackMid;
+    AmpKnob toneStackTreble;
 
     juce::ComboBox distortionTypeSelector;
     std::unique_ptr<ComboBoxAttachment> distortionTypeAttachment;

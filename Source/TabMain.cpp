@@ -13,9 +13,9 @@
 TabMain::TabMain(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeState& vts)
     : audioProcessor(p),
       preGain(-24.0f, 24.0f, 0.1f, "Input", "preGain", vts),
-      preBass(-12.0f, 12.0f, 0.1f, "bass", "preBassEQ", vts),
-      preMid(-12.0f, 12.0f, 0.1f, "mid", "preMidEQ", vts),
-      preTreble(-12.0f, 12.0f, 0.1f, "treble", "preTrebleEQ", vts),
+      toneStackBass(-12.0f, 12.0f, 0.1f, "bass", "toneStackBass", vts),
+      toneStackMid(-12.0f, 12.0f, 0.1f, "mid", "toneStackMid", vts),
+      toneStackTreble(-12.0f, 12.0f, 0.1f, "treble", "toneStackTreble", vts),
       drive(1.0f, 10.0f, 0.1f, "Drive", "drive", vts),
       postBass(-12.0f, 12.0f, 0.1f, "bass", "postBassEQ", vts),
       postMid(-12.0f, 12.0f, 0.1f, "mid", "postMidEQ", vts),
@@ -52,10 +52,10 @@ TabMain::TabMain(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeState&
     // pre gain knob
     addAndMakeVisible(preGain);
 
-    // pre eq knobs
-    addAndMakeVisible(preBass);
-    addAndMakeVisible(preMid);
-    addAndMakeVisible(preTreble);
+    // tone stack eq knobs
+    addAndMakeVisible(toneStackBass);
+    addAndMakeVisible(toneStackMid);
+    addAndMakeVisible(toneStackTreble);
 
     // distortion drive knob
     addAndMakeVisible(drive);
@@ -104,9 +104,9 @@ void TabMain::resized()
 
     auto preX = marginLeft + 60;
     auto preY = marginTop + 60;
-    preBass.setBounds(preX, preY, 80, 80);
-    preMid.setBounds(preX + 50, preY, 80, 80);
-    preTreble.setBounds(preX + 100, preY, 80, 80);
+    toneStackBass.setBounds(preX, preY, 80, 80);
+    toneStackMid.setBounds(preX + 50, preY, 80, 80);
+    toneStackTreble.setBounds(preX + 100, preY, 80, 80);
     preGain.setBounds(preX - 80, preY + 40, 100, 100);
 
     auto postX = preX;

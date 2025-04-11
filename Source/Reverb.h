@@ -65,8 +65,8 @@ private:
     std::deque<float> AP6Input;
     std::deque<float> AP6Output;
 
+    // prev values for lowpass and allpass outputs
     float xLowPass = 0.0f;
-
     float LP1 = 0.0f;
     float LP2 = 0.0f;
     float interpIn1 = 0.0f;

@@ -14,7 +14,7 @@ PreampProcessor::PreampProcessor()
 {
     gainProcessor.setGainDecibels(currentGainDb);
     smoothedGain.reset(44100, 0.05f);
-    compressor = Compressor(-20, 5.0f, 100.0f, 6.0f, 4.0f, 10.0f);
+    compressor = Compressor(-20, 5.0f, 100.0f, 6.0f, 4.0f, 2.0f);
 }
 
 void PreampProcessor::prepare(juce::dsp::ProcessSpec& spec)
@@ -48,7 +48,6 @@ void PreampProcessor::prepare(juce::dsp::ProcessSpec& spec)
         trebleFilters.push_back(juce::dsp::IIR::Filter<float>());
         trebleFilters[i].prepare(spec);
     }
-    updateEQ(0.0f, 0.0f, 0.0f);
     setGain(0);
 }
 
@@ -67,7 +66,7 @@ void PreampProcessor::process(juce::AudioBuffer<float>& buffer)
     }
 
     // pre compressor - good for quiet sounds (tapping, note sustain)
-    if (test) compressor.process(buffer);
+    //compressor.process(buffer);
 
     // pre gain
     gainProcessor.process(context);
@@ -91,38 +90,51 @@ void PreampProcessor::process(juce::AudioBuffer<float>& buffer)
         {
             if (mode == Mode::Clean)
             {
-                // no clipping?
+                // no clipping
             }
-            if (mode == Mode::Crunch)
+            else if (mode == Mode::Crunch)
             {
                 samples[i] = samples[i] / std::sqrt(1 + samples[i] * samples[i]);
             }
-            if (mode == Mode::Lead)
+            else if (mode == Mode::Lead)
             {
                 samples[i] = juce::jlimit(-0.8f, 0.8f, samples[i]);
             }
         }
     }
 
-    // post EQ?
-    
-    // boost 800hz
+    // post EQ
+    // boost 800hz and 5000hz
     for (int channel = 0; channel < numChannels; channel++)
     {
         juce::dsp::AudioBlock<float> channelBlock = block.getSingleChannelBlock(channel);
         juce::dsp::ProcessContextReplacing<float> channelContext(channelBlock);
+        //lowFreqFilters[channel].process(channelContext);
+
         boost800Hz[channel].process(channelContext);
         boost5000Hz[channel].process(channelContext);
     }
 
+
     // normalise volume
-    // not really normalising at the moment, but makes the volume not unbearable
     if (currentGainDb >= 0) buffer.applyGain(1 / sqrt(currentGainDb));
 }
 
-void PreampProcessor::updateEQ(float bass, float mid, float treble)
+void PreampProcessor::setGain(float newGainDb)
 {
-    float updatedBass = bass, updatedMid = mid, updatedTreble = treble;
+    float baseGain = 1.0f;
+    if (mode == Mode::Clean)        baseGain = 1.5f;
+    else if (mode == Mode::Crunch)  baseGain = 20.0f;
+    else if (mode == Mode::Lead)    baseGain = 40.0f;
+    currentGainDb = baseGain + newGainDb;
+    smoothedGain.setTargetValue(juce::Decibels::decibelsToGain(baseGain + newGainDb));
+}
+
+void PreampProcessor::setMode(Mode newMode)
+{
+    float updatedBass = 0.0f;
+    float updatedMid = 0.0f;
+    float updatedTreble = 0.0f;
     if (mode == Mode::Clean)
     {
         updatedBass += 0.0f;
@@ -141,25 +153,17 @@ void PreampProcessor::updateEQ(float bass, float mid, float treble)
         updatedMid += 6.0f;
         updatedTreble += 1.0f;
     }
-    for (int channel = 0; channel < numChannels; channel++)
+
+    // update filters only if changed
+    if (mode != newMode)
     {
-        bassFilters[channel].coefficients = juce::dsp::IIR::Coefficients<float>::makeLowShelf(sampleRate, 100.0f, 1.0f, juce::Decibels::decibelsToGain(updatedBass));
-        midFilters[channel].coefficients = juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, 1000.0f, 1.0f, juce::Decibels::decibelsToGain(updatedMid));
-        trebleFilters[channel].coefficients = juce::dsp::IIR::Coefficients<float>::makeHighShelf(sampleRate, 5000.0f, 0.7f, juce::Decibels::decibelsToGain(updatedTreble));
+        for (int channel = 0; channel < numChannels; channel++)
+        {
+            bassFilters[channel].coefficients = juce::dsp::IIR::Coefficients<float>::makeLowShelf(sampleRate, 100.0f, 1.0f, juce::Decibels::decibelsToGain(updatedBass));
+            midFilters[channel].coefficients = juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, 1000.0f, 1.0f, juce::Decibels::decibelsToGain(updatedMid));
+            trebleFilters[channel].coefficients = juce::dsp::IIR::Coefficients<float>::makeHighShelf(sampleRate, 5000.0f, 0.7f, juce::Decibels::decibelsToGain(updatedTreble));
+        }
     }
-}
 
-void PreampProcessor::setGain(float newGainDb)
-{
-    float baseGain = 1.0f;
-    if (mode == Mode::Clean)        baseGain = 1.5f;
-    else if (mode == Mode::Crunch)  baseGain = 20.0f;
-    else if (mode == Mode::Lead)    baseGain = 40.0f;
-    currentGainDb = baseGain + newGainDb;
-    smoothedGain.setTargetValue(juce::Decibels::decibelsToGain(baseGain + newGainDb));
-}
-
-void PreampProcessor::setMode(Mode newMode)
-{
     mode = newMode;
 }
