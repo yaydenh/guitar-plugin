@@ -18,13 +18,13 @@ public:
     CabSimulator();
     
     void prepare(juce::dsp::ProcessSpec& spec);
-    template <typename ProcessContext>
-    void process(const ProcessContext& context) { convolver.process(context); };
+    void process(juce::AudioBuffer<float>& buffer);
 
     void loadImpulseResponse(juce::String filename);
     juce::StringArray getFilenames();
 
 private:
+    bool on = false;
     juce::dsp::Convolution convolver;
     juce::File IRDir;
     juce::StringArray IRFilenames;

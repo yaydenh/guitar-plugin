@@ -210,9 +210,7 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     distortion.process(buffer);
 
     // cab sim
-    juce::dsp::AudioBlock<float> block(buffer);
-    juce::dsp::ProcessContextReplacing<float> context(block);
-    cabSim.process(context);
+    cabSim.process(buffer);
 
     // post EQ
     float postBass = *parameters.getRawParameterValue("postBassEQ");
@@ -353,7 +351,6 @@ juce::AudioProcessorValueTreeState::ParameterLayout GuitarAmpAudioProcessor::cre
     params.add(std::make_unique<juce::AudioParameterFloat>("compressorKneeWidth", "compressorKneeWidth", 0.0f, 20.0f, 6.0f));
     params.add(std::make_unique<juce::AudioParameterFloat>("compressorRatio", "compressorRatio", 1.0f, 50.0f, 2.0f));
     params.add(std::make_unique<juce::AudioParameterFloat>("compressorMakeUpGain", "compressorMakeUpGain", -10.0f, 20.0f, 0.0f));
-
 
     // reverb pedal
     params.add(std::make_unique<juce::AudioParameterBool>("reverbOn", "reverbOn", false));
