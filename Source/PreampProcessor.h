@@ -30,6 +30,7 @@ public:
 private:
     int numChannels = 2;
     std::vector<juce::dsp::IIR::Filter<float>> lowFreqFilters;
+    std::vector<juce::dsp::IIR::Filter<float>> highFreqFilters;
     std::vector<juce::dsp::IIR::Filter<float>> boost800Hz;
     std::vector<juce::dsp::IIR::Filter<float>> boost5000Hz;
 
