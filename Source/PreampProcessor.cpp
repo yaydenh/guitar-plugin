@@ -42,7 +42,7 @@ void PreampProcessor::prepare(juce::dsp::ProcessSpec& spec)
         boost800Hz[i].prepare(spec);
 
         boost5000Hz.push_back(
-            juce::dsp::IIR::Filter<float>(juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, 5000.0f, 5.0f, juce::Decibels::decibelsToGain(6.0f)))
+            juce::dsp::IIR::Filter<float>(juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate, 5000.0f, 4.0f, juce::Decibels::decibelsToGain(6.0f)))
         );
         boost5000Hz[i].prepare(spec);
 
@@ -118,8 +118,6 @@ void PreampProcessor::process(juce::AudioBuffer<float>& buffer)
         boost800Hz[channel].process(channelContext);
         boost5000Hz[channel].process(channelContext);
     }
-
-
 
     // normalise volume
     if (currentGainDb >= 0) buffer.applyGain(1 / sqrt(currentGainDb));
