@@ -5,6 +5,8 @@
   <MAINGROUP id="n1ZJnT" name="GuitarAmp">
     <GROUP id="{57F8A268-1A21-55E5-C00E-FCB1E05162E8}" name="Source">
       <GROUP id="{E3F64B15-85B4-912D-A842-9002542D4589}" name="Processors">
+        <FILE id="W9ahaa" name="Distortion.cpp" compile="1" resource="0" file="Source/Distortion.cpp"/>
+        <FILE id="ewSLjD" name="Distortion.h" compile="0" resource="0" file="Source/Distortion.h"/>
         <FILE id="QFO3bh" name="ToneStack.cpp" compile="1" resource="0" file="Source/ToneStack.cpp"/>
         <FILE id="zFhpmK" name="ToneStack.h" compile="0" resource="0" file="Source/ToneStack.h"/>
         <FILE id="KSkGr4" name="DistortionProcessor.cpp" compile="1" resource="0"

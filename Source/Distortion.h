@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    Overdrive.h
-    Created: 22 Mar 2025 11:19:47pm
+    Distortion.h
+    Created: 16 Apr 2025 2:53:59pm
     Author:  jayde
 
   ==============================================================================
@@ -12,16 +12,15 @@
 
 #include <JuceHeader.h>
 
-class Overdrive
+class Distortion
 {
 public:
-    Overdrive();
+    Distortion();
 
     void prepare(juce::dsp::ProcessSpec& spec);
     void process(juce::AudioBuffer<float>& buffer);
 
 private:
-    float prev = 0.0f;
-    float hp1 = 0.0f;
-    float hp2 = 0.0f;
+    float drive;
+
 };
