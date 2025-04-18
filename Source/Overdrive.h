@@ -21,7 +21,15 @@ public:
     void process(juce::AudioBuffer<float>& buffer);
 
 private:
-    float prev = 0.0f;
+    float sampleRate = 44100.0f;
     float hp1 = 0.0f;
     float hp2 = 0.0f;
+    float hp1Prev = 0.0f;
+    float hp2Prev = 0.0f;
+
+    float hp1Alpha = 0.0f;
+    float hp2Alpha = 0.0f;
+    float lpAlpha  = 0.0f;
+
+    float lp = 0.0f;
 };
