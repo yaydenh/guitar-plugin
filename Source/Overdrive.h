@@ -26,7 +26,7 @@ private:
     // controls
     float overdrive;
     float tone;
-    float level;
+    float levelDb;
 
     // high/low pass variables
     float hp1 = 0.0f;
@@ -36,5 +36,6 @@ private:
     float hp1Alpha = 0.0f;
     float hp2Alpha = 0.0f;
 
-    float lp = 0.0f;
+    float lp1 = 0.0f;
+    float lp2 = 0.0f;
 };
