@@ -9,6 +9,7 @@
 */
 
 // https://www.electrosmash.com/tube-screamer-analysis
+// https://ccrma.stanford.edu/~dtyeh/papers/DavidYehThesissinglesided.pdf
 
 #include "Overdrive.h"
 
@@ -20,8 +21,7 @@ void Overdrive::prepare(juce::dsp::ProcessSpec& spec)
 {
     sampleRate = spec.sampleRate;
     hp1Alpha = 1.0f / (1.0f + (2.0f * juce::MathConstants<float>::pi * 15.9f / sampleRate));
-    hp2Alpha = 1.0f / (1.0f + (2.0f * juce::MathConstants<float>::pi * 15.6f / sampleRate));
-    lpAlpha = 1.0f / (1.0f + (sampleRate / (2.0f * juce::MathConstants<float>::pi * 723.4f));
+    hp2Alpha = 1.0f / (1.0f + (2.0f * juce::MathConstants<float>::pi * 720.0f / sampleRate));
 }
 
 void Overdrive::process(juce::AudioBuffer<float>& buffer)
@@ -42,21 +42,24 @@ void Overdrive::process(juce::AudioBuffer<float>& buffer)
             hp1 = hp1Alpha * (hp1 + hp1Prev - x);
             hp1Prev = x;
 
-            // cutoff 15.6 Hz
+            // cutoff 720 Hz
             hp2 = hp2Alpha * (hp2 + hp1 - hp2Prev);
             hp2Prev = hp1;
 
-            // clipping
-            // change tanh to approximation for performance?
-            y = std::tanh(hp2);
+            // amplify and clip
+            y *= 1 + ((51000.0f + 500000.0f * overdrive) / 4700.0f);
+            y = std::tanh(hp2); // change tanh to approximation for performance?
 
-            // sum with input signal
-            y += x;
-
-            // low pass, cutoff 723.4hz, -20db/dec
+            // low pass
+            // cutoff = 1 / 2piRC where R varies from overdrive
             // y[n] = (1 - a) * y[n-1] + a * x[n]
-            lp = (1 - lpAlpha) * lp + lpAlpha * y;
+            const float cutoff = 1.0f / (2.0f * juce::MathConstants<float>::pi * 51 * 0.000001f * (51000.0f + 500000.0f * overdrive));
+            const float a = 1.0f / (1.0f + (sampleRate / (2.0f * juce::MathConstants<float>::pi * 723.4f)));
+            lp = (1 - a) * lp + a * y;
             y = lp;
+
+            // sum with input signal after first high pass
+            y += hp1;
 
             samples[n] = y;
         }

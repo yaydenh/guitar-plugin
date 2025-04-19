@@ -22,14 +22,19 @@ public:
 
 private:
     float sampleRate = 44100.0f;
+
+    // controls
+    float overdrive;
+    float tone;
+    float level;
+
+    // high/low pass variables
     float hp1 = 0.0f;
     float hp2 = 0.0f;
     float hp1Prev = 0.0f;
     float hp2Prev = 0.0f;
-
     float hp1Alpha = 0.0f;
     float hp2Alpha = 0.0f;
-    float lpAlpha  = 0.0f;
 
     float lp = 0.0f;
 };
