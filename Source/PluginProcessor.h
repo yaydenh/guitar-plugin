@@ -20,6 +20,7 @@
 #include "CabSimulator.h"
 #include "Compressor.h"
 #include "Reverb.h"
+#include "Overdrive.h"
 
 //==============================================================================
 /**
@@ -92,6 +93,7 @@ private:
     CabSimulator cabSim;
 
     // pedals
+    Overdrive overdrive;
     Compressor compressor;
     Reverb reverb;
     //==============================================================================

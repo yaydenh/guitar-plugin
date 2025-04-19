@@ -108,6 +108,7 @@ void GuitarAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     cabSim.prepare(spec);
     compressor.prepare(spec);
     reverb.prepare(spec);
+    overdrive.prepare(spec);
 }
 
 void GuitarAmpAudioProcessor::releaseResources()
@@ -164,6 +165,13 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
 
     // pre waveform visualiser
     preVisualiser->pushBuffer(buffer);
+
+    // overdrive pedal
+    float overdriveDrive = *parameters.getRawParameterValue("overdriveDrive");
+    float overdriveTone = *parameters.getRawParameterValue("overdriveTone");
+    float overdriveLevel = *parameters.getRawParameterValue("overdriveLevel");
+    overdrive.configure(overdriveDrive, overdriveLevel, overdriveTone);
+    overdrive.process(buffer);
 
     // preamp
     preamp.test = test;
@@ -338,6 +346,12 @@ juce::AudioProcessorValueTreeState::ParameterLayout GuitarAmpAudioProcessor::cre
     params.add(std::make_unique<juce::AudioParameterFloat>("reverbHighFreqDamping", "reverbHighFreqDamping", 0.0f, 1.0f, 0.5f));
     params.add(std::make_unique<juce::AudioParameterFloat>("reverbDecayFactor", "reverbHighFreqDamping", 0.0f, 1.0f, 0.5f));
     params.add(std::make_unique<juce::AudioParameterFloat>("reverbWetDryMix", "reverbWetDryMix", 0.0f, 1.0f, 0.3f));
+
+    // overdrive pedal
+    params.add(std::make_unique<juce::AudioParameterBool>("overdriveOn", "overdriveOn", false));
+    params.add(std::make_unique<juce::AudioParameterFloat>("overdriveDrive", "overdriveDrive", 0.0f, 1.0f, 0.5f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("overdriveTone", "overdriveTone", 0.0f, 1.0f, 0.5f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("overdriveLevel", "overdriveLevel", -12.0f, 12.0f, 0.0f));
 
     return params;
 }

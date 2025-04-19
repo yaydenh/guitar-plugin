@@ -49,6 +49,7 @@ void Overdrive::process(juce::AudioBuffer<float>& buffer)
             hp2Prev = hp1;
 
             // amplify and clip
+            // gain non inverting from op amp
             y *= 1.0f + ((51000.0f + 500000.0f * overdrive) / 4700.0f);
             y = std::tanh(hp2); // change tanh to approximation for performance?
 
@@ -67,7 +68,7 @@ void Overdrive::process(juce::AudioBuffer<float>& buffer)
 
             // low pass 
             // cutoff between 200 to 5000 depending on tone knob
-            const float lp2cutoff = 200.0f * std::powf(5000.0f / 200.0f, tone);
+            const float lp2Cutoff = 200.0f * std::powf(5000.0f / 200.0f, tone);
             const float lp2Alpha = 1.0f / (1.0f + (sampleRate / (2.0f * juce::MathConstants<float>::pi * lp2Cutoff)));
             lp2 = (1.0f - lp2Alpha) * lp2 + lp2Alpha * y;
             y = lp2;
@@ -82,4 +83,11 @@ void Overdrive::process(juce::AudioBuffer<float>& buffer)
             samples[n] = y;
         }
     }
+}
+
+void Overdrive::configure(float newOverdrive, float newTone, float newLevelDb)
+{
+    overdrive = newOverdrive;
+    tone = newTone;
+    levelDb = newLevelDb;
 }
