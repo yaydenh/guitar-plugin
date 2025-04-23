@@ -45,13 +45,15 @@ void Overdrive::process(juce::AudioBuffer<float>& buffer)
             hp1Prev = x;
 
             // cutoff 720 Hz
-            hp2 = hp2Alpha * (hp2 + hp1 - hp2Prev);
+            hp2 = hp2Alpha * (hp2 + hp2Prev - hp1);
             hp2Prev = hp1;
+
+            y = hp2;
 
             // amplify and clip
             // gain non inverting from op amp
             y *= 1.0f + ((51000.0f + 500000.0f * overdrive) / 4700.0f);
-            y = std::tanh(hp2); // change tanh to approximation for performance?
+            y = std::tanh(y); // change tanh to approximation for performance?
 
             // low pass
             // cutoff = 1 / 2piRC where R varies from overdrive
