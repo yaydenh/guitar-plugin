@@ -38,14 +38,14 @@ void Overdrive::process(juce::AudioBuffer<float>& buffer)
             // CLIPPING AMPLIFYING STAGE
 
             // high passes
-            // y[n] = a * y[n-1] + a * (x[n-1] - x[n])
+            // y[n] = a * y[n-1] + a * (x[n] - x[n-1])
 
             // cutoff 15.9 Hz
-            hp1 = hp1Alpha * (hp1 + hp1Prev - x);
+            hp1 = hp1Alpha * (hp1 + x - hp1Prev);
             hp1Prev = x;
 
             // cutoff 720 Hz
-            hp2 = hp2Alpha * (hp2 + hp2Prev - hp1);
+            hp2 = hp2Alpha * (hp2 + hp1 - hp2Prev);
             hp2Prev = hp1;
 
             y = hp2;
@@ -58,12 +58,12 @@ void Overdrive::process(juce::AudioBuffer<float>& buffer)
             // low pass
             // cutoff = 1 / 2piRC where R varies from overdrive
             // y[n] = (1 - a) * y[n-1] + a * x[n]
-            const float lp1Cutoff = 1.0f / (2.0f * juce::MathConstants<float>::pi * 51 * 0.000001f * (51000.0f + 500000.0f * overdrive));
+            const double lp1Cutoff = 1.0 / (2.0 * juce::MathConstants<double>::pi * 51.0 * 0.000000000001 * (51000.0 + 500000.0 * overdrive));
             const float lp1Alpha = 1.0f / (1.0f + (sampleRate / (2.0f * juce::MathConstants<float>::pi * lp1Cutoff)));
             lp1 = (1.0f - lp1Alpha) * lp1 + lp1Alpha * y;
             y = lp1;
 
-            // sum with input signal after first high pass
+            // sum with input signal
             y += hp1;
 
             // TONE AND VOLUME STAGE
