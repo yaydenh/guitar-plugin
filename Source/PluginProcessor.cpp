@@ -171,7 +171,7 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     float overdriveDrive = *parameters.getRawParameterValue("overdriveDrive");
     float overdriveTone = *parameters.getRawParameterValue("overdriveTone");
     float overdriveLevel = *parameters.getRawParameterValue("overdriveLevel");
-    overdrive.configure(overdriveDrive, overdriveLevel, overdriveTone);
+    overdrive.configure(overdriveDrive, overdriveTone, overdriveLevel);
     if (overdriveOn) overdrive.process(buffer);
 
     // preamp
