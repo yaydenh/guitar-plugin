@@ -30,13 +30,13 @@ private:
     float levelDb;
 
     // high/low pass variables
-    float hp1 = 0.0f;
-    float hp2 = 0.0f;
-    float hp1Prev = 0.0f;
-    float hp2Prev = 0.0f;
+    std::vector<float> hp1;
+    std::vector<float> hp2;
+    std::vector<float> hp1Prev;
+    std::vector<float> hp2Prev;
     float hp1Alpha = 0.0f;
     float hp2Alpha = 0.0f;
 
-    float lp1 = 0.0f;
-    float lp2 = 0.0f;
+    std::vector<float> lp1;
+    std::vector<float> lp2;
 };
