@@ -203,7 +203,7 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     distortionAmp.setDrive(driveValue);
     int distortionChoice = parameters.getParameterAsValue("distortionType").getValue();
     distortionAmp.setType(static_cast<DistortionProcessor::Type>(distortionChoice));
-    distortion.process(buffer);
+    distortionAmp.process(buffer);
 
     // cab sim
     cabSim.process(buffer);

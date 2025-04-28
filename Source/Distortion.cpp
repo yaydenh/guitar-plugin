@@ -30,8 +30,8 @@ void Distortion::prepare(juce::dsp::ProcessSpec& spec)
     hp4Prev.resize(spec.numChannels, 0.0f);
     hp1Alpha = 1.0f / (1.0f + (2.0f * juce::MathConstants<float>::pi * 3.3f / sampleRate));
     hp2Alpha = 1.0f / (1.0f + (2.0f * juce::MathConstants<float>::pi * 33.0f / sampleRate));
-    hp2Alpha = 1.0f / (1.0f + (2.0f * juce::MathConstants<float>::pi * 23.0f / sampleRate));
-    hp2Alpha = 1.0f / (1.0f + (2.0f * juce::MathConstants<float>::pi * 73.0f / sampleRate));
+    hp3Alpha = 1.0f / (1.0f + (2.0f * juce::MathConstants<float>::pi * 23.0f / sampleRate));
+    hp4Alpha = 1.0f / (1.0f + (2.0f * juce::MathConstants<float>::pi * 73.0f / sampleRate));
 
     lp1.resize(spec.numChannels, 0.0f);
     lp2.resize(spec.numChannels, 0.0f);
