@@ -10,8 +10,6 @@ Features
     * add more bands for post eq
     * presence and master knob
 * pre-effects
-    * overdrive
-    * distortion
     * phaser
     * chorus
 * post-effects
@@ -19,8 +17,6 @@ Features
 * transpose
 * acoustic and bass simulation
 * in built metronome and tuner
-* reverb
-    * limit parameter controls
 * save state and presets
 
 
