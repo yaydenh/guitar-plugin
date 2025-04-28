@@ -36,6 +36,7 @@ private:
     AmpKnob compressorMakeUpGain;
     juce::ToggleButton compressorOnButton;
     std::unique_ptr<ButtonAttachment> compressorOnAttachment;
+    juce::Label compressorLabel;
 
     AmpKnob reverbPreDelay;
     AmpKnob reverbHighCutFreq;
@@ -45,16 +46,19 @@ private:
     AmpKnob reverbWetDryMix;
     juce::ToggleButton reverbOnButton;
     std::unique_ptr<ButtonAttachment> reverbOnAttachment;
+    juce::Label reverbLabel;
 
     AmpKnob distortionDrive;
     AmpKnob distortionTone;
     AmpKnob distortionLevel;
     juce::ToggleButton distortionOnButton;
     std::unique_ptr<ButtonAttachment> distortionOnAttachment;
+    juce::Label distortionLabel;
 
     AmpKnob overdriveDrive;
     AmpKnob overdriveTone;
     AmpKnob overdriveLevel;
     juce::ToggleButton overdriveOnButton;
     std::unique_ptr<ButtonAttachment> overdriveOnAttachment;
+    juce::Label overdriveLabel;
 };
