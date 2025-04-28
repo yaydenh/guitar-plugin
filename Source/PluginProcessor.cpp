@@ -109,6 +109,7 @@ void GuitarAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     compressor.prepare(spec);
     reverb.prepare(spec);
     overdrive.prepare(spec);
+    distortion.prepare(spec);
 }
 
 void GuitarAmpAudioProcessor::releaseResources()
@@ -166,6 +167,14 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     // pre waveform visualiser
     preVisualiser->pushBuffer(buffer);
 
+    // distortion pedal
+    bool distortionOn = parameters.getParameterAsValue("distortionOn").getValue();
+    float distortionDrive = *parameters.getRawParameterValue("distortionDrive");
+    float distortionTone = *parameters.getRawParameterValue("distortionTone");
+    float distortionLevel = *parameters.getRawParameterValue("distortionLevel");
+    distortion.configure(distortionDrive, distortionTone, distortionLevel);
+    if (distortionOn) distortion.process(buffer);
+
     // overdrive pedal
     bool overdriveOn = parameters.getParameterAsValue("overdriveOn").getValue();
     float overdriveDrive = *parameters.getRawParameterValue("overdriveDrive");
@@ -191,9 +200,9 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
 
     // distortion
     float driveValue = *parameters.getRawParameterValue("drive");
-    distortion.setDrive(driveValue);
+    distortionAmp.setDrive(driveValue);
     int distortionChoice = parameters.getParameterAsValue("distortionType").getValue();
-    distortion.setType(static_cast<DistortionProcessor::Type>(distortionChoice));
+    distortionAmp.setType(static_cast<DistortionProcessor::Type>(distortionChoice));
     distortion.process(buffer);
 
     // cab sim
@@ -353,6 +362,18 @@ juce::AudioProcessorValueTreeState::ParameterLayout GuitarAmpAudioProcessor::cre
     params.add(std::make_unique<juce::AudioParameterFloat>("overdriveDrive", "overdriveDrive", 0.0f, 1.0f, 0.5f));
     params.add(std::make_unique<juce::AudioParameterFloat>("overdriveTone", "overdriveTone", 0.0f, 1.0f, 0.5f));
     params.add(std::make_unique<juce::AudioParameterFloat>("overdriveLevel", "overdriveLevel", -12.0f, 12.0f, 0.0f));
+
+    // overdrive pedal
+    params.add(std::make_unique<juce::AudioParameterBool>("overdriveOn", "overdriveOn", false));
+    params.add(std::make_unique<juce::AudioParameterFloat>("overdriveDrive", "overdriveDrive", 0.0f, 1.0f, 0.5f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("overdriveTone", "overdriveTone", 0.0f, 1.0f, 0.5f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("overdriveLevel", "overdriveLevel", -12.0f, 12.0f, 0.0f));
+
+    // distortion pedal
+    params.add(std::make_unique<juce::AudioParameterBool>("distortionOn", "distortionOn", false));
+    params.add(std::make_unique<juce::AudioParameterFloat>("distortionDrive", "distortionDrive", 0.0f, 1.0f, 0.5f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("distortionTone", "distortionTone", 0.0f, 1.0f, 0.5f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("distortionLevel", "distortionLevel", -12.0f, 12.0f, 0.0f));
 
     return params;
 }

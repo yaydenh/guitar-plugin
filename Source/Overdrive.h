@@ -25,9 +25,9 @@ private:
     float sampleRate = 44100.0f;
 
     // controls
-    float overdrive;
-    float tone;
-    float levelDb;
+    float overdrive = 0.0f;
+    float tone      = 0.0f;
+    float levelDb   = 0.0f;
 
     // high/low pass variables
     std::vector<float> hp1;

@@ -25,6 +25,9 @@ TabPedals::TabPedals(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeSt
       reverbHighFreqDamping(0.0f, 1.0f, 0.05f, "HighFreqDamping", "reverbHighFreqDamping", vts),
       reverbDecayFactor(0.0f, 1.0f, 0.05f, "DecayFactor", "reverbDecayFactor", vts),
       reverbWetDryMix(0.0f, 1.0f, 0.05f, "WetDryMix", "reverbWetDryMix", vts),
+      distortionDrive(0.0f, 1.0f, 0.05f, "Drive", "distortionDrive", vts),
+      distortionTone(0.0f, 1.0f, 0.05f, "Tone", "distortionTone", vts),
+      distortionLevel(-12.0f, 12.0f, 0.1f, "Level", "distortionLevel", vts),
       overdriveDrive(0.0f, 1.0f, 0.05f, "Drive", "overdriveDrive", vts),
       overdriveTone(0.0f, 1.0f, 0.05f, "Tone", "overdriveTone", vts),
       overdriveLevel(-12.0f, 12.0f, 0.1f, "Level", "overdriveLevel", vts)
@@ -47,6 +50,12 @@ TabPedals::TabPedals(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeSt
     addAndMakeVisible(reverbWetDryMix);
     addAndMakeVisible(reverbOnButton);
     reverbOnAttachment = std::make_unique<ButtonAttachment>(vts, "reverbOn", reverbOnButton);
+
+    addAndMakeVisible(distortionDrive);
+    addAndMakeVisible(distortionTone);
+    addAndMakeVisible(distortionLevel);
+    addAndMakeVisible(distortionOnButton);
+    distortionOnAttachment = std::make_unique<ButtonAttachment>(vts, "distortionOn", distortionOnButton);
 
     addAndMakeVisible(overdriveDrive);
     addAndMakeVisible(overdriveTone);
@@ -79,16 +88,26 @@ void TabPedals::resized()
         &reverbDecayFactor, &reverbWetDryMix
     };
 
-    // overdrive
-    overdriveOnButton.setBounds(0, 2 * knobSize, 30, 30);
-
     for (int i = 0; i < reverbKnobs.size(); i++)
         reverbKnobs[i]->setBounds(padding + i * knobSize, padding + knobSize, knobSize, knobSize);
+
+    // distortion
+    distortionOnButton.setBounds(0, 2 * knobSize, 30, 30);
+
+    std::vector<juce::Component*> distortionKnobs = {
+        &distortionDrive, & distortionTone, & distortionLevel
+    };
+
+    for (int i = 0; i < distortionKnobs.size(); i++)
+        distortionKnobs[i]->setBounds(padding + i * knobSize, padding + 2 * knobSize, knobSize, knobSize);
+
+    // overdrive
+    overdriveOnButton.setBounds(0, 3 * knobSize, 30, 30);
 
     std::vector<juce::Component*> overdriveKnobs = {
         &overdriveDrive, &overdriveTone, &overdriveLevel
     };
 
     for (int i = 0; i < overdriveKnobs.size(); i++)
-        overdriveKnobs[i]->setBounds(padding + i * knobSize, padding + 2 * knobSize, knobSize, knobSize);
+        overdriveKnobs[i]->setBounds(padding + i * knobSize, padding + 3 * knobSize, knobSize, knobSize);
 }

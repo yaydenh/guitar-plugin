@@ -21,6 +21,7 @@
 #include "Compressor.h"
 #include "Reverb.h"
 #include "Overdrive.h"
+#include "Distortion.h"
 
 //==============================================================================
 /**
@@ -86,7 +87,7 @@ private:
 
     PreampProcessor preamp;
     ToneStack toneStack;
-    DistortionProcessor distortion;
+    DistortionProcessor distortionAmp;
     EQProcessor eq;
     GainProcessor gain;
     NoiseGate noiseGate;
@@ -94,6 +95,7 @@ private:
 
     // pedals
     Overdrive overdrive;
+    Distortion distortion;
     Compressor compressor;
     Reverb reverb;
     //==============================================================================

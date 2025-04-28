@@ -46,6 +46,12 @@ private:
     juce::ToggleButton reverbOnButton;
     std::unique_ptr<ButtonAttachment> reverbOnAttachment;
 
+    AmpKnob distortionDrive;
+    AmpKnob distortionTone;
+    AmpKnob distortionLevel;
+    juce::ToggleButton distortionOnButton;
+    std::unique_ptr<ButtonAttachment> distortionOnAttachment;
+
     AmpKnob overdriveDrive;
     AmpKnob overdriveTone;
     AmpKnob overdriveLevel;

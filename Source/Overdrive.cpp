@@ -79,7 +79,7 @@ void Overdrive::process(juce::AudioBuffer<float>& buffer)
             // cutoff between 200 to 5000 depending on tone knob
             const float lp2Cutoff = 200.0f * std::powf(5000.0f / 200.0f, tone);
             const float lp2Alpha = 1.0f / (1.0f + (sampleRate / (2.0f * juce::MathConstants<float>::pi * lp2Cutoff)));
-            lp2[channel] = (1.0f - lp2Alpha) * lp2[channel] + lp2Alpha * y;
+            lp2[channel] += lp2Alpha * (y - lp2[channel]);
             y = lp2[channel];
 
             // volume 

@@ -111,3 +111,9 @@ void Distortion::process(juce::AudioBuffer<float>& buffer)
     }
 }
 
+void Distortion::configure(float newDistortion, float newTone, float newLevelDb)
+{
+    distortion = newDistortion;
+    tone = newTone;
+    levelDb = newLevelDb;
+}
