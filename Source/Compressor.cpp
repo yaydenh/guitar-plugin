@@ -31,6 +31,8 @@ void Compressor::prepare(juce::dsp::ProcessSpec& spec)
         filterHighFreq.push_back(juce::dsp::IIR::Filter<float>(juce::dsp::IIR::Coefficients<float>::makeLowPass(spec.sampleRate, 10.0f, 1.0f)));
         filterHighFreq[i].prepare(spec);
     }
+    y1.resize(spec.numChannels, 0.0f);
+    yL.resize(spec.numChannels, 0.0f);
 }
 
 void Compressor::process(juce::AudioBuffer<float>& buffer)
@@ -58,7 +60,6 @@ void Compressor::process(juce::AudioBuffer<float>& buffer)
     for (auto channel = 0; channel < buffer.getNumChannels(); channel++)
     {
         auto* samples = buffer.getWritePointer(channel);
-        float yL = 0, y1 = 0;
         for (int i = 0; i < buffer.getNumSamples(); i++)
         {
             // convert sample to decibel
@@ -89,13 +90,13 @@ void Compressor::process(juce::AudioBuffer<float>& buffer)
             // tracks peaks of signal
             // if new peak xL, set y1 to xL (fast attack)
             // else if xL is smaller, decay based on release factor (slow release)
-            y1 = std::max(xL, release * y1 + (1.0f - release) * xL);
+            y1[channel] = std::max(xL, release * y1[channel] + (1.0f - release) * xL);
 
             // smoothing with attack coefficient - how aggressive compressor is applied
-            yL = attack * yL + (1.0f - attack) * y1;
+            yL[channel] = attack * yL[channel] + (1.0f - attack) * y1[channel];
 
             float dry = samples[i];
-            float wet = samples[i] * juce::Decibels::decibelsToGain(M + makeUpGain - yL);
+            float wet = samples[i] * juce::Decibels::decibelsToGain(M + makeUpGain - yL[channel]);
             samples[i] = (1.0f - blend) * dry + blend * wet;
 
         }

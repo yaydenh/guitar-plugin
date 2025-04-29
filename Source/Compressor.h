@@ -53,4 +53,7 @@ private:
     // hold
     // side chain filtering
     // look ahead
+
+    std::vector<float> y1;
+    std::vector<float> yL;
 };

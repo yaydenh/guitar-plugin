@@ -71,7 +71,7 @@ void PreampProcessor::process(juce::AudioBuffer<float>& buffer)
     }
 
     // pre compressor - good for quiet sounds (tapping, note sustain)
-    //compressor.process(buffer);
+    if (test) compressor.process(buffer);
 
     // pre gain
     gainProcessor.process(context);
