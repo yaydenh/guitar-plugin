@@ -49,10 +49,6 @@ private:
     AmpKnob toneStackMid;
     AmpKnob toneStackTreble;
 
-    juce::ComboBox distortionTypeSelector;
-    std::unique_ptr<ComboBoxAttachment> distortionTypeAttachment;
-    AmpKnob drive;
-
     AmpKnob postBass;
     AmpKnob postMid;
     AmpKnob postTreble;

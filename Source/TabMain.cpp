@@ -16,7 +16,6 @@ TabMain::TabMain(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeState&
       toneStackBass(-12.0f, 12.0f, 0.1f, "bass", "toneStackBass", vts),
       toneStackMid(-12.0f, 12.0f, 0.1f, "mid", "toneStackMid", vts),
       toneStackTreble(-12.0f, 12.0f, 0.1f, "treble", "toneStackTreble", vts),
-      drive(1.0f, 10.0f, 0.1f, "Drive", "drive", vts),
       postBass(-12.0f, 12.0f, 0.1f, "bass", "postBassEQ", vts),
       postMid(-12.0f, 12.0f, 0.1f, "mid", "postMidEQ", vts),
       postTreble(-12.0f, 12.0f, 0.1f, "treble", "postTrebleEQ", vts),
@@ -56,18 +55,6 @@ TabMain::TabMain(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeState&
     addAndMakeVisible(toneStackBass);
     addAndMakeVisible(toneStackMid);
     addAndMakeVisible(toneStackTreble);
-
-    // distortion drive knob
-    addAndMakeVisible(drive);
-
-    // distortion type selector
-    distortionTypeSelector.addItem("Soft Clip", 1);
-    distortionTypeSelector.addItem("Hard Clip", 2);
-    distortionTypeSelector.addItem("WaveShaper", 3);
-    distortionTypeSelector.addItem("Fuzz", 4);
-    distortionTypeSelector.addItem("None", 5);
-    addAndMakeVisible(distortionTypeSelector);
-    distortionTypeAttachment.reset(new ComboBoxAttachment(vts, "distortionType", distortionTypeSelector));
 
     // post eq knobs
     addAndMakeVisible(postBass);
@@ -118,9 +105,7 @@ void TabMain::resized()
     postGain.setBounds(postX + 160, preY + 40, 100, 100);
 
     // right controls
-    drive.setBounds(marginLeft + 330, preY + 40, 100, 100);
-    distortionTypeSelector.setBounds(marginLeft + 330, preY + 140, 100, 30);
-    noiseGate.setBounds(marginLeft + 330 + 100, preY + 40, 100, 100);
+    noiseGate.setBounds(marginLeft + 330, preY + 40, 100, 100);
 
     // visualisers
     preFreq.setBounds(0, 300, 400, 300);

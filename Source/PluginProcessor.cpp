@@ -198,13 +198,6 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     toneStack.updateEQ(toneStackBass, toneStackMid, toneStackTreble);
     toneStack.process(buffer);
 
-    // distortion
-    float driveValue = *parameters.getRawParameterValue("drive");
-    distortionAmp.setDrive(driveValue);
-    int distortionChoice = parameters.getParameterAsValue("distortionType").getValue();
-    distortionAmp.setType(static_cast<DistortionProcessor::Type>(distortionChoice));
-    distortionAmp.process(buffer);
-
     // cab sim
     cabSim.process(buffer);
 
@@ -318,12 +311,6 @@ juce::AudioProcessorValueTreeState::ParameterLayout GuitarAmpAudioProcessor::cre
     params.add(std::make_unique<juce::AudioParameterFloat>("toneStackBass", "toneStackBass", -12.0f, 12.0f, 0.0f));
     params.add(std::make_unique<juce::AudioParameterFloat>("toneStackMid", "toneStackMid", -12.0f, 12.0f, 0.0f));
     params.add(std::make_unique<juce::AudioParameterFloat>("toneStackTreble", "toneStackTreble", -12.0f, 12.0f, 0.0f));
-
-    // distortion parameters
-    params.add(std::make_unique<juce::AudioParameterFloat>("drive", "Drive", 1.0f, 10.0f, 1.0f));
-    params.add(std::make_unique<juce::AudioParameterChoice>("distortionType", "Distortion Type",
-        juce::StringArray{ "Soft Clip", "Hard Clip", "WaveShaper", "Fuzz", "None" }, 0
-    ));
 
     // eq parameters
     params.add(std::make_unique<juce::AudioParameterFloat>("postBassEQ", "postBassEQ", -12.0f, 12.0f, 0.0f));

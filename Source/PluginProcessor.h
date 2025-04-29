@@ -13,7 +13,6 @@
 #include "PreampProcessor.h"
 #include "ToneStack.h"
 #include "GainProcessor.h"
-#include "DistortionProcessor.h"
 #include "EQProcessor.h"
 #include "FrequencyVisualiser.h"
 #include "NoiseGate.h"
@@ -87,7 +86,6 @@ private:
 
     PreampProcessor preamp;
     ToneStack toneStack;
-    DistortionProcessor distortionAmp;
     EQProcessor eq;
     GainProcessor gain;
     NoiseGate noiseGate;

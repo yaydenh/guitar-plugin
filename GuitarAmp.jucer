@@ -11,10 +11,6 @@
         <FILE id="ewSLjD" name="Distortion.h" compile="0" resource="0" file="Source/Distortion.h"/>
         <FILE id="QFO3bh" name="ToneStack.cpp" compile="1" resource="0" file="Source/ToneStack.cpp"/>
         <FILE id="zFhpmK" name="ToneStack.h" compile="0" resource="0" file="Source/ToneStack.h"/>
-        <FILE id="KSkGr4" name="DistortionProcessor.cpp" compile="1" resource="0"
-              file="Source/DistortionProcessor.cpp"/>
-        <FILE id="hmiYon" name="DistortionProcessor.h" compile="0" resource="0"
-              file="Source/DistortionProcessor.h"/>
         <FILE id="RRkbxl" name="Chorus.cpp" compile="1" resource="0" file="Source/Chorus.cpp"/>
         <FILE id="X7IyP3" name="Chorus.h" compile="0" resource="0" file="Source/Chorus.h"/>
         <FILE id="hLVqvN" name="Delay.cpp" compile="1" resource="0" file="Source/Delay.cpp"/>
