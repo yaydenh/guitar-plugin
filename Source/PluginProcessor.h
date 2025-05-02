@@ -21,6 +21,7 @@
 #include "Reverb.h"
 #include "Overdrive.h"
 #include "Distortion.h"
+#include "Fuzz.h"
 
 //==============================================================================
 /**
@@ -94,6 +95,7 @@ private:
     // pedals
     Overdrive overdrive;
     Distortion distortion;
+    Fuzz fuzz;
     Compressor compressor;
     Reverb reverb;
     //==============================================================================

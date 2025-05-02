@@ -30,7 +30,10 @@ TabPedals::TabPedals(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeSt
       distortionLevel(-12.0f, 12.0f, 0.1f, "Level", "distortionLevel", vts),
       overdriveDrive(0.0f, 1.0f, 0.05f, "Drive", "overdriveDrive", vts),
       overdriveTone(0.0f, 1.0f, 0.05f, "Tone", "overdriveTone", vts),
-      overdriveLevel(-12.0f, 12.0f, 0.1f, "Level", "overdriveLevel", vts)
+      overdriveLevel(-12.0f, 12.0f, 0.1f, "Level", "overdriveLevel", vts),
+      fuzzSustain(0.0f, 1.0f, 0.05f, "Sustain", "fuzzSustain", vts),
+      fuzzTone(0.0f, 1.0f, 0.05f, "Tone", "fuzzTone", vts),
+      fuzzLevel(-12.0f, 12.0f, 0.1f, "Level", "fuzzLevel", vts)
 {
     addAndMakeVisible(compressorBlend);
     addAndMakeVisible(compressorThreshold);
@@ -70,6 +73,14 @@ TabPedals::TabPedals(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeSt
     addAndMakeVisible(overdriveLabel);
     overdriveOnAttachment = std::make_unique<ButtonAttachment>(vts, "overdriveOn", overdriveOnButton);
     overdriveLabel.setText("Overdrive", juce::NotificationType::dontSendNotification);
+
+    addAndMakeVisible(fuzzSustain);
+    addAndMakeVisible(fuzzTone);
+    addAndMakeVisible(fuzzLevel);
+    addAndMakeVisible(fuzzOnButton);
+    addAndMakeVisible(fuzzLabel);
+    fuzzOnAttachment = std::make_unique<ButtonAttachment>(vts, "fussOn", fuzzOnButton);
+    fuzzLabel.setText("Fuzz", juce::NotificationType::dontSendNotification);
 }
 
 void TabPedals::resized()
@@ -129,6 +140,18 @@ void TabPedals::resized()
 
     for (int i = 0; i < overdriveKnobs.size(); i++)
         overdriveKnobs[i]->setBounds(paddingX + i * knobSize, paddingY + 20 + pedalCount * pedalHeight, knobSize, knobSize);
+    pedalCount++;
+
+    // fuzz
+    fuzzOnButton.setBounds(0, paddingY + pedalCount * pedalHeight, 30, 30);
+    fuzzLabel.setBounds(30, paddingY + pedalCount * pedalHeight, 100, 30);
+
+    std::vector<juce::Component*> fuzzKnobs = {
+        &fuzzSustain, &fuzzTone, &fuzzLevel
+    };
+
+    for (int i = 0; i < fuzzKnobs.size(); i++)
+        fuzzKnobs[i]->setBounds(paddingX + i * knobSize, paddingY + 20 + pedalCount * pedalHeight, knobSize, knobSize);
     pedalCount++;
 
 }

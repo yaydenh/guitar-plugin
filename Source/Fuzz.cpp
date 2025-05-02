@@ -12,7 +12,6 @@
 
 Fuzz::Fuzz()
 {
-
 }
 
 void Fuzz::prepare(juce::dsp::ProcessSpec& spec)
@@ -48,6 +47,9 @@ void Fuzz::process(juce::AudioBuffer<float>& buffer)
             // y[n] = (1 - a) * y[n-1] + a * x[n]
             lp1[channel] += lp1Alpha * (y - lp1[channel]);
             y = lp1[channel];
+
+            // sustain control
+            y *= 0.5f + sustain;
 
             // boost 23db
             y *= juce::Decibels::decibelsToGain(23.0f);

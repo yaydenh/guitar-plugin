@@ -61,4 +61,11 @@ private:
     juce::ToggleButton overdriveOnButton;
     std::unique_ptr<ButtonAttachment> overdriveOnAttachment;
     juce::Label overdriveLabel;
+
+    AmpKnob fuzzSustain;
+    AmpKnob fuzzTone;
+    AmpKnob fuzzLevel;
+    juce::ToggleButton fuzzOnButton;
+    std::unique_ptr<ButtonAttachment> fuzzOnAttachment;
+    juce::Label fuzzLabel;
 };

@@ -362,5 +362,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout GuitarAmpAudioProcessor::cre
     params.add(std::make_unique<juce::AudioParameterFloat>("distortionTone", "distortionTone", 0.0f, 1.0f, 0.5f));
     params.add(std::make_unique<juce::AudioParameterFloat>("distortionLevel", "distortionLevel", -12.0f, 12.0f, 0.0f));
 
+    // fuzz pedal
+    params.add(std::make_unique<juce::AudioParameterBool>("fuzzOn", "fuzzOn", false));
+    params.add(std::make_unique<juce::AudioParameterFloat>("fuzzSustain", "fuzzSustain", 0.0f, 1.0f, 0.5f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("fuzzTone", "fuzzTone", 0.0f, 1.0f, 0.5f));
+    params.add(std::make_unique<juce::AudioParameterFloat>("fuzzLevel", "fuzzLevel", -12.0f, 12.0f, 0.0f));
+
     return params;
 }
