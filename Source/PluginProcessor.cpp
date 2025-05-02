@@ -350,12 +350,6 @@ juce::AudioProcessorValueTreeState::ParameterLayout GuitarAmpAudioProcessor::cre
     params.add(std::make_unique<juce::AudioParameterFloat>("overdriveTone", "overdriveTone", 0.0f, 1.0f, 0.5f));
     params.add(std::make_unique<juce::AudioParameterFloat>("overdriveLevel", "overdriveLevel", -12.0f, 12.0f, 0.0f));
 
-    // overdrive pedal
-    params.add(std::make_unique<juce::AudioParameterBool>("overdriveOn", "overdriveOn", false));
-    params.add(std::make_unique<juce::AudioParameterFloat>("overdriveDrive", "overdriveDrive", 0.0f, 1.0f, 0.5f));
-    params.add(std::make_unique<juce::AudioParameterFloat>("overdriveTone", "overdriveTone", 0.0f, 1.0f, 0.5f));
-    params.add(std::make_unique<juce::AudioParameterFloat>("overdriveLevel", "overdriveLevel", -12.0f, 12.0f, 0.0f));
-
     // distortion pedal
     params.add(std::make_unique<juce::AudioParameterBool>("distortionOn", "distortionOn", false));
     params.add(std::make_unique<juce::AudioParameterFloat>("distortionDrive", "distortionDrive", 0.0f, 1.0f, 0.5f));
