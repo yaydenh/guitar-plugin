@@ -98,7 +98,6 @@ void Compressor::process(juce::AudioBuffer<float>& buffer)
             float dry = samples[i];
             float wet = samples[i] * juce::Decibels::decibelsToGain(M + makeUpGain - yL[channel]);
             samples[i] = (1.0f - blend) * dry + blend * wet;
-
         }
     }
 }
