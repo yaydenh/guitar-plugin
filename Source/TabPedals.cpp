@@ -79,7 +79,7 @@ TabPedals::TabPedals(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeSt
     addAndMakeVisible(fuzzLevel);
     addAndMakeVisible(fuzzOnButton);
     addAndMakeVisible(fuzzLabel);
-    fuzzOnAttachment = std::make_unique<ButtonAttachment>(vts, "fussOn", fuzzOnButton);
+    fuzzOnAttachment = std::make_unique<ButtonAttachment>(vts, "fuzzOn", fuzzOnButton);
     fuzzLabel.setText("Fuzz", juce::NotificationType::dontSendNotification);
 }
 
