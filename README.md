@@ -1,23 +1,4 @@
 # guitar-plugin
 
-TODO:
-
-Features
-* cab sim
-    * add more impulse responses
-    * mic placement and room acoustics
-* eq
-    * add more bands for post eq
-    * presence and master knob
-* pre-effects
-    * phaser
-    * chorus
-* post-effects
-    * delay
-* transpose
-* acoustic and bass simulation
-* in built metronome and tuner
-* save state and presets
-
-
+vts3 located at Builds\VisualStudio2022\x64\Debug\VST3\GuitarAmp.vst3\Contents\x86_64-win
 
