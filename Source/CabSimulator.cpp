@@ -18,6 +18,7 @@ CabSimulator::CabSimulator()
         IRDir = IRDir.getParentDirectory();
     IRDir = IRDir.getChildFile("Resources");
 
+    IRFilenames.add("None");
     auto files = IRDir.findChildFiles(juce::File::TypesOfFileToFind::findFiles, false);
     for (auto& file : files) IRFilenames.add(file.getFileName());
 }
