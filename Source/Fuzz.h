@@ -19,6 +19,7 @@ public:
     
     void prepare(juce::dsp::ProcessSpec& spec);
     void process(juce::AudioBuffer<float>& buffer);
+    void configure(float newSustain, float newTone, float newLevelDb);
 
 private:
     float sampleRate = 44100.0f;

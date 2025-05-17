@@ -78,5 +78,11 @@ void Fuzz::process(juce::AudioBuffer<float>& buffer)
             samples[n] = y;
         }
     }
+}
 
+void Fuzz::configure(float newSustain, float newTone, float newLevelDb)
+{
+    sustain = newSustain;
+    tone = newTone;
+    levelDb = newLevelDb;
 }

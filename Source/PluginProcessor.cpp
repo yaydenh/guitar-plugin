@@ -110,6 +110,7 @@ void GuitarAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     reverb.prepare(spec);
     overdrive.prepare(spec);
     distortion.prepare(spec);
+    fuzz.prepare(spec);
 }
 
 void GuitarAmpAudioProcessor::releaseResources()
@@ -182,6 +183,14 @@ void GuitarAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     float overdriveLevel = *parameters.getRawParameterValue("overdriveLevel");
     overdrive.configure(overdriveDrive, overdriveTone, overdriveLevel);
     if (overdriveOn) overdrive.process(buffer);
+
+    // overdrive pedal
+    bool fuzzOn = parameters.getParameterAsValue("fuzzOn").getValue();
+    float fuzzSustain = *parameters.getRawParameterValue("fuzzSustain");
+    float fuzzTone = *parameters.getRawParameterValue("fuzzTone");
+    float fuzzLevel = *parameters.getRawParameterValue("fuzzLevel");
+    fuzz.configure(fuzzSustain, fuzzTone, fuzzLevel);
+    if (fuzzOn) fuzz.process(buffer);
 
     // preamp
     preamp.test = test;

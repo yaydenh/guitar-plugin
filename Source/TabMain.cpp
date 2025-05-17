@@ -34,9 +34,12 @@ TabMain::TabMain(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeState&
     addAndMakeVisible(postFreq);
     audioProcessor.setPostFrequencyVisualiser(&postFreq);
 
+    auto bgColour = getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId);
     addAndMakeVisible(preVisualiser);
+    preVisualiser.setColours(bgColour, juce::Colours::black);
     audioProcessor.setPreWaveformVisualiser(&preVisualiser);
     addAndMakeVisible(postVisualiser);
+    postVisualiser.setColours(bgColour, juce::Colours::black);
     audioProcessor.setPostWaveformVisualiser(&postVisualiser);
 
     // distortion type selector
@@ -80,7 +83,7 @@ TabMain::TabMain(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeState&
 void TabMain::resized()
 {
     // test button
-    testToggle.setBounds(200, 20, 30, 30);
+    //testToggle.setBounds(200, 20, 30, 30);
 
     auto marginLeft = 20;
     auto marginTop = 20;
@@ -88,21 +91,21 @@ void TabMain::resized()
     //left controls
     preampModeSelector.setBounds(marginLeft, marginTop, 100, 30);
 
-    irSelector.setBounds(marginLeft + 300, marginTop, 100, 30);
+    irSelector.setBounds(marginLeft + 120, marginTop, 100, 30);
 
     auto preX = marginLeft + 60;
     auto preY = marginTop + 60;
     toneStackBass.setBounds(preX, preY, 80, 80);
-    toneStackMid.setBounds(preX + 50, preY, 80, 80);
-    toneStackTreble.setBounds(preX + 100, preY, 80, 80);
+    toneStackMid.setBounds(preX + 60, preY, 80, 80);
+    toneStackTreble.setBounds(preX + 120, preY, 80, 80);
     preGain.setBounds(preX - 80, preY + 40, 100, 100);
 
     auto postX = preX;
     auto postY = preY + 100;
     postBass.setBounds(postX, postY, 80, 80);
-    postMid.setBounds(postX + 50, postY, 80, 80);
-    postTreble.setBounds(postX + 100, postY, 80, 80);
-    postGain.setBounds(postX + 160, preY + 40, 100, 100);
+    postMid.setBounds(postX + 60, postY, 80, 80);
+    postTreble.setBounds(postX + 120, postY, 80, 80);
+    postGain.setBounds(postX + 180, preY + 40, 100, 100);
 
     // right controls
     noiseGate.setBounds(marginLeft + 330, preY + 40, 100, 100);
