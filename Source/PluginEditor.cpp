@@ -17,7 +17,7 @@ GuitarAmpAudioProcessorEditor::GuitarAmpAudioProcessorEditor(GuitarAmpAudioProce
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (800, 1000);
+    setSize (640, 700);
 
     addAndMakeVisible(tabs);
     auto colour = getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId);

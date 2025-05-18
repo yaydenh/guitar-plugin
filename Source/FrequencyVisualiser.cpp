@@ -74,8 +74,8 @@ void FrequencyVisualiser::drawFrame(juce::Graphics& g)
 {
     for (int i = 0; i < scopeSize; i++)
     {
-        auto width = 400;
-        auto height = 300;
+        auto width = 320;
+        auto height = 200;
         g.drawLine({(float) juce::jmap(i - 1, 0, scopeSize - 1, 0, width),
             juce::jmap(scopeData[i - 1], 0.0f, 1.0f, (float) height, 0.0f),
             (float) juce::jmap(i, 0, scopeSize - 1, 0, width),

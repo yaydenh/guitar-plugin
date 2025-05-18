@@ -85,33 +85,26 @@ void TabMain::resized()
     //testToggle.setBounds(200, 20, 30, 30);
 
     auto marginLeft = 20;
-    auto marginTop = 20;
+    auto marginTop = 30;
 
-    //left controls
     preampModeSelector.setBounds(marginLeft, marginTop, 100, 30);
-
     irSelector.setBounds(marginLeft + 120, marginTop, 100, 30);
+    noiseGate.setBounds(marginLeft + 240, 0, 80, 80);
 
-    auto preX = marginLeft + 60;
-    auto preY = marginTop + 60;
-    toneStackBass.setBounds(preX, preY, 80, 80);
-    toneStackMid.setBounds(preX + 60, preY, 80, 80);
-    toneStackTreble.setBounds(preX + 120, preY, 80, 80);
-    preGain.setBounds(preX - 80, preY + 40, 100, 100);
+    auto knobY = marginTop + 60;
+    preGain.setBounds(0, knobY, 100, 100);
+    toneStackBass.setBounds(100, knobY, 80, 80);
+    toneStackMid.setBounds(170, knobY, 80, 80);
+    toneStackTreble.setBounds(240, knobY, 80, 80);
+    postBass.setBounds(320, knobY, 80, 80);
+    postMid.setBounds(390, knobY, 80, 80);
+    postTreble.setBounds(460, knobY, 80, 80);
+    postGain.setBounds(540, knobY, 100, 100);
 
-    auto postX = preX;
-    auto postY = preY + 100;
-    postBass.setBounds(postX, postY, 80, 80);
-    postMid.setBounds(postX + 60, postY, 80, 80);
-    postTreble.setBounds(postX + 120, postY, 80, 80);
-    postGain.setBounds(postX + 180, preY + 40, 100, 100);
-
-    // right controls
-    noiseGate.setBounds(marginLeft + 330, preY + 40, 100, 100);
 
     // visualisers
-    preFreq.setBounds(0, 300, 400, 300);
-    postFreq.setBounds(0, 600, 400, 300);
-    preVisualiser.setBounds(400, 300, 400, 300);
-    postVisualiser.setBounds(400, 600, 400, 300);
+    preFreq.setBounds(0, 200, 320, 200);
+    postFreq.setBounds(0, 400, 320, 200);
+    preVisualiser.setBounds(320, 200, 320, 200);
+    postVisualiser.setBounds(320, 400, 320, 200);
 }
