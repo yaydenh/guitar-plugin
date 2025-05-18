@@ -30,15 +30,23 @@ TabMain::TabMain(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeState&
 
     // visualisers
     addAndMakeVisible(preFreq);
+    addAndMakeVisible(preFreqLabel);
+    preFreqLabel.setText("Input Frequencies", juce::NotificationType::dontSendNotification);
     audioProcessor.setPreFrequencyVisualiser(&preFreq);
     addAndMakeVisible(postFreq);
+    addAndMakeVisible(postFreqLabel);
+    postFreqLabel.setText("Output Frequencies", juce::NotificationType::dontSendNotification);
     audioProcessor.setPostFrequencyVisualiser(&postFreq);
 
     auto bgColour = getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId);
     addAndMakeVisible(preVisualiser);
+    addAndMakeVisible(preVisualiserLabel);
+    preVisualiserLabel.setText("Input Waveform", juce::NotificationType::dontSendNotification);
     preVisualiser.setColours(bgColour, juce::Colours::black);
     audioProcessor.setPreWaveformVisualiser(&preVisualiser);
     addAndMakeVisible(postVisualiser);
+    addAndMakeVisible(postVisualiserLabel);
+    postVisualiserLabel.setText("Output Waveform", juce::NotificationType::dontSendNotification);
     postVisualiser.setColours(bgColour, juce::Colours::black);
     audioProcessor.setPostWaveformVisualiser(&postVisualiser);
 
@@ -55,11 +63,15 @@ TabMain::TabMain(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeState&
     addAndMakeVisible(preGain);
 
     // tone stack eq knobs
+    preEqLabel.setText("Pre-EQ", juce::NotificationType::dontSendNotification);
+    addAndMakeVisible(preEqLabel);
     addAndMakeVisible(toneStackBass);
     addAndMakeVisible(toneStackMid);
     addAndMakeVisible(toneStackTreble);
 
     // post eq knobs
+    postEqLabel.setText("Post-EQ", juce::NotificationType::dontSendNotification);
+    addAndMakeVisible(postEqLabel);
     addAndMakeVisible(postBass);
     addAndMakeVisible(postMid);
     addAndMakeVisible(postTreble);
@@ -93,18 +105,27 @@ void TabMain::resized()
 
     auto knobY = marginTop + 60;
     preGain.setBounds(0, knobY, 100, 100);
+
     toneStackBass.setBounds(100, knobY, 80, 80);
     toneStackMid.setBounds(170, knobY, 80, 80);
     toneStackTreble.setBounds(240, knobY, 80, 80);
+    preEqLabel.setBounds(185, knobY + 40, 100, 100);
+
     postBass.setBounds(320, knobY, 80, 80);
     postMid.setBounds(390, knobY, 80, 80);
     postTreble.setBounds(460, knobY, 80, 80);
+    postEqLabel.setBounds(400, knobY + 40, 100, 100);
+
     postGain.setBounds(540, knobY, 100, 100);
 
 
     // visualisers
     preFreq.setBounds(0, 200, 320, 200);
+    preFreqLabel.setBounds(0, 200, 70, 50);
     postFreq.setBounds(0, 400, 320, 200);
+    postFreqLabel.setBounds(0, 400, 70, 50);
     preVisualiser.setBounds(320, 200, 320, 200);
+    preVisualiserLabel.setBounds(320, 200, 70, 50);
     postVisualiser.setBounds(320, 400, 320, 200);
+    postVisualiserLabel.setBounds(320, 400, 70, 50);
 }

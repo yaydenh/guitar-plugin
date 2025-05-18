@@ -13,7 +13,7 @@
 GuitarAmpAudioProcessorEditor::GuitarAmpAudioProcessorEditor(GuitarAmpAudioProcessor& p, juce::AudioProcessorValueTreeState& vts)
     : AudioProcessorEditor(&p), audioProcessor(p), valueTreeState(vts),
       tabs(juce::TabbedButtonBar::TabsAtTop),
-      mainTab(p, vts), pedalsTab(p, vts)
+      mainTab(p, vts), preEffectsTab(p, vts), postEffectsTab(p, vts)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -22,8 +22,8 @@ GuitarAmpAudioProcessorEditor::GuitarAmpAudioProcessorEditor(GuitarAmpAudioProce
     addAndMakeVisible(tabs);
     auto colour = getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId);
     tabs.addTab("Main", colour, &mainTab, false);
-    tabs.addTab("Pedals", colour, &pedalsTab, false);
-
+    tabs.addTab("Pre-Effects", colour, &preEffectsTab, false);
+    tabs.addTab("Post-Effects", colour, &postEffectsTab, false);
 }
 
 GuitarAmpAudioProcessorEditor::~GuitarAmpAudioProcessorEditor()

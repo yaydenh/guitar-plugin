@@ -37,7 +37,10 @@ private:
     FrequencyVisualiser postFreq;
     juce::AudioVisualiserComponent preVisualiser = juce::AudioVisualiserComponent(1);
     juce::AudioVisualiserComponent postVisualiser = juce::AudioVisualiserComponent(1);
-
+    juce::Label preFreqLabel;
+    juce::Label postFreqLabel;
+    juce::Label preVisualiserLabel;
+    juce::Label postVisualiserLabel;
 
     juce::ComboBox preampModeSelector;
     std::unique_ptr<ComboBoxAttachment> preampModeAttachment;
@@ -45,10 +48,12 @@ private:
 
     AmpKnob preGain;
 
+    juce::Label preEqLabel;
     AmpKnob toneStackBass;
     AmpKnob toneStackMid;
     AmpKnob toneStackTreble;
 
+    juce::Label postEqLabel;
     AmpKnob postBass;
     AmpKnob postMid;
     AmpKnob postTreble;

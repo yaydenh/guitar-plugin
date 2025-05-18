@@ -38,6 +38,13 @@
       </GROUP>
       <GROUP id="{96D2748F-02E3-C928-0BE6-1243B309E500}" name="Components">
         <GROUP id="{73100DBD-629B-AF8E-17B2-8B171EA91A82}" name="Tabs">
+          <FILE id="aRFhJy" name="TabPostEffects.cpp" compile="1" resource="0"
+                file="Source/TabPostEffects.cpp"/>
+          <FILE id="t9YSYJ" name="TabPostEffects.h" compile="0" resource="0"
+                file="Source/TabPostEffects.h"/>
+          <FILE id="N57tkt" name="TabPreEffects.cpp" compile="1" resource="0"
+                file="Source/TabPreEffects.cpp"/>
+          <FILE id="WeuV6I" name="TabPreEffects.h" compile="0" resource="0" file="Source/TabPreEffects.h"/>
           <FILE id="eyqZOk" name="TabMain.cpp" compile="1" resource="0" file="Source/TabMain.cpp"/>
           <FILE id="uHd2NP" name="TabMain.h" compile="0" resource="0" file="Source/TabMain.h"/>
           <FILE id="wHGomL" name="TabPedals.cpp" compile="1" resource="0" file="Source/TabPedals.cpp"/>
