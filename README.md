@@ -2,6 +2,25 @@
 
 VST3 file located at Builds\VisualStudio2022\x64\Debug\VST3\GuitarAmp.vst3\Contents\x86_64-win
 
+## Features
+Amplifier
+- Mode Selector: Clean, Crunch, and Lead tones
+- Impulse Response (IR) Loader: Choose external cabinet IR
+- Input / Output Gain Controls: Adjust signal levels pre/post-processing
+- Pre & Post EQ: Shape tone before and after the amp stage
+
+Effects Pedals
+- Distortion
+- Overdrive
+- Fuzz
+- Compressor
+- Reverb
+- Noise Gate
+
+Visual Tools
+- Frequency Spectrum Visualiser: Real-time frequency graph
+- Waveform Visualiser: Monitor your audio signal dynamically
+
 ## Current UI
 
 ### Main Tab
