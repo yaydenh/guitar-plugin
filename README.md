@@ -21,7 +21,7 @@ Visual Tools
 - Frequency Spectrum Visualiser: Real-time frequency graph
 - Waveform Visualiser: Monitor your audio signal dynamically
 
-## Current UI
+## UI
 
 ### Main Tab
 ![image](https://github.com/user-attachments/assets/5c7ce193-a0ad-4e0c-89f5-34a1b170631b)
